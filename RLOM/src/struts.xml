@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<include file="com/raylinetech/ssh2/logistics/common/action/common-struts.xml" />
+<!-- 	<include file="com/what/ssh2/bbs/admin/action/admin-struts.xml" />
+	<include file="com/what/ssh2/bbs/admin/action/mail-struts.xml" /> -->
+</struts>

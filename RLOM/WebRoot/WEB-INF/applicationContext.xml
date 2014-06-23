@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<import
+		resource="classpath:com/raylinetech/ssh2/logistics/logistics-spring.xml" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:log4j.properties</value>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:redis.properties</value>
+				<value>classpath:service.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="serviceConfigBean" class="com.raylinetech.ssh2.logistics.common.config.ServiceConfigBean">
+		<property name="userName" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="serverHost" value="${mail.serverhost}" />
+		<property name="serverPort" value="${mail.serverport}" />
+	</bean>
+
+</beans>

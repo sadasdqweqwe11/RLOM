@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<import
+		resource="classpath:com/raylinetech/ssh2/logistics/common/action/common-action-spring.xml" />
+
+	<!-- dao层 begin-->
+	<bean id="userDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="orderFileDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.OrderFileDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="trackingNoDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.TrackingNoDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="rlOrderDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.RLOrderDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="logisticsDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.LogisticsDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="skuDao" class="com.raylinetech.ssh2.logistics.common.dao.impl.SkuDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<!-- dao层 end-->
+
+
+
+	
+	
+
+
+
+	
+	
+	<!-- service层 begin-->
+	<bean id="userService" class="com.raylinetech.ssh2.logistics.common.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id="orderFileService" class="com.raylinetech.ssh2.logistics.common.service.impl.OrderFileServiceImpl">
+		<property name="orderFileDao" ref="orderFileDao"></property>
+		<property name="trackingNoDao" ref="trackingNoDao"></property>
+		<property name="rlOrderDao" ref="rlOrderDao"></property>
+	</bean>
+	<bean id="trackingNoService" class="com.raylinetech.ssh2.logistics.common.service.impl.TrackingNoServiceImpl">
+		<property name="trackingNoDao" ref="trackingNoDao"></property>
+		<property name="logisticsDao" ref="logisticsDao"></property>
+		<property name="rlOrderDao" ref="rlOrderDao"></property>
+	</bean>
+	<bean id="rlOrderService" class="com.raylinetech.ssh2.logistics.common.service.impl.RLOrderServiceImpl">
+		<property name="rlOrderDao" ref="rlOrderDao"></property>
+		<property name="trackingNoDao" ref="trackingNoDao"></property>
+	</bean>
+	<bean id="loginCookieService" class="com.raylinetech.ssh2.logistics.common.service.impl.LoginCookieServiceImpl">
+	</bean>
+	
+	<bean id="logisticsService" class="com.raylinetech.ssh2.logistics.common.service.impl.LogisticsServiceImpl">
+		<property name="logisticsDao" ref="logisticsDao"></property>
+		<property name="skuDao" ref="skuDao"></property>
+	</bean>
+	
+	<bean id="excelService" class="com.raylinetech.ssh2.logistics.common.service.impl.ExcelServiceImpl">
+		<property name="skuDao" ref="skuDao"></property>
+	</bean>
+
+	<bean id="txtService" class="com.raylinetech.ssh2.logistics.common.service.impl.TxtServiceImpl">
+		<property name="skuDao" ref="skuDao"></property>
+	</bean>	
+	<bean id="searchService" class="com.raylinetech.ssh2.logistics.common.service.impl.SearchServiceImpl">
+		<property name="logisticsDao" ref="logisticsDao"></property>
+		<property name="skuDao" ref="skuDao"></property>
+		<property name="rlOrderDao" ref="rlOrderDao"></property>
+	</bean>
+	
+<!-- 	
+
+	
+	
+
+ -->
+	
+	
+	<!-- Job classes as follow -->
+<!-- 	<bean id="deleteUnSignUpUserJob"
+		class="com.raylinetech.ssh2.logistics.common.job.DeleteUnSignUpUserJob">
+				<property name="userService" ref="userService"></property>
+		
+		 <property name="taskExecutor" ref="taskExecutor" />
+		<property name="syncInfoService" ref="syncInfoService" />
+		<property name="userToneManageClient"
+			ref="userToneManageClient" />
+		
+	</bean>
+	
+	<bean id="hottopicJob"
+		class="com.raylinetech.ssh2.logistics.common.job.HottopicJob">
+		<property name="hottopicService" ref="hottopicService"></property>
+		<property name="boardService" ref="boardService"></property>
+		<property name="topicService" ref="topicService"></property>
+		
+		 <property name="taskExecutor" ref="taskExecutor" />
+		<property name="syncInfoService" ref="syncInfoService" />
+		<property name="userToneManageClient"
+			ref="userToneManageClient" />
+		
+	</bean>
+	
+	<bean id="clearBoardTodayPostJob"
+		class="com.raylinetech.ssh2.logistics.common.job.ClearBoardTodayPost">
+		<property name="boardService" ref="boardService"></property>
+	</bean>
+	
+	
+	Job Details as follow
+	<bean id="deleteUnSignUpUserJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="deleteUnSignUpUserJob" />
+		<property name="targetMethod" value="delete" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="hottopicJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="hottopicJob"></property> 
+		<property name="targetMethod" value="task"></property> 
+	</bean>
+	
+	<bean id="clearBoardTodayPostJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="clearBoardTodayPostJob"></property> 
+		<property name="targetMethod" value="task"></property> 
+	</bean> -->
+
+	<!-- Job Triggers as follow -->
+<!-- 	<bean id="deleteUnSignUpUserJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="deleteUnSignUpUserJobDetail" />
+		<property name="cronExpression" value="0 0 21 * * ?" />
+	</bean>
+	
+	<bean id="hottopicJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="hottopicJobDetail" ></property> 
+		<property name="cronExpression" value="0 0/30 * * * ?" ></property> 
+	</bean>
+	
+	<bean id="clearBoardTodayPostJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="clearBoardTodayPostJobDetail" ></property> 
+		<property name="cronExpression" value="0 0 0 * * ?" ></property> 
+	</bean> -->
+
+	<!-- Sheduler Factory -->
+	<!-- 
+	<bean
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="hottopicJobTrigger" />
+				<ref bean="deleteUnSignUpUserJobTrigger" />
+			</list>
+		</property>
+	</bean>  -->
+</beans>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<!-- action -->
+	<bean id="loginAction" class="com.raylinetech.ssh2.logistics.common.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="loginCookieService" ref="loginCookieService"></property>
+	</bean>
+	<bean id="indexAction" class="com.raylinetech.ssh2.logistics.common.action.IndexAction" scope="prototype"></bean>
+	<bean id="mainAction" class="com.raylinetech.ssh2.logistics.common.action.MainAction" scope="prototype">
+			<property name="rlOrderService" ref="rlOrderService"></property>
+	</bean>
+	<bean id="upLoadAction" class="com.raylinetech.ssh2.logistics.common.action.UpLoadAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="orderFileService" ref="orderFileService"></property>
+	</bean>
+	
+	<bean id="upLoadAjax" class="com.raylinetech.ssh2.logistics.common.ajax.UpLoadAjax" scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="orderFileService" ref="orderFileService"></property>
+	</bean>
+		<bean id="checkExcelAction" class="com.raylinetech.ssh2.logistics.common.action.CheckExcelAction" scope="prototype">
+		<property name="rlOrderService" ref="rlOrderService"></property>
+		<property name="trackingNoService" ref="trackingNoService"></property>
+		<property name="orderFileService" ref="orderFileService"></property>
+		<property name="logisticsService" ref="logisticsService"></property>
+		<property name="excelService" ref="excelService"></property>
+		<property name="txtService" ref="txtService"></property>
+		</bean>
+	<bean id="listUploadFilesAction" class="com.raylinetech.ssh2.logistics.common.action.ListUploadFilesAction" scope="prototype">
+		<property name="orderFileService" ref="orderFileService"></property>
+		<property name="rlOrderService" ref="rlOrderService"></property>
+		<property name="logisticsService" ref="logisticsService"></property>
+	</bean>
+	<bean id="orderFileAction" class="com.raylinetech.ssh2.logistics.common.action.OrderFileAction" scope="prototype">
+		<property name="orderFileService" ref="orderFileService"></property>
+		<property name="rlOrderService" ref="rlOrderService"></property>
+		<property name="logisticsService" ref="logisticsService"></property>
+	</bean>
+	
+	<bean id="checkFileAjaxAction" class="com.raylinetech.ssh2.logistics.common.ajax.CheckFileAjaxAction" scope="prototype">
+	</bean>
+	<bean id="getChartsAjax" class="com.raylinetech.ssh2.logistics.common.ajax.GetChartsAjax" scope="prototype">
+		<property name="rlOrderService" ref="rlOrderService"></property>
+	</bean>
+
+	<bean id="orderTableAjaxAction" class="com.raylinetech.ssh2.logistics.common.ajax.OrderTableAjaxAction" scope="prototype">
+		<property name="searchService" ref="searchService"></property>
+	</bean>
+	
+	<bean id="downloadAction" class="com.raylinetech.ssh2.logistics.common.action.DownloadAction" scope="prototype">
+		<property name="rlOrderService" ref="rlOrderService"></property>
+	</bean>
+	<bean id="logisticsAction" class="com.raylinetech.ssh2.logistics.common.action.LogisticsAction" scope="prototype">
+		<property name="rlOrderService" ref="rlOrderService"></property>
+	</bean>
+	
+	<bean id="generateTrackingnoAjax" class="com.raylinetech.ssh2.logistics.common.ajax.GenerateTrackingnoAjax" scope="prototype">
+		<property name="rlOrderService" ref="rlOrderService"></property>
+		<property name="trackingNoService" ref="trackingNoService"></property>
+	</bean>
+	
+	
+	<bean id="getTreeAjax" class="com.raylinetech.ssh2.logistics.common.ajax.GetTreeAjax" scope="prototype">
+		<property name="searchService" ref="searchService"></property>
+	</bean>
+	
+	
+	
+</beans>

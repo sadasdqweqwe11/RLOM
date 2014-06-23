@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.action.excludePattern" value="/ueditor.*" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
+	<constant name="struts.multipart.maxSize" value="20485760" />
+	<package name="struts2" extends="struts-default" namespace="/">
+		<action name="login" class="loginAction">
+			<result name="main"  type="redirect">main.action</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="currentUrl" type="redirect">${path}</result>
+		</action>
+		
+		<action name="changeLogistics" class="logisticsAction" method="changeLogistics">
+			<result name="input">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="success" type="redirect">${path}</result>
+		</action>
+
+		<action name="index" class="indexAction">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+		</action>
+		<action name="main" class="mainAction">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="main">/WEB-INF/jsps/upload.jsp</result>
+		</action>
+		<action name="main1" class="mainAction">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="main">/WEB-INF/jsps/main.jsp</result>
+		</action>
+		<action name="upload" class="upLoadAction" method="uploadOrder">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="chain">
+				checkExcel
+			</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="input">/WEB-INF/jsps/uploadMistaketip.jsp</result>
+			
+			<interceptor-ref name="defaultStack" /> 
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">20048576</param>
+				<param name="allowedExtensions">
+					xls,txt
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="uploadTrackingno" class="upLoadAction" method="uploadTrackingno">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="chain">
+				checkTrackingnoExcel
+			</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="input">/WEB-INF/jsps/uploadMistaketip.jsp</result>
+			<interceptor-ref name="defaultStack" /> 
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">20048576</param>
+				<param name="allowedExtensions">
+					xls
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		
+		
+		
+		
+		<action name="checkExcel" class="checkExcelAction" method="checkExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<!-- <result name="success" type="redirect">${urlPath}</result> -->
+			<result name="success">/WEB-INF/jsps/CheckExcel.jsp</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		<action name="checkTrackingnoExcel" class="checkExcelAction" method="checkTrackingnoExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/CheckTrackingnoExcel.jsp</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		
+		<action name="storeExcel" class="checkExcelAction" method="storeExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="redirect">${urlPath}</result> 
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		
+		<action name="storeTrackingnoExcel" class="checkExcelAction" method="storeTrackingnoExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="redirect">main.action</result> 
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		<action name="deleteExcel" class="checkExcelAction" method="deleteExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success"  type="redirect">main.action</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		<action name="generateExcel" class="checkExcelAction" method="generateExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="redirect">listUploadFiles</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		<action name="downloadExcel" class="checkExcelAction" method="downloadExcel">
+		</action>
+
+		<action name="listUploadFiles" class="listUploadFilesAction">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/listRLOrder.jsp</result>
+		</action>
+		<action name="orderFile" class="orderFileAction">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/orderFile.jsp</result>
+		</action>
+        <action name="downloadSCBD"  class="downloadAction" method="downloadSCBD">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
+        <action name="downloadFJD"  class="downloadAction" method="downloadFJD">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
+        <action name="downloadZFJD"  class="downloadAction" method="downloadZFJD">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>        
+        <action name="downloadVendor"  class="downloadAction" method="downloadVendor">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>
+        <action name="downloadBQ"  class="downloadAction" method="downloadBQ">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
+        <action name="downloadTable"  class="downloadAction" method="downloadTable">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
+        <action name="deleteRLOrders"  class="downloadAction" method="deleteRLOrders">  
+			<result name="success" type="redirect">listUploadFiles</result>
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>  
+
+
+	</package>
+	<package name="orderFile" extends="struts-default" namespace="/orderFile">
+		<action name="*" class="orderFileAction" method="showFile">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/orderFile.jsp</result>
+		</action>
+	</package>
+	
+    <package name="ajax" namespace="/ajax" extends="json-default">  
+        <action name="checkFile"  class="checkFileAjaxAction" method="checkExcel">  
+            <result type="json">  
+ <!--                <param name="includeProperties">  
+                     listOne/[/d+/]/.id,listOne/[/d+/]/.typeName  
+                    ,listTwo/[/d+/]/.id,listTwo/[/d+/]/.typeName  
+                    ,listThree/[/d+/]/.id,listThree/[/d+/]/.typeName  
+                </param>   --> 
+            </result>  
+        </action>
+
+        <action name="orderTableAjax" class="orderTableAjaxAction"  method="loadTable">
+					<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="success">/WEB-INF/jsps/load/orderTable.jsp</result>
+		</action>
+        
+        <action name="getChartsAjax" class="getChartsAjax"  method="getCharts">
+		</action>
+		<action name="generateTrackingnoAjax" class="generateTrackingnoAjax"  method="generateTrackingno">
+		</action>
+		
+		<action name="getSearchMap" class="getTreeAjax"  method="getSearchMap">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+		</action>
+		
+		<action name="checkExcelAjax" class="checkExcelAction" method="checkExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/load/loadCheckExcel.jsp</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		
+       </package>  
+</struts>
