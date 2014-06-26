@@ -76,7 +76,20 @@ public class RLOrder implements Cloneable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="logisticsid")
 	private Logistics logistics;
+	/**
+     * 记录是否拆单，不需要拆单0，系统拆单拆单1，系统合单2，手动拆单3，手动合单4，copy订单5 default 0	
+     */
+	@Column
+    private int splitstatus;
+	@Column
+    private long uid;
     
+	public int getSplitstatus() {
+		return splitstatus;
+	}
+	public void setSplitstatus(int splitstatus) {
+		this.splitstatus = splitstatus;
+	}
 	public Logistics getLogistics() {
 		return logistics;
 	}
@@ -243,6 +256,14 @@ public class RLOrder implements Cloneable{
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public long getUid() {
+		return uid;
+	}
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
+
 	public RLOrder(long id, String rlordernumber, String ordernumber,
 			String vendor, String skuno, String itemname, String pinming,
 			String quantity, String description, String buyername,
@@ -251,7 +272,8 @@ public class RLOrder implements Cloneable{
 			String buyerphonenumber, String date, String amount,
 			String trackingno, String guojia, String marketplace,
 			String account, String currency, long fileid,
-			List<RLOrderItem> rlorderitems, Logistics logistics) {
+			List<RLOrderItem> rlorderitems, Logistics logistics,
+			int splitstatus, long uid) {
 		super();
 		this.id = id;
 		this.rlordernumber = rlordernumber;
@@ -280,8 +302,9 @@ public class RLOrder implements Cloneable{
 		this.fileid = fileid;
 		this.rlorderitems = rlorderitems;
 		this.logistics = logistics;
+		this.splitstatus = splitstatus;
+		this.uid = uid;
 	}
-	
 	@Override
 	public RLOrder clone() throws CloneNotSupportedException {
 		RLOrder order = new RLOrder();
@@ -296,11 +319,7 @@ public class RLOrder implements Cloneable{
 		order.setGuojia(guojia);
 		order.setId(id);
 		order.setItemname(itemname);
-		Logistics  log = null;
-		if(this.logistics!=null){
-			log = (Logistics)this.logistics.clone();
-		}
-		order.setLogistics(log);
+		order.setLogistics(logistics);
 		order.setMarketplace(marketplace);
 		order.setOrdernumber(ordernumber);
 		order.setPinming(pinming);
@@ -308,7 +327,7 @@ public class RLOrder implements Cloneable{
 		order.setQuantity(quantity);
 		List items = new ArrayList();
 		for (RLOrderItem item : this.rlorderitems) {
-			items.add((RLOrderItem)item.clone());
+			items.add(item.clone());
 		}
 		order.setRlorderitems(items);
 		order.setRlordernumber(rlordernumber);
@@ -320,6 +339,7 @@ public class RLOrder implements Cloneable{
 		order.setSkuno(skuno);
 		order.setTrackingno(trackingno);
 		order.setVendor(vendor);
+		order.setUid(uid);
 		return order;
 	}
 

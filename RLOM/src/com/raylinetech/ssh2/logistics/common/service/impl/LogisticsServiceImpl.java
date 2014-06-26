@@ -3,11 +3,13 @@ package com.raylinetech.ssh2.logistics.common.service.impl;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import com.raylinetech.ssh2.logistics.common.config.PageConfig;
 import com.raylinetech.ssh2.logistics.common.dao.LogisticsDao;
 import com.raylinetech.ssh2.logistics.common.dao.SkuDao;
 import com.raylinetech.ssh2.logistics.common.entity.Logistics;
@@ -74,6 +76,17 @@ public class LogisticsServiceImpl implements LogisticsService{
 				for (RLOrder rlOrder : rlOrders) {
 					//将只有一件的直接返回,进入下一次循环
 					if(rlOrder.getRlorderitems().size()==1 && rlOrder.getRlorderitems().get(0).getQuantity().trim().equals("1")){
+						DecimalFormat df= new DecimalFormat("#.##");
+						String amount = df.format(3.0 + Math.random()*11);
+						rlOrder.setAmount(amount);
+						String skuno = rlOrder.getRlorderitems().get(0).getSku().getSkuno();
+						Sku sku = this.skuDao.find(skuno);
+						rlOrder.getRlorderitems().get(0).setSku(sku);
+						rlOrder.setVendor(sku.getVendor());
+						rlOrder.setSkuno(sku.getSkuno());
+						rlOrder.setItemname(sku.getName());
+						rlOrder.setPinming(sku.getPinming());
+						rlOrder.setDescription(rlOrder.getRlorderitems().get(0).getDescription());
 						resultList.add(rlOrder);
 					}else{
 						processList.add(rlOrder);
@@ -126,6 +139,18 @@ public class LogisticsServiceImpl implements LogisticsService{
 									e.printStackTrace();
 								}
 								order.setRlorderitems(areaItems);
+								DecimalFormat df= new DecimalFormat("#.##");
+								String amount = df.format(3.0 + Math.random()*11);
+								rlOrder.setAmount(amount);
+								String skuno = rlOrder.getRlorderitems().get(0).getSku().getSkuno();
+								Sku sku = this.skuDao.find(skuno);
+								rlOrder.getRlorderitems().get(0).setSku(sku);
+								rlOrder.setSkuno(sku.getSkuno());
+								rlOrder.setVendor(sku.getVendor());
+								rlOrder.setItemname(sku.getName());
+								rlOrder.setPinming(sku.getPinming());
+								rlOrder.setDescription(rlOrder.getRlorderitems().get(0).getDescription());
+								order.setSplitstatus(PageConfig.SPLIT_SYS_SPLIT);
 								resultList.add(order);
 							}else{
 								//将带电池的和不带电池的分开
@@ -169,14 +194,16 @@ public class LogisticsServiceImpl implements LogisticsService{
 									} catch (CloneNotSupportedException e) {
 										e.printStackTrace();
 									}
-									order.setRlorderitems(areaItems);
+									order.setRlorderitems(oneOrder);
 									order.setVendor(oneOrder.get(0).getSku().getVendor());
 									order.setItemname(oneOrder.get(0).getSku().getName());
 									order.setPinming(oneOrder.get(0).getSku().getPinming());
+									order.setSkuno(oneOrder.get(0).getSku().getSkuno());
 									order.setDescription(oneOrder.get(0).getDescription());
 									DecimalFormat df= new DecimalFormat("#.##");
 									String amount = df.format(3.0 + Math.random()*11);
-									order.setAccount(amount);
+									order.setAmount(amount);
+									order.setSplitstatus(PageConfig.SPLIT_SYS_SPLIT);
 									resultList.add(order);
 								}
 							}
@@ -193,14 +220,19 @@ public class LogisticsServiceImpl implements LogisticsService{
 	 * @return
 	 */
 	private List<RLOrderItem> getOneOrder(List<RLOrderItem> allLists) {
-		Map<String,RLOrderItem> oneOrder = new HashMap<String, RLOrderItem>();
+		Map<String,RLOrderItem> oneOrder = new LinkedHashMap<String, RLOrderItem>();
 		List<RLOrderItem> toDel = new ArrayList<RLOrderItem>();
 		double weight = 0.0;
+		
+		//TODO
+		for (int i = 0; i < allLists.size(); i++) {
+			System.out.println(allLists.get(i).getSku().getSkuno()+"  " + allLists.get(i).getSku().getBattery());
+		}
 		for (int i = 0; i < allLists.size(); i++) {
 			int quantity = Integer.parseInt(allLists.get(i).getQuantity());
 			while(quantity >0){
 				double totalweight = weight + allLists.get(i).getSku().getWeight();
-				//如果重量大于1.8kg，则结束，抓取allLists的下一件
+				//如果重量大于1.8kg，则结束内层循环，抓取allLists的下一件
 				if(totalweight>1.8){
 					break;
 				}else{
@@ -209,7 +241,7 @@ public class LogisticsServiceImpl implements LogisticsService{
 					RLOrderItem item = oneOrder.get(skuno); 
 					if(null==item){
 						//如果sku数量小于4，则map增加一个条目，并且数量=1 并且将allLists的元素i的quantity-1
-						if(oneOrder.keySet().size()<=4){
+						if(oneOrder.keySet().size()<4){
 						try {
 							item = (RLOrderItem)allLists.get(i).clone();
 						} catch (CloneNotSupportedException e) {
@@ -218,7 +250,8 @@ public class LogisticsServiceImpl implements LogisticsService{
 						item.setQuantity("1");
 						quantity = quantity -1;
 						allLists.get(i).setQuantity(quantity+"");
-						oneOrder.put(item.getSku().getVendor(), item);
+//						oneOrder.put(item.getSku().getVendor(), item);
+						oneOrder.put(item.getSku().getSkuno(), item);
 						if(quantity == 0 ){
 							toDel.add(allLists.get(i));
 						}
@@ -232,7 +265,8 @@ public class LogisticsServiceImpl implements LogisticsService{
 						oneOrder.get(skuno).setQuantity(qua+"");
 						quantity = quantity -1;
 						allLists.get(i).setQuantity(quantity+"");
-						oneOrder.put(item.getSku().getVendor(), item);
+//						oneOrder.put(item.getSku().getVendor(), item);
+//						oneOrder.put(item.getSku().getVendor(), item);
 						if(quantity == 0 ){
 							toDel.add(allLists.get(i));
 						}
@@ -242,11 +276,11 @@ public class LogisticsServiceImpl implements LogisticsService{
 		}
 		List<RLOrderItem> rlOrderItems = new ArrayList<RLOrderItem>();
 		for (RLOrderItem rlOrderItem : oneOrder.values()) {
+			System.out.println("one order values are " + rlOrderItem.getSku().getSkuno()+"  " + rlOrderItem.getSku().getBattery());
 			rlOrderItems.add(rlOrderItem);
-			System.out.println(rlOrderItem.getDescription());
 		}
 		allLists.removeAll(toDel);
-		return rlOrderItems;
+ 		return rlOrderItems;
 	}
 
 
@@ -390,7 +424,7 @@ public class LogisticsServiceImpl implements LogisticsService{
 		}
 		
 		datas[6] = promotion;
-		if("Povos Uk".equalsIgnoreCase(account)){
+		if("Povos Uk".equalsIgnoreCase(account)||"Povos Us".equalsIgnoreCase(account)){
 			datas[7] = 1;
 		}
 		StringBuilder sb = new StringBuilder();
@@ -576,23 +610,25 @@ public class LogisticsServiceImpl implements LogisticsService{
 //		}
 //		System.out.println(a);
 //		System.out.println("David Uk".equalsIgnoreCase("david uk"));
-		List<Integer> l = new ArrayList();
-		int[] a = {1,2,3,4,5};
-		for (int i = a.length-1; i >=0; i--) {
-			l.add(a[i]);
-		}
-		System.out.println(l);
-		List<Integer> ll = new ArrayList();
-		for (int i : l) {
-			System.out.println(i);
-			ll.add(i);
-		}
-		System.out.println(l);
-		System.out.println(ll);
-		l.removeAll(ll);
-		System.out.println(l);
-		System.out.println(ll);
-		
+//		List<Integer> l = new ArrayList();
+//		int[] a = {1,2,3,4,5};
+//		for (int i = a.length-1; i >=0; i--) {
+//			l.add(a[i]);
+//		}
+//		System.out.println(l);
+//		List<Integer> ll = new ArrayList();
+//		for (int i : l) {
+//			System.out.println(i);
+//			ll.add(i);
+//		}
+//		System.out.println(l);
+//		System.out.println(ll);
+//		l.removeAll(ll);
+//		System.out.println(l);
+//		System.out.println(ll);
+		DecimalFormat df= new DecimalFormat("#.##");
+		String amount = df.format(3.0 + Math.random()*11);
+		System.out.println(amount);
 		
 //		Iterator<Integer> itr = l.iterator();
 //		while (itr.hasNext()) {

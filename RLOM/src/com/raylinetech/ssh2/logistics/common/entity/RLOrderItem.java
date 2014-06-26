@@ -62,8 +62,12 @@ public class RLOrderItem implements Cloneable{
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	public RLOrderItem clone() throws CloneNotSupportedException {
+		RLOrderItem item = new RLOrderItem();
+		item.setDescription(description);
+		item.setQuantity(quantity);
+		item.setSku(sku);
+		return item;
 	}
 	
 	public RLOrderItem(long id, Sku sku, String quantity, String description) {

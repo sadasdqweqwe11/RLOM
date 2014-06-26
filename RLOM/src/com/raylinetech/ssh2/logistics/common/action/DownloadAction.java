@@ -53,14 +53,20 @@ public class DownloadAction extends ActionSupport{
 	private List orders;
 	
 	private RLOrderService rlOrderService;
-
-
 	
 	private String date;
 	
 	private String vendor;
-	
 
+	private String path;
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public String getDate() {
 		return date;
@@ -407,7 +413,7 @@ public class DownloadAction extends ActionSupport{
 			ids.add(Long.parseLong((String)object));
 		}
 		this.rlOrderService.deleteRLOrdersAndReturnTrackingno(ids);
-		
+		this.path = request.getHeader("referer");
 		return SUCCESS;
 	}
 	public static void main(String[] args) {
@@ -583,7 +589,6 @@ public class DownloadAction extends ActionSupport{
 			toClient.close();
 //			response.flushBuffer();//强行将响应缓存中的内容发送到目的
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

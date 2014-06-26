@@ -76,6 +76,71 @@
 				}
 			}
 		});
+
+		$(".copyOrder").click(function(){
+			if($('input[name="orders"]:checked').length==0){
+				alert("请选择至少一项");
+				return false;
+				}else{
+			var flag = confirm('是否确定复制订单');
+			if(flag){
+				$("#form").attr("action", "<%=path%>/<%=path%>/copyOrder.action?"+new Date()).submit();
+			}
+				}
+		});
+		
+
+		$(".splitOrder").click(function(){
+			if($('input[name="orders"]:checked').length==0){
+				alert("请选择至少一项");
+				return false;
+				}else{
+			var flag = confirm('是否确定拆单');
+			if(flag){
+				$("#form").attr("action", "<%=path%>/<%=path%>/splitOrder.action?"+new Date()).submit();
+			}
+				}
+			
+		});
+		
+
+		$(".mergeOrder").click(function(){
+			if($('input[name="orders"]:checked').length<2){
+				alert("请选择至少两项");
+				return false;
+				}else{
+					var flag = confirm('是否确定合单');
+					if(flag){
+						var nameFlag = true;
+						var name = "";
+						$('input[name="orders"]:checked').each(function(){
+							var id = $(this).val();
+							if(name==""){
+								name = $("#name"+id).text();
+							}else{
+								nameFlag=nameFlag && (name ==$("#name"+id).text());
+							}
+						});
+						if(nameFlag){
+							$("#form").attr("action", "<%=path%>/<%=path%>/mergeOrder.action?"+new Date()).submit();
+						}else{
+							alert("收货人必须相同才可以合单");
+						}
+					}
+				}
+		});
+		
+		$(".del").click(function(){
+			if($('input[name="orders"]:checked').length==0){
+			alert("请选择至少一项");
+			return false;
+			}else{
+				var flag = confirm("确定要删除吗？");
+				if(flag){
+				$("#form").attr("action", "<%=path%>/deleteRLOrders.action?"+new Date()).submit();
+				}
+			}
+		});
 		
 		
          });
@@ -85,7 +150,7 @@
 
 		<style type="text/css">
 <!--
-.true {
+.split0 {
 	font-family: "楷体";
 	font-size: 12px;
 	padding:2px 2px 2px 2px;
@@ -95,6 +160,44 @@
 .false {
 	font-family: "楷体";
 	background-color: #ffff33;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+
+.split1 {
+	font-family: "楷体";
+	background-color: #0092c7;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+
+.split2 {
+	font-family: "楷体";
+	background-color: #f3e59a;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+.split3 {
+	font-family: "楷体";
+	background-color: #9fe0f6;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+
+.split4 {
+	font-family: "楷体";
+	background-color: #f3b59b;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+.split5 {
+	font-family: "楷体";
+	background-color: #f29c9c;
 	font-size: 12px;
 	padding:2px 2px 2px 2px;
 	text-align:center;
@@ -122,90 +225,104 @@
 			<table width="1000" border="1" align="center"
 			cellpadding="0" cellspacing="0">
 			<tr class="true">
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7"></span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">IND</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
+					class="STYLE7">RLO</span>
+				</td>
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">ORI</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">VENDOR</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">SKU</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">QUA</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">NAME</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">ADD1</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">CITY</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">POST</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">COUN</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">DATE</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">AMOU</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">GUO</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">MARK</span>
 				</td>
 
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">ACCO</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">CURR</span>
 				</td>
-				<td  class="true" valign="middle"><span
+				<td  class="split0" valign="middle"><span
 					class="STYLE7">LOGI</span>
 				</td>
 			</tr>
 			<c:forEach items="${orderMap}" var="entry" varStatus="all">
 				<c:forEach items="${entry.value}" var="order" varStatus="sum">
-					<tr class="${entry.key }">
-						<td   class="true"><input type="checkbox" name="orders" class="${order.vendor }" value="${order.id}"></td>
-						<td   class="true">${sum.index+1}</td>
-						<td   class="true">${order.rlordernumber}</td>
-						<td   class="true"><span class="selVendor">${order.vendor}</span></td>
-						<td   class="true">${order.skuno}</td>
-						<td   class="true">${order.quantity}</td>
-						<td   class="true">${order.buyername}</td>
-						<td   class="true">${order.shipaddress1}</td>
-						<td   class="true">${order.shipcity}</td>
-						<td  id="post${order.id}" class="true">${order.postalcode}</td>
-						<td   class="true">${order.shipcountry}</td>
-						<td   class="true">${order.date}</td>
-						<td   class="true">${order.amount}</td>
-						<td   class="true">${order.guojia}</td>
-						<td   class="true">${order.marketplace}</td>
-						<td   class="true">${order.account}</td>
-						<td   class="true">${order.currency}</td>
-						<td   class="true">${order.logistics.name}</td>
+				<tr>
+					<td rowspan="${fn:length(order.rlorderitems)}"  class="split${order.splitstatus}"><input type="checkbox" name="orders" class="${order.vendor}" value="${order.id}"></td>
+					<td rowspan="${fn:length(order.rlorderitems)}"  class="split${order.splitstatus}">${sum.index+1}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}"  class="split${order.splitstatus}">${order.rlordernumber}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}"  class="split${order.splitstatus}">${order.ordernumber}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}"  class="split${order.splitstatus}"><span class="selVendor">${order.rlorderitems[0].sku.vendor}</span></td>
+					<td class="split${order.splitstatus}">${order.rlorderitems[0].sku.skuno}</td>
+					<td class="split${order.splitstatus}">${order.rlorderitems[0].quantity}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}" id="name${order.id}">${order.buyername}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.shipaddress1}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.shipcity}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" id="post${order.id}" class="split${order.splitstatus}">${order.postalcode}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.shipcountry}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.date}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.amount}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.guojia}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.marketplace}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.account}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.currency}</td>
+					<td rowspan="${fn:length(order.rlorderitems)}" class="split${order.splitstatus}">${order.logistics.name}</td>
+				</tr>
+					<c:forEach items="${order.rlorderitems}" var="item"  begin="1" end="${fn:length(order.rlorderitems)}" varStatus="itsum">
+					<tr>
+						<td   class="split${order.splitstatus}">${item.sku.skuno}</td>
+						<td   class="split${order.splitstatus}">${item.quantity}</td>
 					</tr>
+					</c:forEach>
 				</c:forEach>
 			</c:forEach>
 			<tr>
 					<td width="20px" align="left" valign="middle"><input
 						type="checkbox" id="all"/></td>
-				<td ><span>全选</span></td>
+				<td ><span >全选</span></td>
+				<td ><span class="splitOrder">拆单</span></td>
+				<td ><span class="mergeOrder">合单</span></td>
+				<td ><span class="copyOrder" >复制</span></td>
+				<td><span class="del">删除</span></td>
 					</tr>
 			</table>
 	</form>

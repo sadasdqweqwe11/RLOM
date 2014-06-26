@@ -150,9 +150,5 @@ public class Logistics implements Serializable{
 		this.phonenumber2 = phonenumber2;
 		this.remarks = remarks;
 	}
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
 	
 }

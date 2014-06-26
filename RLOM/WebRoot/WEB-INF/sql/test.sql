@@ -1,12 +1,16 @@
 update logistics_trackingno set isused=0  where trackingno="1";
 
-select * from logistics_rlorder;
+select * from logistics_rlorder_item where skuid="CBJZ11-AM027";11287
+select * from logistics_rlorder where id=11287;
 select * from logistics_rlorder_item where id=11048;
+
 select * from logistics_orderFile;
-select * from logistics_trackingno;
+select * from logistics_trackingno;1406241602
 select * from logistics_logistics where id=0;
 
-select * from logistics_rlorder where date>="20140512" and date <="20140516" and logisticsid = 3;
+select * from logistics_rlorder where id>=11400;
+
+select * from logistics_rlorder_item where skuid not in(select skuno from logistics_sku);
 
 update logistics_sku set area=1  where skuno="PW305";
 

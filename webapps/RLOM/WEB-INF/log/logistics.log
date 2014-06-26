@@ -1,0 +1,248 @@
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:411)
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e: display name [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]; startup date [Wed Jun 25 14:55:56 CST 2014]; root of context hierarchy
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from URL [file:WebRoot/WEB-INF/applicationContext.xml]
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/logistics-spring.xml]
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/common-spring.xml]
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/action/common-action-spring.xml]
+[INFO ]     2014-06-25     14:55:56       method:   org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:426)
+Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]: org.springframework.beans.factory.support.DefaultListableBeanFactory@37fd6bea
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [log4j.properties]
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [jdbc.properties]
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [redis.properties]
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [service.properties]
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:414)
+Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@37fd6bea: defining beans [dataSource,sessionFactory,hibernateTemplate,transactionManager,jedisPoolConfig,shardedJedisPool,loginAction,indexAction,mainAction,upLoadAction,uploadAjax,checkExcelAction,listUploadFilesAction,orderFileAction,checkFileAjaxAction,getChartsAjax,orderTableAjaxAction,downloadAction,logisticsAction,generateTrackingnoAjax,getTreeAjax,userDao,orderFileDao,trackingNoDao,rlOrderDao,logisticsDao,skuDao,userService,orderFileService,trackingNoService,rlOrderService,loginCookieService,logisticsService,excelService,txtService,searchService,propertyConfigurer,serviceConfigBean]; root of factory hierarchy
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.Version.<clinit>(Version.java:15)
+Hibernate Annotations 3.2.1.GA
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OutputFile
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OutputFile on table logistics_file
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.User
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.User on table logistics_user
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrder
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrder on table logistics_rlorder
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OrderFile
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OrderFile on table logistics_orderFile
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Sku
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Sku on table logistics_sku
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.TrackingNo
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.TrackingNo on table logistics_trackingno
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrderItem
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrderItem on table logistics_rlorder_item
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Logistics
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Logistics on table logistics_logistics
+[INFO ]     2014-06-25     14:55:57       method:   org.hibernate.cfg.annotations.CollectionBinder.bindOneToManySecondPass(CollectionBinder.java:618)
+Mapping collection: com.raylinetech.ssh2.logistics.common.entity.RLOrder.rlorderitems -> logistics_rlorder_item
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.orm.hibernate3.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:730)
+Building new Hibernate SessionFactory
+[INFO ]     2014-06-25     14:55:57       method:   org.springframework.orm.hibernate3.HibernateTransactionManager.afterPropertiesSet(HibernateTransactionManager.java:421)
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@1ca37c6a] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:411)
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e: display name [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]; startup date [Wed Jun 25 14:58:31 CST 2014]; root of context hierarchy
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from URL [file:WebRoot/WEB-INF/applicationContext.xml]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/logistics-spring.xml]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/common-spring.xml]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/action/common-action-spring.xml]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:426)
+Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]: org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [log4j.properties]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [jdbc.properties]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [redis.properties]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [service.properties]
+[INFO ]     2014-06-25     14:58:31       method:   org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:414)
+Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f: defining beans [dataSource,sessionFactory,hibernateTemplate,transactionManager,jedisPoolConfig,shardedJedisPool,loginAction,indexAction,mainAction,upLoadAction,uploadAjax,checkExcelAction,listUploadFilesAction,orderFileAction,checkFileAjaxAction,getChartsAjax,orderTableAjaxAction,downloadAction,logisticsAction,generateTrackingnoAjax,getTreeAjax,userDao,orderFileDao,trackingNoDao,rlOrderDao,logisticsDao,skuDao,userService,orderFileService,trackingNoService,rlOrderService,loginCookieService,logisticsService,excelService,txtService,searchService,propertyConfigurer,serviceConfigBean]; root of factory hierarchy
+[INFO ]     2014-06-25     14:58:31       method:   org.hibernate.cfg.annotations.Version.<clinit>(Version.java:15)
+Hibernate Annotations 3.2.1.GA
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OutputFile
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OutputFile on table logistics_file
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.User
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.User on table logistics_user
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrder
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrder on table logistics_rlorder
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OrderFile
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OrderFile on table logistics_orderFile
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Sku
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Sku on table logistics_sku
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.TrackingNo
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.TrackingNo on table logistics_trackingno
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrderItem
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrderItem on table logistics_rlorder_item
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Logistics
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Logistics on table logistics_logistics
+[INFO ]     2014-06-25     14:58:32       method:   org.hibernate.cfg.annotations.CollectionBinder.bindOneToManySecondPass(CollectionBinder.java:618)
+Mapping collection: com.raylinetech.ssh2.logistics.common.entity.RLOrder.rlorderitems -> logistics_rlorder_item
+[INFO ]     2014-06-25     14:58:32       method:   org.springframework.orm.hibernate3.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:730)
+Building new Hibernate SessionFactory
+[INFO ]     2014-06-25     14:58:32       method:   org.springframework.orm.hibernate3.HibernateTransactionManager.afterPropertiesSet(HibernateTransactionManager.java:421)
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@fcdfd19] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:411)
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e: display name [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]; startup date [Wed Jun 25 15:01:18 CST 2014]; root of context hierarchy
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from URL [file:WebRoot/WEB-INF/applicationContext.xml]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/logistics-spring.xml]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/common-spring.xml]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/action/common-action-spring.xml]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:426)
+Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]: org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [log4j.properties]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [jdbc.properties]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [redis.properties]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [service.properties]
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:414)
+Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f: defining beans [dataSource,sessionFactory,hibernateTemplate,transactionManager,jedisPoolConfig,shardedJedisPool,loginAction,indexAction,mainAction,upLoadAction,uploadAjax,checkExcelAction,listUploadFilesAction,orderFileAction,checkFileAjaxAction,getChartsAjax,orderTableAjaxAction,downloadAction,logisticsAction,generateTrackingnoAjax,getTreeAjax,userDao,orderFileDao,trackingNoDao,rlOrderDao,logisticsDao,skuDao,userService,orderFileService,trackingNoService,rlOrderService,loginCookieService,logisticsService,excelService,txtService,searchService,propertyConfigurer,serviceConfigBean]; root of factory hierarchy
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.Version.<clinit>(Version.java:15)
+Hibernate Annotations 3.2.1.GA
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OutputFile
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OutputFile on table logistics_file
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.User
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.User on table logistics_user
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrder
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrder on table logistics_rlorder
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OrderFile
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OrderFile on table logistics_orderFile
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Sku
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Sku on table logistics_sku
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.TrackingNo
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.TrackingNo on table logistics_trackingno
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrderItem
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrderItem on table logistics_rlorder_item
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Logistics
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Logistics on table logistics_logistics
+[INFO ]     2014-06-25     15:01:18       method:   org.hibernate.cfg.annotations.CollectionBinder.bindOneToManySecondPass(CollectionBinder.java:618)
+Mapping collection: com.raylinetech.ssh2.logistics.common.entity.RLOrder.rlorderitems -> logistics_rlorder_item
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.orm.hibernate3.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:730)
+Building new Hibernate SessionFactory
+[INFO ]     2014-06-25     15:01:18       method:   org.springframework.orm.hibernate3.HibernateTransactionManager.afterPropertiesSet(HibernateTransactionManager.java:421)
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@313d21d6] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:411)
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e: display name [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]; startup date [Wed Jun 25 15:03:19 CST 2014]; root of context hierarchy
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from URL [file:WebRoot/WEB-INF/applicationContext.xml]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/logistics-spring.xml]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/common-spring.xml]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:323)
+Loading XML bean definitions from class path resource [com/raylinetech/ssh2/logistics/common/action/common-action-spring.xml]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:426)
+Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@528acf6e]: org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [log4j.properties]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [jdbc.properties]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [redis.properties]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.core.io.support.PropertiesLoaderSupport.loadProperties(PropertiesLoaderSupport.java:178)
+Loading properties file from class path resource [service.properties]
+[INFO ]     2014-06-25     15:03:19       method:   org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:414)
+Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7c2e1f1f: defining beans [dataSource,sessionFactory,hibernateTemplate,transactionManager,jedisPoolConfig,shardedJedisPool,loginAction,indexAction,mainAction,upLoadAction,uploadAjax,checkExcelAction,listUploadFilesAction,orderFileAction,checkFileAjaxAction,getChartsAjax,orderTableAjaxAction,downloadAction,logisticsAction,generateTrackingnoAjax,getTreeAjax,userDao,orderFileDao,trackingNoDao,rlOrderDao,logisticsDao,skuDao,userService,orderFileService,trackingNoService,rlOrderService,loginCookieService,logisticsService,excelService,txtService,searchService,propertyConfigurer,serviceConfigBean]; root of factory hierarchy
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.Version.<clinit>(Version.java:15)
+Hibernate Annotations 3.2.1.GA
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OutputFile
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OutputFile on table logistics_file
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.User
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.User on table logistics_user
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrder
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrder on table logistics_rlorder
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.OrderFile
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.OrderFile on table logistics_orderFile
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Sku
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Sku on table logistics_sku
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.TrackingNo
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.TrackingNo on table logistics_trackingno
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.RLOrderItem
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.RLOrderItem on table logistics_rlorder_item
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:388)
+Binding entity from annotated class: com.raylinetech.ssh2.logistics.common.entity.Logistics
+[INFO ]     2014-06-25     15:03:19       method:   org.hibernate.cfg.annotations.EntityBinder.bindTable(EntityBinder.java:378)
+Bind entity com.raylinetech.ssh2.logistics.common.entity.Logistics on table logistics_logistics
+[INFO ]     2014-06-25     15:03:20       method:   org.hibernate.cfg.annotations.CollectionBinder.bindOneToManySecondPass(CollectionBinder.java:618)
+Mapping collection: com.raylinetech.ssh2.logistics.common.entity.RLOrder.rlorderitems -> logistics_rlorder_item
+[INFO ]     2014-06-25     15:03:20       method:   org.springframework.orm.hibernate3.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:730)
+Building new Hibernate SessionFactory
+[INFO ]     2014-06-25     15:03:20       method:   org.springframework.orm.hibernate3.HibernateTransactionManager.afterPropertiesSet(HibernateTransactionManager.java:421)
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@313d21d6] of Hibernate SessionFactory for HibernateTransactionManager

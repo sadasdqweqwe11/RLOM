@@ -1,54 +1,194 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-< !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>jQuery 二级联动</title>
 <script src="../js/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-$("#province").change(function(){
-$("#province option").each(function(i,o){
-if($(this).attr("selected"))
-{
-$(".city").hide();
-$(".city").eq(i).show();
-}
-});
-});
-$("#province").change();
-});
-</script>
-</head>
-<body>
-<select id="province">
-<option>----请选择省份----</option>
-<option>北京</option>
-<option>上海</option>
-<option>江苏</option>
-</select>
-<select class="city">
-<option>----请选择城市----</option>
-</select>
-<select class="city">
-<option>东城</option>
-<option>西城</option>
-<option>崇文</option>
-<option>宣武</option>
-<option>朝阳</option>
-</select>
-<select class="city">
-<option>黄浦</option>
-<option>卢湾</option>
-<option>徐汇</option>
-<option>长宁</option>
-<option>静安</option>
-</select>
-<select class="city">
-<option>南京</option>
-<option>镇江</option>
-<option>苏州</option>
-<option>南通</option>
-<option>扬州</option>
-</select>
+	<script type="text/javascript" src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.jacklmoore.com/colorbox/example1/colorbox.css">
+
+<style>
+	body{
+		font-size: 14px;
+		font-family: Microsoft YaHei, 微软雅黑, Verdana, sans-serif, 宋体;
+		line-height: 18px;
+	}
+	.section{
+		position:relative;
+		width:50%;
+		float:left;
+	}
+	.title{
+		font-size:16px;
+	}
+	.clear {
+		clear: both;
+		font-size: 1px;
+		line-height: 0;
+	}
+</style>
+
+
+
+<p>
+	jQuery 弹出窗口 
+	<a href="http://www.oschina.net/p/colorbox" target="_blank">
+		ColorBox
+	</a>
+</p>
+<h4>
+	效果：
+</h4>
+<h4>
+	ColorBox 演示
+</h4>
+<div class="section">
+	<div class="title">
+		弹性过渡
+	</div>
+	<p>
+		<a class="group1" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group1" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group1" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+</div>
+<div class="section">
+	<div class="title">
+		渐入过渡
+	</div>
+	<p>
+		<a class="group2" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group2" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group2" href="http://static.oschina.net/uploads/space/2012/0607/142131_2PqS_28.jpg" title="图片">
+			图片
+		</a>
+	</p>
+</div>
+<div class="section">
+	<div class="title">
+		无过渡，固定宽高（75%屏幕高宽）
+	</div>
+	<p>
+		<a class="group3" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group3" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group3" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+</div>
+<div class="section">
+	<div class="title">
+		滑动显示
+	</div>
+	<p>
+		<a class="group4" href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group4" href="http://static.oschina.net/uploads/space/2012/0709/105428_4aoW_28.jpg" title="图片">
+			图片
+		</a>
+	</p>
+	<p>
+		<a class="group4" href="http://static.oschina.net/uploads/space/2012/0607/142131_2PqS_28.jpg" title="图片">
+			图片
+		</a>
+	</p>
+</div>
+<div class="section">
+	<div class="title">
+		其他类型
+	</div>
+	<p>
+		<a class='ajax' href="ajaxColorBox" title="Homer Defined">
+			外部HTML(Ajax)
+		</a>
+	</p>
+	<p>
+		<a class='youtube' href="http://player.youku.com/player.php/sid/XMzI2NTUzMjcy/v.swf" title="Apologize现场版">
+			嵌入视频
+		</a>
+	</p>
+	<p>
+		<a class='iframe' href="http://osctools.net">
+			外部网页(Iframe)
+		</a>
+	</p>
+	<p>
+		<a class='inline' href="#inline_content">
+			内嵌HTML
+		</a>
+	</p>
+</div>
+
+<div class="section">
+	<div class="title">
+		使用回调函数示例
+	</div>
+	<p>
+		<a class='callbacks' href="http://sandbox.runjs.cn/uploads/rs/74/nlhieis0/girl.jpg" title="图片">
+			带有alert示例
+		</a>
+		. 回调函数使得用户能够扩展插件的一部分功能.
+	</p>
+	<div style="display:none">
+		<div id="inline_content" style="padding:10px; background:#fff;">
+    	<p>
+				<strong>
+					This content comes from a hidden element on this page.
+				</strong>
+				</p>
+				<p>
+					The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.
+				</p>
+				<p>
+					<a id="click" href="#" style="padding:5px; background:#ccc;">
+						Click me, it will be preserved!
+					</a>
+				</p>
+				
+				<p>
+					<strong>
+						If you try to open a new ColorBox while it is already open, it will update itself with the new content.
+					</strong>
+				</p>
+				<p>
+					Updating Content Example:
+					<br>
+					<a class="ajax cboxElement" href="http://static.oschina.net/uploads/space/2012/0607/142131_2PqS_28.jpg">
+						Click here to load new content
+					</a>
+				</p>
+    	</div>
+	</div>
+</div>
+<div class="clear">
+</div>
 </body>
 </html>

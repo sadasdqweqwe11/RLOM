@@ -47,7 +47,7 @@ public class RLOrderDaoImpl implements RLOrderDao{
 	}
 	@Override
 	public List<RLOrder> findByFile(long id) {
-		String hql = "from RLOrder order where order.fileid=:fileid";
+		String hql = "from RLOrder order where order.fileid=:fileid  order by order.splitstatus desc";
 		try {
 			List list =  this.hibernateTemplate.findByNamedParam(hql, "fileid", id);
 			if(list.size()== 0 ){
@@ -67,7 +67,7 @@ public class RLOrderDaoImpl implements RLOrderDao{
 	@Override
 	public List<RLOrder> findByDateLogistics(String beginDate, String endDate,
 			int logisticsid) {
-		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate and order.logistics.id=:logisticsid order by order.logistics.id";
+		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate and order.logistics.id=:logisticsid  order by order.logistics.id";
 		String[] name = {"beginDate","endDate","logisticsid"};
 		Object[] password = {beginDate, endDate, logisticsid};
 		List list =  this.hibernateTemplate.findByNamedParam(hql, name, password);
@@ -90,7 +90,7 @@ public class RLOrderDaoImpl implements RLOrderDao{
 	@Override
 	public List<RLOrder> findByDateVendor(String beginDate, String endDate,
 			String vendor) {
-		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate and order.vendor=:vendor order by order.logistics.id";
+		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate and order.vendor=:vendor  order by order.logistics.id";
 		String[] param = {"beginDate","endDate","vendor"};
 		Object[] value = {beginDate, endDate, vendor};
 		List list =  this.hibernateTemplate.findByNamedParam(hql, param, value);
@@ -125,7 +125,7 @@ public class RLOrderDaoImpl implements RLOrderDao{
 	}
 	@Override
 	public List<RLOrder> findByDate(String startDate, String endDate) {
-		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate order by order.logistics.id";
+		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate order by order.splitstatus desc, order.logistics.id asc";
 		String[] param = {"beginDate","endDate"};
 		Object[] value = {startDate, endDate};
 		List list =  this.hibernateTemplate.findByNamedParam(hql, param, value);

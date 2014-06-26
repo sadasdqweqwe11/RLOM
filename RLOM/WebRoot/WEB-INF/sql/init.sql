@@ -64,7 +64,7 @@ Create Table If Not Exists logistics.logistics_rlorder(
 	skuno varchar(30),
 	itemname varchar(50),
 	pinming varchar(50),
-	quantity int(3),
+	quantity varchar(10),
 	description varchar(255),
 	buyername varchar(30),
 	shipaddress1 varchar(100),
@@ -82,8 +82,16 @@ Create Table If Not Exists logistics.logistics_rlorder(
 	account varchar(30),
 	currency varchar(10),
 	fileid int(20),
-	logisticsid int(10)
+	logisticsid int(10),
+	splitstatus int(4),
+	uid int(10)
 );
+
+
+#alter table logistics_rlorder change quantity quantity varchar(10) default "0";
+#alter table logistics_rlorder Add column splitstatus int(4) default 0 AFTER logisticsid;
+#alter table logistics_rlorder Add column uid int(10) default 0 AFTER splitstatus;
+ 
 
 
 #order_item
@@ -191,7 +199,6 @@ Create Table If Not Exists logistics.logistics_sku(
 	other int(3) DEFAULT 0,
 	UNIQUE (skuno)
 );
-
 #alter table logistics_sku drop column id;
 #alter table logistics_sku change skuno skuno varchar(40) primary key;
 #alter table logistics_sku Add column name varchar(50) default "" AFTER price; 

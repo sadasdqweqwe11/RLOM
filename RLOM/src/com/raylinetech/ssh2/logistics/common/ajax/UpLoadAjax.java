@@ -30,6 +30,13 @@ public class UpLoadAjax extends ActionSupport{
 	
 	private static final Logger logger = LoggerFactory
 			.getLogger(UpLoadAjax.class);
+	
+	private File files;
+	
+	private String filesFileName;
+	
+	private String filesFileContenType;
+	
 	private File uploadFile;
 	
 	private String uploadFileFileName;
@@ -46,6 +53,30 @@ public class UpLoadAjax extends ActionSupport{
 	
 	private OrderFileService orderFileService;
 	
+	public File getFiles() {
+		return files;
+	}
+
+	public void setFiles(File files) {
+		this.files = files;
+	}
+
+	public String getFilesFileName() {
+		return filesFileName;
+	}
+
+	public void setFilesFileName(String filesFileName) {
+		this.filesFileName = filesFileName;
+	}
+
+	public String getFilesFileContenType() {
+		return filesFileContenType;
+	}
+
+	public void setFilesFileContenType(String filesFileContenType) {
+		this.filesFileContenType = filesFileContenType;
+	}
+
 	public File getUploadTrackingno() {
 		return uploadTrackingno;
 	}
@@ -123,6 +154,10 @@ public class UpLoadAjax extends ActionSupport{
 		if(user == null){
 			return "login";
 		}
+		
+		System.out.println(this.filesFileName + "files file name is isisisisi");
+		
+		
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 		File f = this.getUploadFile();
@@ -170,7 +205,7 @@ public class UpLoadAjax extends ActionSupport{
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if(user == null){
-			return "login";
+			return null;
 		}
 		File f = this.getUploadTrackingno();
 		long size = 0;
@@ -184,39 +219,32 @@ public class UpLoadAjax extends ActionSupport{
 				String extName = this.uploadTrackingnoFileName.substring(0,this.uploadTrackingnoFileName.lastIndexOf("."));
 				saveName = user.getUid()+""+DateUtil.yyyyMMddHHmmss()+extName;
 				//save upload file
-
-				System.out.println("gos here1 ");
 				File destfile = new File(savePath,saveName);
-				System.out.println("gos here1 ");
 				OutputStream os = new FileOutputStream(destfile);
-				System.out.println("gos here1 ");
 				byte[] buffer = new byte[400];
 				int length = 0 ;
 				while((length = is.read(buffer)) > 0){
 				     os.write(buffer, 0, length);
 				}		 
-				System.out.println("gos here2 ");
 				is.close();
 				os.close();
 				OrderFile orderFile = new OrderFile();
 
-				System.out.println("gos here3 ");
 				orderFile.setUid(user.getUid());
 				orderFile.setOriginalfilename(this.uploadTrackingnoFileName);
 				orderFile.setFilesize(size);
 				orderFile.setFiletype(extName);
 				orderFile.setPostdatetime(new Date());
 				orderFile.setFilename(saveName);
-				System.out.println("gos here4 ");
 				this.orderFileService.save(orderFile);
 				request.setAttribute("orderFile", orderFile);
-			return SUCCESS;
+			return null;
 			} catch (FileNotFoundException e) {
 		 		StringWriter errors = new StringWriter();
 		 		e.printStackTrace(new PrintWriter(errors));
 		 		logger.error(errors.toString());
 				request.setAttribute("error", PageConfig.NAME_UPLOAD_ERROR);
-				return "fail";
+				return null;
 			}
 	}
 }

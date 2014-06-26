@@ -871,22 +871,21 @@ public class PdfServiceImpl implements PdfService {
 			for (int i = 0; i < 4; i++) {
 				RLOrderItem productDetail = null;
 				if (i < products.size()) {
-					if (i == 0) {
-						productDetail = products.get(i);
-						String sku = productDetail.getSku().getSkuno();
-						if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
-							sku = sku.substring(6);
-						}
-						String pinming = sku.trim() + " " + productDetail.getSku().getPinming()+"/"+
-								productDetail.getSku().getName() + " * " + productDetail.getQuantity();
+					productDetail = products.get(i);
+					String sku = productDetail.getSku().getSkuno();
+					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
+						sku = sku.substring(6);
+					}
+					String pinming = sku.trim() + " " + productDetail.getSku().getPinming()+"/"+
+							productDetail.getSku().getName() + " * " + productDetail.getQuantity();
 //						if (pinming.length() > 36) {
 //							pinming = pinming.substring(0, 36) + " ...";
 //						}
-						cell = new PdfPCell(new Phrase(pinming, chi8));
-						cell.setBorder(Rectangle.RIGHT);
-						cell.setColspan(3);
-						table.addCell(cell);
-
+					cell = new PdfPCell(new Phrase(pinming, chi8));
+					cell.setBorder(Rectangle.RIGHT);
+					cell.setColspan(3);
+					table.addCell(cell);
+					if (i == 0) {
 						cell = new PdfPCell(new Phrase(df.format(totalWeight), chi8));
 						cell.setBorder(Rectangle.RIGHT);
 						cell.setColspan(2);
@@ -895,6 +894,15 @@ public class PdfServiceImpl implements PdfService {
 								.format(Double.parseDouble(StringUtil
 										.getDoubleFromAmount(rlOrder.getAmount())) * 0.3);
 						cell = new PdfPCell(new Phrase(price, chi8));
+						cell.setBorder(Rectangle.NO_BORDER);
+						cell.setColspan(1);
+						table.addCell(cell);
+					}else{
+						cell = new PdfPCell(new Phrase("", chi8));
+						cell.setBorder(Rectangle.RIGHT);
+						cell.setColspan(2);
+						table.addCell(cell);
+						cell = new PdfPCell(new Phrase("", chi8));
 						cell.setBorder(Rectangle.NO_BORDER);
 						cell.setColspan(1);
 						table.addCell(cell);

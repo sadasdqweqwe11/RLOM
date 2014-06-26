@@ -26,6 +26,9 @@
 	type="text/css" charset="utf-8">
 <script src="<%=path%>/js/date/kalendae.standalone.min.js"
 	type="text/javascript" charset="utf-8"></script>
+<script src="<%=path%>/js/jquery/jQuery-File-Upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="<%=path%>/js/jquery/jQuery-File-Upload/js/jquery.iframe-transport.js" type="text/javascript"></script>
+	<script src="<%=path%>/js/jquery/jQuery-File-Upload/js/jquery.fileupload.js" type="text/javascript"></script>
 <style type="text/css" media="screen">
 .kalendae span.closed {
 	background: red;
@@ -169,7 +172,20 @@ chart.write('chartdiv12');
                 $(".downloadVendor").click(function(){
 					$("#form3").attr("action", "<%=path%>/downloadVendor?"+new Date()).submit();
                 });
+                
+                
+                $('#fileupload').fileupload({
+					url:"ajax/uploadAjax.action",
+    				done: function (e, data) {
+        				$.each(data.result, function (index, file) {
+            			$('<p/>').text(file.name + ' uploaded').appendTo($("body"));
+        			});
+    				}
+				});
             });
+            
+            
+            
 </script>
 
 
@@ -206,6 +222,20 @@ chart.write('chartdiv12');
 			</tr>
 		</table>
 	</form>
+	
+<%-- 	<form id="form3" name="form3" method="post"
+		enctype="multipart/form-data" action="<%=path%>/uploadSkuinfo.action">
+		<table>
+			<tr>
+				<td><span class="reply-tr">上传Sku info</span><br />
+					<br /> 
+					<input type="file" name="skuinfo">
+  					<input type="submit"  value="预览" />
+				</td>
+			</tr>
+		</table>
+	</form> --%>
+	
 	<div id="chartdiv12" style="width: 640px; height: 400px;"></div>
 <form id="form3" name="form3" method="post"
 		enctype="multipart/form-data" action="<%=path%>/.action">
@@ -227,6 +257,6 @@ chart.write('chartdiv12');
 			</c:forEach>
 				</p>
 </div>
-
+<%-- <input id="fileupload" type="file" name="files" data-url="<%=path%>/ajax/uploadOrderAjax" multiple> --%>
 </body>
 </html>

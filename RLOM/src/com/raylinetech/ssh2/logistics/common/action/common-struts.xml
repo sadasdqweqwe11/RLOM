@@ -18,6 +18,18 @@
 			<result name="input">/WEB-INF/jsps/mistaketip.jsp</result>
 			<result name="success" type="redirect">${path}</result>
 		</action>
+		<action name="mergeOrder" class="logisticsAction" method="mergeOrder">
+			<result name="input">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="success" type="redirect">${path}</result>
+		</action>
+		<action name="splitOrder" class="logisticsAction" method="splitOrder">
+			<result name="input">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="success" type="redirect">${path}</result>
+		</action>
+		<action name="copyOrder" class="logisticsAction" method="copyOrder">
+			<result name="input">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="success" type="redirect">${path}</result>
+		</action>
 
 		<action name="index" class="indexAction">
 			<result name="login">/WEB-INF/jsps/login.jsp</result>
@@ -130,7 +142,7 @@
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>   
         <action name="deleteRLOrders"  class="downloadAction" method="deleteRLOrders">  
-			<result name="success" type="redirect">listUploadFiles</result>
+			<result name="success" type="redirect">${path}</result>
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>  
 
@@ -173,6 +185,17 @@
 			<result name="login">/WEB-INF/jsps/login.jsp</result>
 			<result name="success">/WEB-INF/jsps/load/loadCheckExcel.jsp</result>
 			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		
+		<action name="uploadOrderAjax" class="uploadAjax" method="uploadOrder">
+			<interceptor-ref name="defaultStack" /> 
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">20048576</param>
+				<param name="allowedExtensions">
+					xls,txt
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
 		</action>
 		
        </package>  

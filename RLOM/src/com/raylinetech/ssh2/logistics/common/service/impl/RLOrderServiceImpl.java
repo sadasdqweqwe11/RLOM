@@ -104,6 +104,24 @@ public class RLOrderServiceImpl implements RLOrderService{
 	public List<RLOrder> getRLOrderListFromDate(String beginDate, String endDate) {
 		return this.rlOrderDao.findByDate(beginDate,endDate);
 	}
+
+	@Override
+	public List<RLOrder> splitOrders(List<String> rlOrderIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RLOrder> mergeOrders(List<String> rlOrderIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RLOrder> copyOrders(List<String> rlOrderIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

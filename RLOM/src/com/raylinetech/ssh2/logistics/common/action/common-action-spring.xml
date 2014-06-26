@@ -19,7 +19,7 @@
 		<property name="orderFileService" ref="orderFileService"></property>
 	</bean>
 	
-	<bean id="upLoadAjax" class="com.raylinetech.ssh2.logistics.common.ajax.UpLoadAjax" scope="prototype">
+	<bean id="uploadAjax" class="com.raylinetech.ssh2.logistics.common.ajax.UpLoadAjax" scope="prototype">
 		<property name="userService" ref="userService"></property>
 		<property name="orderFileService" ref="orderFileService"></property>
 	</bean>

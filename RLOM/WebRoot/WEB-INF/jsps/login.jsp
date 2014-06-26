@@ -22,7 +22,7 @@
 	<![endif]-->
 <script>
 	$(function(){
-		$(".click").click(function(){
+		$(".click").focus(function(){
 		var value = $(this).val();
 			if($.trim(value)=="请输入邮箱"){
 				$(this).val("");
@@ -31,6 +31,8 @@
 				$(this).val("");
 			}
 		});
+		
+		$("#email").focus();
 	});
 
 </script>
@@ -45,7 +47,7 @@
 				<div class="username-text">邮箱:</div>
 				<div class="password-text">密码:</div>
 				<div class="username-field">
-					<input class="click" type="text" name="email" value="请输入邮箱" />
+					<input id="email" class="click" type="text" name="email" value="请输入邮箱" />
 				</div>
 				<div class="password-field">
 					<input class="click" type="password" name="password" value="*****" />

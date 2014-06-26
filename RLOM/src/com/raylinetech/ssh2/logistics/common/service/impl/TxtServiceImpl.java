@@ -65,12 +65,12 @@ public class TxtServiceImpl implements TxtService{
 			val.add(true);
 			val.add(true);
 			//第9位 phone number
-			boolean mark9 = true;
-			if(null == datas.get(9)|| "".equals(datas.get(9).toString().trim())){
-				mark9 = false;
-			}
-			val.add(mark9);
-
+//			boolean mark9 = true;
+//			if(null == datas.get(9)|| "".equals(datas.get(9).toString().trim())){
+//				mark9 = false;
+//			}
+//			val.add(mark9);
+			val.add(true);
 			//第三位 SKUNO 查询得出是否此sku不存在，如果不存在则false
 			boolean mark10 = true;
 			if(null != datas.get(10)&& !"".equals(datas.get(10).toString().trim())){
@@ -78,7 +78,13 @@ public class TxtServiceImpl implements TxtService{
 				if(skuno.indexOf(ExcelService.BZ)>0){
 				skuno= skuno.substring(0, skuno.indexOf(ExcelService.BZ));
 				}
-				System.out.println(this.skuDao + "sku dao is null?");
+				/*暂时使用，因为之前的版本有些sku有和库中不一致，且没有下架TOBE UPDATE */
+				String temSkuno = PageConfig.getTempSku(skuno.toUpperCase());
+				if(temSkuno!=null){
+					skuno = temSkuno;
+					System.out.println(temSkuno + "skuskuskuksu ");
+				}
+				System.out.println(skuno);
 				Sku sku = this.skuDao.find(skuno);
 				if(null==sku){
 					mark10 = false;
@@ -229,15 +235,20 @@ public class TxtServiceImpl implements TxtService{
 			List<List<String>>  value = oneOrder.getValue();
 			RLOrder order = new RLOrder();
 			order.setOrdernumber(ordernumber);
-			//设置date为系统时间
 			order.setBuyerphonenumber(value.get(0).get(9).trim());
+
 			order.setSkuno(value.get(0).get(10).trim());
 			List<RLOrderItem> items = new ArrayList<RLOrderItem>();
 			for (List<String> list : value) {
 				RLOrderItem item = new RLOrderItem();
 				String skuno = list.get(10).trim();
-				if(skuno.indexOf("--")>0){
-					skuno= skuno.substring(0, skuno.indexOf(LogisticsService.BZ));
+				if(skuno.indexOf(ExcelService.BZ)>0){
+				skuno= skuno.substring(0, skuno.indexOf(ExcelService.BZ));
+				}
+				/*暂时使用，因为之前的版本有些sku有和库中不一致，且没有下架TOBE UPDATE */
+				String temSkuno = PageConfig.getTempSku(skuno.toUpperCase());
+				if(temSkuno!=null){
+					skuno = temSkuno;
 				}
 				item.setSku(new Sku(skuno));
 				item.setDescription(list.get(11).trim());
@@ -281,7 +292,9 @@ public class TxtServiceImpl implements TxtService{
 			order.setPinming("");
 			order.setDescription("");
 			order.setQuantity("");
+			order.setUid(orderFile.getUid());
 			orders.add(order);
+			
 		}
 		return orders;
 	}

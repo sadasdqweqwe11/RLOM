@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.raylinetech.ssh2.logistics.common.config.PageConfig;
 import com.raylinetech.ssh2.logistics.common.entity.Logistics;
 import com.raylinetech.ssh2.logistics.common.entity.OrderFile;
 import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
+import com.raylinetech.ssh2.logistics.common.entity.RLOrderItem;
 import com.raylinetech.ssh2.logistics.common.entity.TrackingNo;
 import com.raylinetech.ssh2.logistics.common.entity.User;
 import com.raylinetech.ssh2.logistics.common.exception.ExcelException;
@@ -182,13 +184,16 @@ public class CheckExcelAction extends ActionSupport {
 		List<List> checkList = null;
 		String fileType = "xls";
 		boolean flag = true;
-		if(orderFile.getFilename().endsWith("xls")){
+//		List<RLOrder> orders = new ArrayList<RLOrder>();
+		if(orderFile.getFilename().toLowerCase().endsWith("xls")){
 			stringList= this.excelService.excelToList(path+PageConfig.ORDERFILE_PATH, orderFile);
 			checkList = this.excelService.validateExcel(stringList);
+//			orders = this.excelService.excelToRLORder(path+PageConfig.ORDERFILE_PATH, orderFile);
 			fileType = "xls";
 		}else{
 			stringList= this.txtService.txtToList(path+PageConfig.ORDERFILE_PATH, orderFile);
 			checkList = this.txtService.validateTxt(stringList);
+//			orders = this.txtService.txtToRLORder(path+PageConfig.ORDERFILE_PATH, orderFile);
 			fileType = "txt";
 		}
 		if(checkList!= null){
@@ -201,6 +206,7 @@ public class CheckExcelAction extends ActionSupport {
 				}
 			}
 		}
+//		this.rlOrderService.saveOrUpdateRLOrderList(orders);
 		request.setAttribute("fileType",fileType);
 		request.setAttribute("stringList",stringList);
 		request.setAttribute("checkList",checkList);
@@ -285,12 +291,29 @@ public class CheckExcelAction extends ActionSupport {
 //		Map<Integer, List<RLOrder>> orderMap= this.logisticsService.getMapFromRLOrders(rlOrders);
 		List<RLOrder> result = this.logisticsService.allocationRLOrders(rlOrders);
 		this.rlOrderService.saveOrUpdateRLOrderList(result);
+		String STR_FORMAT = "0000"; 
+		DecimalFormat df = new DecimalFormat(STR_FORMAT);
 		for (RLOrder rlOrder : result) {
-			 String STR_FORMAT = "0000"; 
-			 DecimalFormat df = new DecimalFormat(STR_FORMAT);
 			 int id = (int)rlOrder.getId()%10000;
-			 String rlOrdernumber = DateUtil.yyMMdd()+df.format(id);
+			 String date = rlOrder.getDate();
+			 String rlOrdernumber = "";
+			 if(date.length()>0){
+				 rlOrdernumber = date.substring(2)+df.format(id);
+			 }else{
+				 rlOrdernumber = DateUtil.yyMMdd()+df.format(id);
+			 }
 			 rlOrder.setRlordernumber(rlOrdernumber);
+			 int quantity = 0;
+			 List<RLOrderItem> oneOrder = rlOrder.getRlorderitems();
+			 for (RLOrderItem rlOrderItem : oneOrder) {
+				quantity = Integer.parseInt(rlOrderItem.getQuantity()) + quantity;
+			}
+			 rlOrder.setQuantity(quantity+"");
+			 rlOrder.setVendor(oneOrder.get(0).getSku().getVendor());
+			 rlOrder.setItemname(oneOrder.get(0).getSku().getName());
+			 rlOrder.setPinming(oneOrder.get(0).getSku().getPinming());
+			 rlOrder.setDescription(oneOrder.get(0).getDescription());
+			 
 		}
 		this.rlOrderService.saveOrUpdateRLOrderList(result);
 		this.urlPath = "orderFile/"+orderFile.getId();

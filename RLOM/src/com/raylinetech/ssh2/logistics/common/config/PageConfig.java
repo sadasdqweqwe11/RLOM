@@ -7,7 +7,7 @@ public class PageConfig{
 	
 	private static Map<String, String> guojiaMap;
 	private static Map<String, String> currencyMap;
-	
+	private static Map<String, String> skuTempMap;
 	static {
 		guojiaMap = new HashMap<String, String>();
 		guojiaMap.put("UK", "英国");
@@ -22,6 +22,27 @@ public class PageConfig{
 		currencyMap.put("英国", "GBP");
 		currencyMap.put("法国", "EUR");
 		currencyMap.put("美国", "USD");
+		
+		skuTempMap = new HashMap<String, String>();
+		skuTempMap.put("BAG","CBJX11201-Y");
+		skuTempMap.put("BLACK BLACKBOARD","CBJZ11-HBT910hei");
+		skuTempMap.put("091BLACK","CBJZ11-HBT910hei");
+		skuTempMap.put("091HEI","CBJZ11-HBT910hei");
+		skuTempMap.put("CBJZ11-910HEI","CBJZ11-HBT910hei");
+		skuTempMap.put("01A","CTJZ21R01A");
+		skuTempMap.put("001A","CTJZ21R01A");
+		skuTempMap.put("02B","CTJZ21R01B");
+		skuTempMap.put("002B","CTJZ21R01B");
+		skuTempMap.put("PR321 POVOS","PR321");
+		skuTempMap.put("PW326","PR326");
+		skuTempMap.put("PS1086W","PS1086");
+		skuTempMap.put("CBJZ11-001LAN","CBJZ11-AM001lan");
+		skuTempMap.put("BLACKBOARD001","CBJZ11-HBT910hei");
+		skuTempMap.put("LY-TZTE-YE96","PS5301");
+		skuTempMap.put("091GREEN","CBJZ11-HBT910lv");
+		skuTempMap.put("QP-UY5I-3T5I","PR322");
+		skuTempMap.put("0I-YWCG-7QGQ","PR3017");
+		
 	}
 	public static String getGuojia(String country){
 		return guojiaMap.get(country);
@@ -29,7 +50,9 @@ public class PageConfig{
 	public static String getCurrency(String guojia){
 		return currencyMap.get(guojia);
 	}
-	
+	public static String getTempSku(String skuno){
+		return skuTempMap.get(skuno);
+	}
 	
 	public static final int PAGESIZE=30;
 	public static final int OTHER_TOPIC_DISPLAY_NUMBER=5;
@@ -47,6 +70,16 @@ public class PageConfig{
 	public static final String MESSAGE_TOOLONG="您一口气写的太多啦~！分两次发试试吧~";
 	public static final String ORDERFILE_PATH="/uploadfile/excel/";
 	public static final String TRACKINGNOFILE_PATH="/uploadfile/trackingno/";
+    /* 记录是否拆单，不需要拆单0，系统拆单拆单1，系统合单2，手动拆单3，手动合单4，copy订单5 default 0*/
+	public static final int SPLIT_SYS_SPLIT=1;
+	
+	public static final int SPLIT_SYS_MERGE=2;
+	
+	public static final int SPLIT_MT_SPLIT=3;
+
+	public static final int SPLIT_MT_MERGE=4;
+	
+	public static final int SPLIT_COPY=5;
 	
 	
 	

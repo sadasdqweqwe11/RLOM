@@ -2,6 +2,7 @@ package com.raylinetech.ssh2.logistics.common.test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,12 +70,23 @@ public class RLOrderServiceTest {
 //		System.out.println(orderList.get(0).getRlorderitems().get(0).getId());
 //	}
 
+//	@Test
+//	public void testFind() {
+//		List<RLOrder> order =  this.rlOrderService.getRLOrderListFromDate("20140620","20140620");
+//		for (RLOrder rlOrder : order) {
+//			System.out.println(rlOrder.getRlordernumber());
+//		}
+//	}
+	
 	@Test
-	public void testFind() {
-		List<RLOrder> order =  this.rlOrderService.getRLOrderListFromDate("20140620","20140620");
+	public void testDel() {
+		List<RLOrder> order =  this.rlOrderService.getRLOrderListFromDate("20140623","20140624");
+		List<Long> ids = new ArrayList<Long>();
 		for (RLOrder rlOrder : order) {
 			System.out.println(rlOrder.getRlordernumber());
+			ids.add(rlOrder.getId());
 		}
+		this.rlOrderService.deleteRLOrdersAndReturnTrackingno(ids);
 	}
 //	
 //	@Test

@@ -243,6 +243,7 @@ public class ExcelServiceImpl implements ExcelService {
 				order.setAccount(list.get(21).trim());
 				order.setCurrency(list.get(22).trim());
 				order.setFileid(orderFile.getId());
+				order.setUid(orderFile.getUid());
 				List<RLOrderItem> items = new LinkedList<RLOrderItem>();
 				if (null == list.get(3) || "".equals(list.get(3).trim())) {
 				} else {

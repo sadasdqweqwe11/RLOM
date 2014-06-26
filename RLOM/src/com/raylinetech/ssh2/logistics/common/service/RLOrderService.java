@@ -34,5 +34,11 @@ public interface RLOrderService {
 
 	public List<RLOrder> getRLOrderListFromDate(String beginDate, String endDate);
 	
+	public List<RLOrder> splitOrders(List<String> rlOrderIds);
+	
+	public List<RLOrder> mergeOrders(List<String> rlOrderIds);
+	
+	public List<RLOrder> copyOrders(List<String> rlOrderIds);
+	
 	
 }

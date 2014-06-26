@@ -208,5 +208,36 @@
 
 	</form>
 
+
+		<div style="display:none">
+		<div id="inline_content" style="padding:10px; background:#fff;">
+    	<p>
+				<strong>
+					This content comes from a hidden element on this page.
+				</strong>
+				</p>
+				<p>
+					The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.
+				</p>
+				<p>
+					<a id="click" href="#" style="padding:5px; background:#ccc;">
+						Click me, it will be preserved!
+					</a>
+				</p>
+				
+				<p>
+					<strong>
+						If you try to open a new ColorBox while it is already open, it will update itself with the new content.
+					</strong>
+				</p>
+				<p>
+					Updating Content Example:
+					<br>
+					<a class="ajax cboxElement" href="http://static.oschina.net/uploads/space/2012/0607/142131_2PqS_28.jpg">
+						Click here to load new content
+					</a>
+				</p>
+    	</div>
+	</div>
 </body>
 </html>
