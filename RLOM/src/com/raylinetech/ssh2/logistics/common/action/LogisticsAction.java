@@ -127,6 +127,7 @@ public class LogisticsAction extends ActionSupport{
 			order.setId(0);
 			order.setRlordernumber("");
 			order.setSplitstatus(PageConfig.SPLIT_COPY);
+			order.setTrackingno("");
 			copyOrders.add(order);
 		}
 		this.rlOrderService.saveOrUpdateRLOrderList(copyOrders);

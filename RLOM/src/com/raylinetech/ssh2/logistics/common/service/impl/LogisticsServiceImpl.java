@@ -17,6 +17,7 @@ import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
 import com.raylinetech.ssh2.logistics.common.entity.RLOrderItem;
 import com.raylinetech.ssh2.logistics.common.entity.Sku;
 import com.raylinetech.ssh2.logistics.common.service.LogisticsService;
+import com.raylinetech.ssh2.logistics.common.service.PdfService;
 import com.raylinetech.ssh2.logistics.common.util.SortUtil;
 
 public class LogisticsServiceImpl implements LogisticsService{
@@ -54,8 +55,13 @@ public class LogisticsServiceImpl implements LogisticsService{
 
 	@Override
 	public List<RLOrder> allocationRLOrders(List<RLOrder> rlOrders) {
-		List<RLOrder> splitOrders = this.splitRLOrders(rlOrders);
 		List<RLOrder> result = new ArrayList<RLOrder>();
+		//将符合目标条件的先挑出来，并且将list相关的删除掉。
+		//tobeupdate
+		List<RLOrder> firsts = this.getFirstList(rlOrders);
+		result.addAll(firsts);
+		//将剩余的进入一般逻辑里
+		List<RLOrder> splitOrders = this.splitRLOrders(rlOrders);
 		for (RLOrder rlOrder : splitOrders) {
 			List<RLOrder> logid = this.addLogistics(rlOrder);
 			result.addAll(logid);
@@ -63,6 +69,89 @@ public class LogisticsServiceImpl implements LogisticsService{
 		return result;
 	}
 	
+	private List<RLOrder> getFirstList(List<RLOrder> rlOrders) {
+		List<RLOrder> result = new ArrayList<RLOrder>();
+		for (RLOrder rlOrder : rlOrders) {
+			if(null!=rlOrder.getRlorderitems()&&rlOrder.getRlorderitems().size()==1){
+				String skuno = rlOrder.getRlorderitems().get(0).getSku().getSkuno();
+				String account = rlOrder.getAccount();
+				String market = rlOrder.getMarketplace();
+				System.out.println(skuno+"111" + account+"111"+ market);
+				if(null!=market&&"AMAZON".equals(market.toUpperCase())){
+					if(PageConfig.isInAmazonList(skuno)){
+						System.out.println("amazon");
+						Sku sku = this.skuDao.find(skuno);
+						rlOrder.setVendor(sku.getVendor());
+						rlOrder.setItemname(sku.getName());
+						rlOrder.setPinming(sku.getPinming());
+						rlOrder.setSkuno(sku.getSkuno());
+						rlOrder.setDescription(rlOrder.getRlorderitems().get(0).getDescription());
+						rlOrder.getRlorderitems().get(0).setSku(sku);
+						if(null==rlOrder.getAmount() || rlOrder.getAmount().trim().equals("")){
+							DecimalFormat df= new DecimalFormat("#.##");
+							String amount = df.format(3.0 + Math.random()*11);
+							rlOrder.setAmount(amount);
+							}
+						rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
+						rlOrder.setLogistics(new Logistics(PdfService.LOGISTIC_BJXBBGH));
+						result.add(rlOrder);
+						//设置logi
+						//设置sku
+						//设置amount
+					}
+				}
+				if(null!=account&&"POVOS UK".equals(account.toUpperCase())){
+					if(PageConfig.isInPovosList(skuno)){
+						System.out.println("povobuguahao");
+						Sku sku = this.skuDao.find(skuno);
+						rlOrder.setVendor(sku.getVendor());
+						rlOrder.setItemname(sku.getName());
+						rlOrder.setPinming(sku.getPinming());
+						rlOrder.setSkuno(sku.getSkuno());
+						rlOrder.setDescription(rlOrder.getRlorderitems().get(0).getDescription());
+						rlOrder.getRlorderitems().get(0).setSku(sku);
+						if(null==rlOrder.getAmount() || rlOrder.getAmount().trim().equals("")){
+							DecimalFormat df= new DecimalFormat("#.##");
+							String amount = df.format(3.0 + Math.random()*11);
+							rlOrder.setAmount(amount);
+							}
+						rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
+						rlOrder.setLogistics(new Logistics(PdfService.LOGISTIC_BJXBBGH));
+						result.add(rlOrder);
+					}
+				}
+				if(null!=account&&"BEN UK".equals(account.toUpperCase())){
+					if(PageConfig.isInBenList(skuno)){
+						System.out.println("benbuguahao");
+						Sku sku = this.skuDao.find(skuno);
+						rlOrder.setVendor(sku.getVendor());
+						rlOrder.setItemname(sku.getName());
+						rlOrder.setPinming(sku.getPinming());
+						rlOrder.setSkuno(sku.getSkuno());
+						rlOrder.setDescription(rlOrder.getRlorderitems().get(0).getDescription());
+						rlOrder.getRlorderitems().get(0).setSku(sku);
+						if(null==rlOrder.getAmount() || rlOrder.getAmount().trim().equals("")){
+							DecimalFormat df= new DecimalFormat("#.##");
+							String amount = df.format(3.0 + Math.random()*11);
+							rlOrder.setAmount(amount);
+							}
+						rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
+						rlOrder.setLogistics(new Logistics(PdfService.LOGISTIC_BJXBBGH));
+						result.add(rlOrder);
+					}
+				}
+			
+			}
+		}
+		System.out.println(rlOrders.size());
+		System.out.println(result.size());
+		rlOrders.removeAll(result);
+		System.out.println(rlOrders.size());
+		System.out.println(result.size());
+		return result;
+	}
+
+
 	/**
 	 * 拆单逻辑
 	 * @param rlOrders
@@ -76,9 +165,11 @@ public class LogisticsServiceImpl implements LogisticsService{
 				for (RLOrder rlOrder : rlOrders) {
 					//将只有一件的直接返回,进入下一次循环
 					if(rlOrder.getRlorderitems().size()==1 && rlOrder.getRlorderitems().get(0).getQuantity().trim().equals("1")){
+						if(null==rlOrder.getAmount() || rlOrder.getAmount().equals("")){
 						DecimalFormat df= new DecimalFormat("#.##");
 						String amount = df.format(3.0 + Math.random()*11);
 						rlOrder.setAmount(amount);
+						}
 						String skuno = rlOrder.getRlorderitems().get(0).getSku().getSkuno();
 						Sku sku = this.skuDao.find(skuno);
 						rlOrder.getRlorderitems().get(0).setSku(sku);
@@ -131,6 +222,7 @@ public class LogisticsServiceImpl implements LogisticsService{
 							int area  = areaEntry.getKey();
 							List<RLOrderItem> areaItems = areaEntry.getValue();
 							//如果只有一个sku这个sku的quantity为1，则直接返回，否则
+							//临时逻辑，如果size==1，先判断是否是目标格式，如果是设置
 							if(areaItems.size()==1 && areaItems.get(0).getQuantity().trim().equals("1") ){
 								RLOrder order = null;
 								try {
@@ -139,9 +231,11 @@ public class LogisticsServiceImpl implements LogisticsService{
 									e.printStackTrace();
 								}
 								order.setRlorderitems(areaItems);
-								DecimalFormat df= new DecimalFormat("#.##");
-								String amount = df.format(3.0 + Math.random()*11);
-								rlOrder.setAmount(amount);
+								if(null==rlOrder.getAmount() || rlOrder.getAmount().equals("")){
+									DecimalFormat df= new DecimalFormat("#.##");
+									String amount = df.format(3.0 + Math.random()*11);
+									rlOrder.setAmount(amount);
+									}
 								String skuno = rlOrder.getRlorderitems().get(0).getSku().getSkuno();
 								Sku sku = this.skuDao.find(skuno);
 								rlOrder.getRlorderitems().get(0).setSku(sku);
@@ -200,9 +294,11 @@ public class LogisticsServiceImpl implements LogisticsService{
 									order.setPinming(oneOrder.get(0).getSku().getPinming());
 									order.setSkuno(oneOrder.get(0).getSku().getSkuno());
 									order.setDescription(oneOrder.get(0).getDescription());
-									DecimalFormat df= new DecimalFormat("#.##");
-									String amount = df.format(3.0 + Math.random()*11);
-									order.setAmount(amount);
+									if(null==rlOrder.getAmount() || rlOrder.getAmount().trim().equals("")){
+										DecimalFormat df= new DecimalFormat("#.##");
+										String amount = df.format(3.0 + Math.random()*11);
+										order.setAmount(amount);
+										}
 									order.setSplitstatus(PageConfig.SPLIT_SYS_SPLIT);
 									resultList.add(order);
 								}
@@ -408,7 +504,7 @@ public class LogisticsServiceImpl implements LogisticsService{
 			datas[3] = 3;
 		}
 		
-		String[] pos = {"GY","IV","HS","KA27","KA28","KW","PA20","PA21","PA22","PA23","PA24","PA25","PA26","PA27","PA28","PA29","PA30","PA31","PA32","PA33","PA34","PA35","PA36","PA37","PA38","PA39","PA60","PA61","PA62","PA63","PA64","PA65","PA66","PA67","PA68","PA69","PA70","PA71","PA72","PA73","PA74","PA75","PA76","PA77","PA78","PH17","PH18","PH19","PH20","PH21","PH22","PH23","PH24","PH25","PH26"," PH30","PH31","PH32","PH33","PH34","PH35","PH36","PH37","PH38"," PH39","PH40"," PH41","PH42"," PH43","PH 44","PH49","PH50","IM","BT","JE","2E","TR21","TR22","TR23","TR24","TR25"};
+		String[] pos = {"GY","IV","HS","KA27","KA28","KW","PA20","PA21","PA22","PA23","PA24","PA25","PA26","PA27","PA28","PA29","PA30","PA31","PA32","PA33","PA34","PA35","PA36","PA37","PA38","PA39","PA60","PA61","PA62","PA63","PA64","PA65","PA66","PA67","PA68","PA69","PA70","PA71","PA72","PA73","PA74","PA75","PA76","PA77","PA78","PH17","PH18","PH19","PH20","PH21","PH22","PH23","PH24","PH25","PH26"," PH30","PH31","PH32","PH33","PH34","PH35","PH36","PH37","PH38"," PH39","PH40"," PH41","PH42"," PH43","PH 44","PH49","PH50","IM","BT","JE","ZE","TR21","TR22","TR23","TR24","TR25"};
 		boolean flag = false;
 		for (String string : pos) {
 			if(postalCode.toUpperCase().contains(string)){

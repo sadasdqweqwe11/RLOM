@@ -188,8 +188,16 @@ public class CheckExcelAction extends ActionSupport {
 		if(orderFile.getFilename().toLowerCase().endsWith("xls")){
 			stringList= this.excelService.excelToList(path+PageConfig.ORDERFILE_PATH, orderFile);
 			checkList = this.excelService.validateExcel(stringList);
-//			orders = this.excelService.excelToRLORder(path+PageConfig.ORDERFILE_PATH, orderFile);
-			fileType = "xls";
+			if(null!=checkList&&checkList.get(0)!=null){
+				System.out.println(checkList.size());
+				System.out.println(checkList.get(0).size());
+				if(checkList.get(0).size()==39){
+					fileType="ebay";
+					System.out.println(fileType);
+				}
+			}else{
+				fileType = "xls";
+			}
 		}else{
 			stringList= this.txtService.txtToList(path+PageConfig.ORDERFILE_PATH, orderFile);
 			checkList = this.txtService.validateTxt(stringList);

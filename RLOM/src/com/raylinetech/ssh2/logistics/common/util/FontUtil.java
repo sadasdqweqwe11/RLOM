@@ -17,7 +17,10 @@ public class FontUtil {
 	private static Font eng5;
 	private static Font eng4;
 
+	private static Font chi15bold ;
 	private static Font chi15 ;
+	private static Font chi12 ;
+	private static Font chi12bold ;
 	private static Font chi10 ;
 	private static Font chi10bold ;
 	private static Font chi8;
@@ -75,6 +78,50 @@ public class FontUtil {
         return chi15;  
 	 }
 	 
+	 public   static Font getChi12() {
+		BaseFont bf;
+		try {
+			bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);
+			if (chi12 == null) {    
+				chi12 = new Font(bf, 12, Font.BOLD);
+			}    
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return chi12;  
+	 }
+	 
+	 public   static Font getChi12BOLD() {
+		BaseFont bf;
+		try {
+			bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);
+			if (chi12bold == null) {    
+				chi12bold = new Font(bf, 12, Font.BOLD);
+			}    
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return chi12bold;  
+	 }
+	 
+	 public   static Font getChi15BOLD() {
+		BaseFont bf;
+		try {
+			bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);
+			if (chi15bold == null) {    
+				chi15bold = new Font(bf, 15, Font.BOLD);
+			}    
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return chi15bold;  
+	 }
 	 public   static Font getChi10() {
 		BaseFont bf;
 		try {

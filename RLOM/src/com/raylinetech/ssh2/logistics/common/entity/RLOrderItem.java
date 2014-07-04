@@ -16,7 +16,11 @@ public class RLOrderItem implements Cloneable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+	@Column
+	private String orderno;
+	@Column
+	private String itemno;
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="skuid")
 	private Sku sku;
 	@Column
@@ -61,18 +65,47 @@ public class RLOrderItem implements Cloneable{
 		this.sku = sku;
 	}
 
+	public String getOrderno() {
+		return orderno;
+	}
+
+	public void setOrderno(String orderno) {
+		this.orderno = orderno;
+	}
+
+	public String getItemno() {
+		return itemno;
+	}
+
+	public void setItemno(String itemno) {
+		this.itemno = itemno;
+	}
+
 	@Override
 	public RLOrderItem clone() throws CloneNotSupportedException {
 		RLOrderItem item = new RLOrderItem();
 		item.setDescription(description);
 		item.setQuantity(quantity);
 		item.setSku(sku);
+		item.setItemno(itemno);
+		item.setOrderno(orderno);
 		return item;
 	}
 	
 	public RLOrderItem(long id, Sku sku, String quantity, String description) {
 		super();
 		this.id = id;
+		this.sku = sku;
+		this.quantity = quantity;
+		this.description = description;
+	}
+
+	public RLOrderItem(long id, String orderno, String itemno, Sku sku,
+			String quantity, String description) {
+		super();
+		this.id = id;
+		this.orderno = orderno;
+		this.itemno = itemno;
 		this.sku = sku;
 		this.quantity = quantity;
 		this.description = description;

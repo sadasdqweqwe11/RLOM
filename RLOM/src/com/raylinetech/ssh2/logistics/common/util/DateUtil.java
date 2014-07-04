@@ -1,5 +1,6 @@
 package com.raylinetech.ssh2.logistics.common.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -66,6 +67,20 @@ public class DateUtil {
         return getCurrentTimeString(DATETIMEFORMAT, mills);
     }
     
+    public static String reFormatDate(String dateString, String format1,String format2){
+		SimpleDateFormat format = new SimpleDateFormat(format1);
+		Date date=null;
+		String sdate= "";
+		try {
+			date = format.parse(dateString);
+			sdate = new SimpleDateFormat(format2).format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return sdate;
+    }
+    
     public static void main(String[] args) {
 //		String ab = "123/545;123124124:123123";
 //		String c = ab.substring(0,ab.indexOf("/"));
@@ -73,5 +88,6 @@ public class DateUtil {
 //		System.out.println(c);
 //		System.out.println(d);
     	System.out.println(yyMMdd());
+    	System.out.println(reFormatDate("20020124", "yyyyMMdd", "yy-MM-dd"));
 	}
 }

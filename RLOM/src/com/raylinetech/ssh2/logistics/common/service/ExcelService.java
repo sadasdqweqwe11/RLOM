@@ -37,7 +37,18 @@ public interface ExcelService {
 	public static int LOGISTIC_SHYYB =20;
 	public static int LOGISTIC_BJYYB =21;
 	public static int LOGISTIC_YWYYB =22;
-	
+	public static int LOGISTIC_SZYODEL_SMALL =23;
+	public static int LOGISTIC_SHYODEL_SMALL =24;
+	public static int LOGISTIC_BJYODEL_SMALL =25;
+	public static int LOGISTIC_YWYODEL_SMALL =26;
+	public static int LOGISTIC_SZYODEL_ELE =27;
+	public static int LOGISTIC_SHYODEL_ELE =28;
+	public static int LOGISTIC_BJYODEL_ELE =29;
+	public static int LOGISTIC_YWYODEL_ELE =30;
+	public static int LOGISTIC_SZYODEL =31;
+	public static int LOGISTIC_SHYODEL =32;
+	public static int LOGISTIC_BJYODEL =33;
+	public static int LOGISTIC_YWYODEL =34;
 	
 	
 //	public static int LOGISTIC_GHZGYZXB = 1;

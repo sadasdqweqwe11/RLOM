@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
+import com.raylinetech.ssh2.logistics.common.file.AmazonExcel;
 import com.raylinetech.ssh2.logistics.common.file.BGHZGYZXBExcel;
 import com.raylinetech.ssh2.logistics.common.file.EUBExcel;
 import com.raylinetech.ssh2.logistics.common.file.EquickExcel;
@@ -263,6 +264,38 @@ public class DownloadAction extends ActionSupport{
 				response.setContentType("APPLICATION/msexcel");
 				ExcelOperator operator = ExcelOperatorFactory.getExcelOperatorInstance();
 				operator.WriteExcel(model, out);
+			out.close();  
+	        response.flushBuffer();//强行将响应缓存中的内容发送到目的
+	        return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String downloadAmazon() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session  = request.getSession();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		if(null == this.orders){
+			return "fail";
+		}
+		List ids = new ArrayList();
+		for (Object object : this.orders) {
+			ids.add(Long.parseLong((String)object));
+		}
+		List<RLOrder> orders = this.rlOrderService.getRLOrderListFromRLOrderIds(ids);
+		int logisticsid = orders.get(0).getLogistics().getId();
+		ExcelService exc = new ExcelServiceImpl();
+		PdfService pdf = new PdfServiceImpl();
+		try {
+			OutputStream out = response.getOutputStream(); 
+			ExcelModel model = null;
+			response.setHeader("content-disposition","attachment;filename="+"Amazon"+DateUtil.yyyyMMdd()+ ".xls");
+			response.setContentType("APPLICATION/msexcel");
+			model = new AmazonExcel(orders);
+			ExcelOperator operator = ExcelOperatorFactory.getExcelOperatorInstance();
+			operator.WriteExcel(model, out);
 			out.close();  
 	        response.flushBuffer();//强行将响应缓存中的内容发送到目的
 	        return null;

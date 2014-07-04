@@ -141,6 +141,9 @@
         <action name="downloadTable"  class="downloadAction" method="downloadTable">  
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>   
+         <action name="downloadAmazon"  class="downloadAction" method="downloadAmazon">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
         <action name="deleteRLOrders"  class="downloadAction" method="deleteRLOrders">  
 			<result name="success" type="redirect">${path}</result>
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>

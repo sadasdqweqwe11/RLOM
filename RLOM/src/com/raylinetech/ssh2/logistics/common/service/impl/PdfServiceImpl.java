@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.w3c.dom.css.Rect;
+
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -118,6 +120,8 @@ public class PdfServiceImpl implements PdfService {
 					this.rlOrdersToYYB(orders, out,document,writer);
 				}else if (logisticsid == PdfService.LOGISTIC_SZHLXB||logisticsid == PdfService.LOGISTIC_BJHLXB||logisticsid == PdfService.LOGISTIC_SHHLXB||logisticsid == PdfService.LOGISTIC_YWHLXB) {
 					this.rlOrdersToHLXB(orders, out,document,writer);
+				}else if(logisticsid >=PdfService.LOGISTIC_SZYODEL_SMALL&&logisticsid <=LOGISTIC_YWYODEL){
+					this.rlOrdersToYODEL(rlOrders, out, document, writer);
 				}
 				document.close();
 				out.close();
@@ -147,7 +151,6 @@ public class PdfServiceImpl implements PdfService {
 					20);
 			// Step 2—Get a PdfWriter instance.
 			PdfWriter writer = PdfWriter.getInstance(document, out);
-			writer.setViewerPreferences(PdfWriter.PageLayoutTwoColumnLeft);
 			// Step 3—Open the Document.
 			document.open();
 			Map<Integer, List<RLOrder>> orderMap = new TreeMap<Integer, List<RLOrder>>();
@@ -183,6 +186,8 @@ public class PdfServiceImpl implements PdfService {
 					this.rlOrdersToYYB(orders, out,document,writer);
 				}else if (logisticsid == PdfService.LOGISTIC_SZHLXB||logisticsid == PdfService.LOGISTIC_BJHLXB||logisticsid == PdfService.LOGISTIC_SHHLXB||logisticsid == PdfService.LOGISTIC_YWHLXB) {
 					this.rlOrdersToHLXB(orders, out,document,writer);
+				}else if(logisticsid >=PdfService.LOGISTIC_SZYODEL_SMALL&&logisticsid <=LOGISTIC_YWYODEL){
+					this.rlOrdersToYODEL(rlOrders, out, document, writer);
 				}
 			}
 			document.close();
@@ -1900,6 +1905,375 @@ public class PdfServiceImpl implements PdfService {
 	}
 
 
+	/**
+	 * 竖版A4 6个标签
+	 * @param rlOrders
+	 * @param out
+	 * @return
+	 */
+	private boolean rlOrdersToYODEL(List<RLOrder> rlOrders, OutputStream out, Document document,PdfWriter writer) {
+		try {
+			int size = rlOrders.size();
+			for (RLOrder order : rlOrders) {
+				document.setPageSize(PageSize.A4.rotate());
+				document.newPage();
+				PdfContentByte cb = writer.getDirectContent();
+				Barcode128 code128 = new Barcode128();
+				code128.setCodeType(Barcode128.CODE_A);
+				/* 设置条码宽度 begin */
+				String fullCode = code128.getRawText(order.getTrackingno(), false);
+				// code128.setCodeType(Barcode128.CODE128_UCC);
+				int len = fullCode.length();
+				code128.setCode(order.getTrackingno());
+				code128.setX(216 / ((len + 2) * 11 + 2f));
+				code128.setBarHeight(40f);
+				code128.setAltText("");
+				Image tradingImage = code128.createImageWithBarcode(cb, null, null);
+
+				/* 设置条码宽度 begin */
+				String fullCode1 = code128.getRawText(order.getRlordernumber(), false);
+				// code128.setCodeType(Barcode128.CODE128_UCC);
+				int len1 = fullCode1.length();
+				code128.setCode(order.getRlordernumber());
+				code128.setX(70 / ((len1 + 2) * 11 + 2f));
+				code128.setBarHeight(20f);
+//				code128.setTextAlignment(Element.ALIGN_LEFT);
+				code128.setAltText("");
+				Image ordernoImage = code128.createImageWithBarcode(cb, null, null);
+
+				
+				
+				Image img = null;
+				try {
+					String rootPath = System.getProperty("tansungWeb.root");
+					img = Image.getInstance(rootPath + "/images/yanwenlogo.jpg");
+				} catch (BadElementException e) {
+					e.printStackTrace();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				img.scaleAbsolute(200f, 40f);
+				
+				
+				float[] widthsOut = { 0.54f ,0.46f };
+				PdfPTable table = new PdfPTable(widthsOut);
+				table.setWidthPercentage(100);
+				float[] widthsLeft = { 0.33f, 0.34f, 0.33f};
+				PdfPTable left = new PdfPTable(widthsLeft);
+				PdfPCell cell = null;
+				
+				cell= new PdfPCell(img);
+				cell.setColspan(2);
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setPaddingLeft(2f);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("客户号： "+order.getLogistics().getAccount(),FontUtil.getChi12()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("Ship To:",FontUtil.getChi10BOLD()));
+				cell.setColspan(3);
+				cell.setBorder(Rectangle.TOP);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(order.getBuyername() + "    Tel: " + order.getBuyerphonenumber(),FontUtil.getEng10()));
+				cell.setColspan(3);
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(StringUtil.linkString("  ", order.getShipaddress1(),order.getShipaddress2(),order.getShipcity(),order.getShipstate(),order.getPostalcode()) +"\n"+ order.getShipcountry(),FontUtil.getEng10()));
+				cell.setColspan(2);
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(""));
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("OrderNo:  "+ order.getRlordernumber(),FontUtil.getEng10()));
+				cell.setBorder(Rectangle.BOTTOM);
+				cell.setColspan(3);
+				left.addCell(cell);
+				int quantity = 1;
+				double weight=100.00;
+				double value = 0.5 * Double.parseDouble(order.getAmount());
+				String mutilItemnames = "";
+				StringBuilder sb = new StringBuilder();
+				for (RLOrderItem item : order.getRlorderitems()) {
+					quantity = quantity + Integer.parseInt(item.getQuantity());
+					weight = weight + item.getSku().getWeight();
+					mutilItemnames  = mutilItemnames + ",  " +item.getSku().getName();
+					String sku = item.getSku().getSkuno();
+					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
+						sku = sku.substring(6);
+					}
+					sb.append("  " + sku.trim() + " * " + item.getQuantity()+"\n");
+				}
+				mutilItemnames = mutilItemnames.substring(1);
+
+				cell = new PdfPCell(new Phrase(sb.toString(),FontUtil.getEng10()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setColspan(3);
+				cell.setFixedHeight(50f);
+				left.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase("件数\nQuantity",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthTop(2f);
+				cell.setBorderWidthLeft(0);
+				cell.setFixedHeight(25f);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("重量\nWeight",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthTop(2f);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("价值\nValue",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthTop(2f);
+				cell.setBorderWidthRight(0);
+				left.addCell(cell);
+				
+
+				
+				cell = new PdfPCell(new Phrase(quantity+"",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				cell.setFixedHeight(25f);
+				cell.setBorderWidthLeft(0);
+				left.addCell(cell);
+				
+				DecimalFormat df = new DecimalFormat("#.##");
+				cell = new PdfPCell(new Phrase(df.format(weight),FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				cell.setFixedHeight(25f);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(df.format(value),FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				cell.setBorderWidthRight(0);
+				left.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase("日期\nQuantity",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthLeft(0);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("目的地\nCountry",FontUtil.getChi12BOLD()));
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("货运类型\nType of freight",FontUtil.getChi12BOLD()));
+				cell.setBorderWidthRight(0);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(DateUtil.reFormatDate(order.getDate(), "yyyyMMdd", "yyyy-MM-dd"),FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				cell.setFixedHeight(25f);
+				cell.setBorderWidthLeft(0);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(order.getGuojia(),FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				left.addCell(cell);
+				
+				String freightType = "YODEL英国标准";
+				int logid = order.getLogistics().getId();
+				if(logid==PdfService.LOGISTIC_BJYODEL_SMALL||logid==PdfService.LOGISTIC_YWYODEL_SMALL||logid==PdfService.LOGISTIC_SHYODEL_SMALL||logid==PdfService.LOGISTIC_SZYODEL_SMALL){
+					freightType = "YODEL英国小包";
+				}else if(logid==PdfService.LOGISTIC_BJYODEL_ELE||logid==PdfService.LOGISTIC_YWYODEL_ELE||logid==PdfService.LOGISTIC_SHYODEL_ELE||logid==PdfService.LOGISTIC_SZYODEL_ELE){
+					freightType = "YODEL英国小包（含电）";
+				}
+				cell = new PdfPCell(new Phrase(freightType,FontUtil.getChi12BOLD()));
+				cell.setBorderWidthBottom(2f);
+				cell.setBorderWidthRight(0);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("品名\nCommodity Description Required",FontUtil.getChi12BOLD()));
+				cell.setBorder(Rectangle.BOTTOM);
+				cell.setColspan(3);
+				left.addCell(cell);
+
+				String pinming = order.getRlorderitems().get(0).getSku().getPinming();
+				String itemname = order.getRlorderitems().get(0).getSku().getName();
+				cell = new PdfPCell(new Phrase(pinming +"\n" + itemname,FontUtil.getChi12BOLD()));
+				cell.setBorder(Rectangle.BOTTOM);
+				cell.setBorderWidthBottom(2f);
+				cell.setColspan(3);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("多品名/备注: " +mutilItemnames ,FontUtil.getChi12BOLD()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setFixedHeight(55f);
+				cell.setColspan(3);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(order.getRlordernumber(),FontUtil.getChi12BOLD()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setFixedHeight(48f);
+				cell.setColspan(3);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(ordernoImage);
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setColspan(3);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(order.getTrackingno(),FontUtil.getChi15BOLD()));
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setColspan(3);
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				cell = new PdfPCell(tradingImage);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(48f);
+				cell.setColspan(3);
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				
+				cell = new PdfPCell(new Phrase("HsCode:", FontUtil.getEng10()));
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setColspan(3);
+				cell.setBorder(Rectangle.NO_BORDER);
+				left.addCell(cell);
+				
+				
+				cell = new PdfPCell(left);
+				cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+				
+				
+				PdfPTable right = new PdfPTable(1);
+				cell =new PdfPCell(new Phrase("燕文标签 YANWEN Lable",FontUtil.getChi15BOLD()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setFixedHeight(40f);
+				right.addCell(cell);
+				
+				cell =new PdfPCell(new Phrase("  *  折叠下方实线处的打印标签。将标签放入燕文运输封套中。如果您没有封套，则使用干净的塑\n   料运输胶带将已折叠的标签粘帖在整个标签上。（注：此燕文标签需要打印2份放入封套中）",FontUtil.getChi12()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setFixedHeight(50f);
+				right.addCell(cell);
+				
+				cell =new PdfPCell(new Phrase("  *  为了标明您接受的与燕文之间的运输协议，并授权燕文作为出口控制和办理海关手续的",FontUtil.getChi12()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setFixedHeight(50f);
+				right.addCell(cell);
+				
+				cell =new PdfPCell(new Phrase("日期和寄件人签字\nDate and sender's signature",FontUtil.getChi12()));
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setPaddingLeft(300f);
+				cell.setUseAscender(true);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				right.addCell(cell);
+				
+				float[] widthsDate = {0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f};
+				PdfPTable dateTable = new PdfPTable(widthsDate);
+				//wangliang
+				Image signImage = null;
+				try {
+					String rootPath = System.getProperty("tansungWeb.root");
+					signImage = Image.getInstance(rootPath + "/images/sign/sign.png");
+				} catch (BadElementException e) {
+					e.printStackTrace();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				signImage.scaleAbsolute(108f, 40f);
+				cell =new PdfPCell(signImage);
+				cell.setColspan(10);
+				cell.setBorder(Rectangle.NO_BORDER);
+				dateTable.addCell(cell);
+				
+				//date
+				String date = DateUtil.reFormatDate(order.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+				char[] cs = date.toCharArray();
+				for (int i =0 ; i <cs.length ; i++) {
+					if(cs[i]!='-'){
+						if((i==5 || i==8)&&cs[i]=='0'){
+							cell =new PdfPCell(new Phrase(""));
+							cell.setBorder(Rectangle.NO_BORDER);
+							dateTable.addCell(cell);							
+						}else{
+							Image image = null;
+							try {
+								String rootPath = System.getProperty("tansungWeb.root");
+								image = Image.getInstance(rootPath + "/images/sign/"+ cs[i] +".png");
+							} catch (BadElementException e) {
+								e.printStackTrace();
+							} catch (MalformedURLException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							image.scaleAbsolute(30f, 40f);
+							cell =new PdfPCell(image);
+							cell.setBorder(Rectangle.NO_BORDER);
+							dateTable.addCell(cell);
+						}
+					}else{
+						cell =new PdfPCell(new Phrase(""));
+						cell.setBorder(Rectangle.NO_BORDER);
+						dateTable.addCell(cell);
+					}
+				}
+				cell = new PdfPCell(dateTable);
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setPaddingLeft(300);
+				cell.setPaddingRight(100);
+				right.addCell(cell);
+
+				cell =new PdfPCell(new Phrase("沿此处折叠",FontUtil.getChi12()));
+				cell.setBorder(Rectangle.BOTTOM);
+				cell.setUseAscender(true);
+				cell.setFixedHeight(85);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				right.addCell(cell);
+				
+				cell =new PdfPCell(new Phrase(" ",FontUtil.getChi4()));
+				cell.setUseAscender(true);
+				cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				right.addCell(cell);
+				
+				
+				cell = new PdfPCell(right);
+				cell.setRotation(270);
+				cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+				// 第一个模块ff
+				document.add(table);
+				document.setPageSize(PageSize.A4);
+			}
+		} catch (DocumentException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 
 	/**
@@ -2086,6 +2460,9 @@ public class PdfServiceImpl implements PdfService {
 						PdfPCell tableCell1 = new PdfPCell(this.EUBFenJianDan(
 								writer, rlOrders.get(i * 12 + j)));
 						tableCell1.setBorder(Rectangle.NO_BORDER);
+						tableCell1.setPaddingLeft(5f);
+						tableCell1.setPaddingRight(5f);
+						
 						table.addCell(tableCell1);
 					} else if (size == i * 12 + j + 1) {
 						PdfPCell cellSpace = new PdfPCell();
@@ -2742,7 +3119,7 @@ public class PdfServiceImpl implements PdfService {
 		cell.setRowspan(2);
 		table.addCell(cell);
 
-		cell = new PdfPCell(new Phrase("Y-POST - 俄罗斯",
+		cell = new PdfPCell(new Phrase("Y-POST - "+order.getGuojia(),
 				FontUtil.getChi10()));
 		cell.setUseAscender(true);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -2772,12 +3149,12 @@ public class PdfServiceImpl implements PdfService {
 		cell.setColspan(3);
 		table.addCell(cell);
 		
-		cell = new PdfPCell(new Phrase("Russia",FontUtil.getEng8()));
+		cell = new PdfPCell(new Phrase(order.getShipcountry(),FontUtil.getEng8()));
 		cell.setBorder(Rectangle.NO_BORDER);
 		cell.setColspan(3);
 		table.addCell(cell);
 		
-		cell = new PdfPCell(new Phrase("俄罗斯",FontUtil.getChi8()));
+		cell = new PdfPCell(new Phrase(order.getGuojia(),FontUtil.getChi8()));
 		cell.setBorder(Rectangle.NO_BORDER);
 		cell.setColspan(3);
 		table.addCell(cell);

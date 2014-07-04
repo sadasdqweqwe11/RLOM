@@ -131,6 +131,10 @@ public class Logistics implements Serializable{
 		this.trackingstore = trackingstore;
 	}
 	
+	public Logistics(int id) {
+		super();
+		this.id = id;
+	}
 	public Logistics(int id, String name, String engname, String logifunc,
 			String account, String password, int trackingstore, String mailto,
 			String address, String postalcode, String phonenumber1,

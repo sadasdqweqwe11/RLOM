@@ -1,6 +1,8 @@
 package com.raylinetech.ssh2.logistics.common.config;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PageConfig{
@@ -8,6 +10,14 @@ public class PageConfig{
 	private static Map<String, String> guojiaMap;
 	private static Map<String, String> currencyMap;
 	private static Map<String, String> skuTempMap;
+	
+	private static List<String> amazonList ;
+	private static List<String> povosList;
+	private static List<String> benList;
+	
+	
+	
+	
 	static {
 		guojiaMap = new HashMap<String, String>();
 		guojiaMap.put("UK", "英国");
@@ -43,6 +53,34 @@ public class PageConfig{
 		skuTempMap.put("QP-UY5I-3T5I","PR322");
 		skuTempMap.put("0I-YWCG-7QGQ","PR3017");
 		
+		
+		
+		amazonList = new ArrayList<String>();
+		amazonList.add("CTJZ21R01A");
+		amazonList.add("CTJZ21R01B");
+		amazonList.add("CTJZ21R01C");
+		amazonList.add("CTJZ21R01D");
+		amazonList.add("CTJZ21R01E");
+		
+		povosList = new ArrayList<String>();
+		povosList.add("CBJZ11-HBT910hei");
+		povosList.add("CBJX11201-Y");
+		povosList.add("CBJZ11-AM003");
+		povosList.add("CBJX11211-B");
+		povosList.add("CSZW11-1208101063");
+		povosList.add("CBJZ11-AM824");
+		povosList.add("CBJZ11-AM001fen");
+		povosList.add("CBJX11197-G");
+		povosList.add("CBJX11197-B");
+		povosList.add("CSZW11-1208100801");
+		povosList.add("CSZW11-1208101027");
+		povosList.add("CBJX11204-G");
+		povosList.add("CBJX11207-P");
+		povosList.add("CBJX11202-P");
+		povosList.add("CBJX11211-D");
+		
+		benList = new ArrayList<String>();
+		benList.add("CBJZ11-AM999T");
 	}
 	public static String getGuojia(String country){
 		return guojiaMap.get(country);
@@ -52,6 +90,16 @@ public class PageConfig{
 	}
 	public static String getTempSku(String skuno){
 		return skuTempMap.get(skuno);
+	}
+
+	public static boolean isInBenList(String skuno){
+		return benList.contains(skuno);
+	}
+	public static boolean isInPovosList(String skuno){
+		return povosList.contains(skuno);
+	}
+	public static boolean isInAmazonList(String skuno){
+		return amazonList.contains(skuno);
 	}
 	
 	public static final int PAGESIZE=30;
@@ -80,6 +128,8 @@ public class PageConfig{
 	public static final int SPLIT_MT_MERGE=4;
 	
 	public static final int SPLIT_COPY=5;
+	
+	public static final int SPLIT_SYS_FIRST=6;
 	
 	
 	

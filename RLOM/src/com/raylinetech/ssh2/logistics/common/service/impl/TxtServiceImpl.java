@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -217,7 +218,7 @@ public class TxtServiceImpl implements TxtService{
 		}
 		
 		
-		Map<String, List<List<String>>> orderMap = new HashMap<String, List<List<String>>>();
+		Map<String, List<List<String>>> orderMap = new LinkedHashMap<String, List<List<String>>>();
 		for (List<String> oneList : lists) {
 			String orderNo = oneList.get(0);
 			List<List<String>> orders = orderMap.get(orderNo);
@@ -250,6 +251,8 @@ public class TxtServiceImpl implements TxtService{
 				if(temSkuno!=null){
 					skuno = temSkuno;
 				}
+				item.setOrderno(ordernumber);
+				item.setItemno(list.get(1).trim());
 				item.setSku(new Sku(skuno));
 				item.setDescription(list.get(11).trim());
 				item.setQuantity(list.get(12).trim());
@@ -265,6 +268,7 @@ public class TxtServiceImpl implements TxtService{
 				}
 			}
 			order.setShipaddress2(address2);
+			
 			order.setShipcity(value.get(0).get(20).trim());
 			order.setShipstate(value.get(0).get(21).trim());
 			order.setPostalcode(value.get(0).get(22).trim());

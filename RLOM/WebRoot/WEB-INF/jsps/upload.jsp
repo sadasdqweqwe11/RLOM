@@ -182,9 +182,59 @@ chart.write('chartdiv12');
         			});
     				}
 				});
+				
+				$(".yanwen").click(function(){
+/*
+					$.get("http://online.yw56.com.cn/service_sandbox/Common/LoginUser/100000/100001",function(data){
+ 					var xmlObject = new ActiveXObject("Msxml.DOMDocument");
+					xmlObject.async = false;  
+					xmlObject.loadXML(message);
+					alert(data);
+					
+  					}); 
+					 */
+        $.ajax
+        ({
+            type: "GET",
+            //url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'http%3A%2F%2Fonline.yw56.com.cn%2Fservice_sandbox%2FCommon%2FLoginUser%2F100000%2F100001",  //这里是网址
+            url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fonline.yw56.com.cn%2Fservice_sandbox%2FCommon%2FLoginUser%2F100000%2F100001'&diagnostics=true",
+            success:function(data){alert("123");},
+            //timeout:30000, 
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(errorThrown);
+            }
+        });
+/* 
+	    $.ajax({
+            url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'http%3A%2F%2Fwww.webservicex.net%2FCurrencyConvertor.asmx%2FConversionRate%3FFromCurrency%3DNOK%26ToCurrency%3DEUR'&format=json&callback=cbfunc",
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'cbfunc'
+        });
+        function cbfunc(data) {
+            alert("OK");
+        } */
+
+					/* $.ajax({
+	  					//url: 'http://online.yw56.com.cn/service_sandbox/Common/LoginUser/100000/100001',
+	  					url: 'http://localhost:8080/RLOM/html/xm.xml',
+	  					dataType: 'html',
+	  					success: function(data){
+	  					processData: false,
+					 	$(data).find("LoginUserResponseType").each(function(index, ele) {
+							var titles = $(ele).find("title").text();
+							var links = $(ele).find("link").text();
+						});
+						 
+					 	}
+					});
+				 */
+				});
+				
+				
             });
             
-            
+
             
 </script>
 
@@ -255,7 +305,11 @@ chart.write('chartdiv12');
 			<c:forEach items="${vendors}" var="vendor"  varStatus="sum">
 				<a href="javascript:void(0)" class="c${(sum.index+2)%8+1} vendor">${vendor}</a>
 			</c:forEach>
+			<a href="javascript:void(0)" class="yanwen">燕文对接</a>
 				</p>
+				
+				
+				
 </div>
 <%-- <input id="fileupload" type="file" name="files" data-url="<%=path%>/ajax/uploadOrderAjax" multiple> --%>
 </body>

@@ -204,6 +204,64 @@
 				</tr>
 			</c:forEach>
 		</c:if>
+		
+		<c:if test="${fileType == 'ebay'}">
+					<tr class="true">
+				<td  class="true" valign="middle"><span
+					class="STYLE7"></span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">ORI</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">UID</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">NAME</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">PHONE</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">ADD1</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">CITY</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">ZIP</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">COUNTRY</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">QUA</span>
+				</td>
+				<td  class="true" valign="middle"><span
+					class="STYLE7">AMO</span>
+				</td>
+
+				<td  class="true" valign="middle"><span
+					class="STYLE7">SKU</span>
+				</td>
+			</tr>
+			<c:forEach items="${stringList}" var="list" varStatus="sum">
+				<tr>
+					<td   class="${checkList[sum.index][0]}">${sum.index+1}</td>
+					<td   class="${checkList[sum.index][0]}">${list[0]}</td>
+					<td   class="${checkList[sum.index][1]}">${list[1]}</td>
+					<td   class="${checkList[sum.index][2]}">${list[2]}</td>
+					<td   class="${checkList[sum.index][3]}">${list[3]}</td>
+					<td   class="${checkList[sum.index][5]}">${list[5]}</td>
+					<td   class="${checkList[sum.index][7]}">${list[7]}</td>
+					<td   class="${checkList[sum.index][9]}">${list[9]}</td>
+					<td   class="${checkList[sum.index][10]}">${list[10]}</td>
+					<td   class="${checkList[sum.index][15]}">${list[15]}</td>
+					<td   class="${checkList[sum.index][16]}">${list[16]}</td>
+					<td   class="${checkList[sum.index][31]}">${list[31]}</td>
+				</tr>
+			</c:forEach>
+		</c:if>
 		</table>
 
 	</form>

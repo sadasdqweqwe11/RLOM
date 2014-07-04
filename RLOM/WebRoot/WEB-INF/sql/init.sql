@@ -88,7 +88,7 @@ Create Table If Not Exists logistics.logistics_rlorder(
 );
 
 
-#alter table logistics_rlorder change quantity quantity varchar(10) default "0";
+#alter table logistics_rlorder change ordernumber ordernumber varchar(50);
 #alter table logistics_rlorder Add column splitstatus int(4) default 0 AFTER logisticsid;
 #alter table logistics_rlorder Add column uid int(10) default 0 AFTER splitstatus;
  
@@ -98,15 +98,12 @@ Create Table If Not Exists logistics.logistics_rlorder(
 Create Table If Not Exists logistics.logistics_rlorder_item(
 	id int(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	rlorderid int(20),
+	orderno varchar(50),
+	itemno varchar(50),
 	skuid varchar(40),
 	quantity varchar(3),
 	description varchar(255)
 );
-#alter table logistics_rlorder_item drop column ordernumber;
-#alter table logistics_rlorder_item drop column itemname;
-#alter table logistics_rlorder_item drop column pinming;       
-#alter table logistics_rlorder_item change  skuno  skuid varchar(40);
-
 
 #order file 上传excel文件表
 Create Table If Not Exists logistics.logistics_orderFile(
@@ -182,6 +179,19 @@ insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalco
 insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (21,"北京燕邮宝","北京燕文物流有限公司","北京朝阳区万红路5号蓝涛中心A101","106567","张楠 转 106567","100016","13701311116","010-64621881/64656790","请拆包处理",0);
 insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (22,"义乌燕邮宝","北京燕文物流有限公司","义乌市北苑秋实路103号","207711","张楠 转 207711","","0579-85238581","","请拆包处理",0);
 
+
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (23,"深圳YODEL英国小包","北京燕文物流有限公司","深圳市宝安区水库路111号星宏科技园D栋一层","303616","张楠 转 303616","","0755-83576869 83576658","0755-61190719/20/21/22","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (24,"上海YODEL英国小包","北京燕文物流有限公司","上海市闸北区灵石路(巨丰商务）697-3号7号楼101室","207711","张楠 转 207711","","021-36031631 / 36031637","021-36359765/66/67/68/69","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (25,"北京YODEL英国小包","北京燕文物流有限公司","北京朝阳区万红路5号蓝涛中心A101","106567","张楠 转 106567","100016","13701311116","010-64621881/64656790","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (26,"义乌-上海YODEL英国小包","北京燕文物流有限公司","义乌市北苑秋实路103号","207711","张楠 转 207711","","0579-85238581","","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (27,"深圳YODEL英国小包（带电）","北京燕文物流有限公司","深圳市宝安区水库路111号星宏科技园D栋一层","303616","张楠 转 303616","","0755-83576869 83576658","0755-61190719/20/21/22","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (28,"上海YODEL英国小包（带电）","北京燕文物流有限公司","上海市闸北区灵石路(巨丰商务）697-3号7号楼101室","207711","张楠 转 207711","","021-36031631 / 36031637","021-36359765/66/67/68/69","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (29,"北京YODEL英国小包（带电）","北京燕文物流有限公司","北京朝阳区万红路5号蓝涛中心A101","106567","张楠 转 106567","100016","13701311116","010-64621881/64656790","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (30,"义乌-上海YODEL英国小包（带电）","北京燕文物流有限公司","义乌市北苑秋实路103号","207711","张楠 转 207711","","0579-85238581","","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (31,"深圳YODEL标准","北京燕文物流有限公司","深圳市宝安区水库路111号星宏科技园D栋一层","303616","张楠 转 303616","","0755-83576869 83576658","0755-61190719/20/21/22","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (32,"上海YODEL标准","北京燕文物流有限公司","上海市闸北区灵石路(巨丰商务）697-3号7号楼101室","207711","张楠 转 207711","","021-36031631 / 36031637","021-36359765/66/67/68/69","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (33,"北京YODEL标准","北京燕文物流有限公司","北京朝阳区万红路5号蓝涛中心A101","106567","张楠 转 106567","100016","13701311116","010-64621881/64656790","请拆包处理",0);
+insert into logistics_logistics(id,name,logifunc,address,account,mailto,postalcode,phonenumber1,phonenumber2,remarks,trackingstore) values (34,"义乌-上海YODEL标准","北京燕文物流有限公司","义乌市北苑秋实路103号","207711","张楠 转 207711","","0579-85238581","","请拆包处理",0);
 
 
 #drop table logistics.logistics_sku;
