@@ -250,7 +250,7 @@ public class ExcelServiceImpl implements ExcelService {
 				RLOrder order = new RLOrder();
 				order.setRlordernumber(list.get(0).trim());
 				order.setOrdernumber(list.get(1).trim());
-				order.setVendor(list.get(2).trim().substring(0, 6));
+				order.setVendor(list.get(2).trim());
 				order.setSkuno(list.get(3).trim());
 				order.setItemname(list.get(4).trim());
 				order.setPinming(list.get(5).trim());
@@ -318,14 +318,15 @@ public class ExcelServiceImpl implements ExcelService {
 		for (List<String> oneList : lists) {
 			String buyerfullname = oneList.get(2).trim().toUpperCase();
 			String buyeraddress1 = oneList.get(5).trim().toUpperCase();
-			String nameAdressKey = buyerfullname+buyeraddress1;
-			List<List<String>> orders = orderMap.get(nameAdressKey);
+			String postalcode = oneList.get(9).trim().toUpperCase();
+			String nameAddressPostKey = buyerfullname+buyeraddress1+postalcode;
+			List<List<String>> orders = orderMap.get(nameAddressPostKey);
 			if (orders == null) {
 				orders = new ArrayList<List<String>>();
 				orders.add(oneList);
-				orderMap.put(nameAdressKey, orders);
+				orderMap.put(nameAddressPostKey, orders);
 			} else {
-				orderMap.get(nameAdressKey).add(oneList);
+				orderMap.get(nameAddressPostKey).add(oneList);
 			}
 		}
 		List<RLOrder> orders = new ArrayList<RLOrder>();
@@ -339,7 +340,6 @@ public class ExcelServiceImpl implements ExcelService {
 			String ordernumber = StringUtil.linkString("-", ordernumbers);
 			order.setOrdernumber(ordernumber);
 			order.setBuyerphonenumber(value.get(0).get(3).trim());
-
 			order.setSkuno(value.get(0).get(31).trim());
 			List<RLOrderItem> items = new ArrayList<RLOrderItem>();
 			for (List<String> list : value) {
@@ -696,6 +696,33 @@ public class ExcelServiceImpl implements ExcelService {
 		return ls;
 	}
 
+	@Override
+	public List<List> validateAmountExcel(List<List> stringList) {
+		List<List> ls = new LinkedList<List>();
+		for (int i = 0; i < stringList.size(); i++) {
+			List datas = stringList.get(i);
+			List val = new LinkedList();
+			// 第1位 需要判断空
+			if (i != datas.size() - 1) {
+				boolean mark1 = true;
+				if (null == datas.get(0)
+						|| "".equals(datas.get(0).toString().trim())) {
+					mark1 = false;
+				}
+				val.add(mark1);
+				// 第1位 需要判断空
+				boolean mark2 = true;
+				if (null == datas.get(1)
+						|| "".equals(datas.get(1).toString().trim())) {
+					mark2 = false;
+				}
+				val.add(mark2);
+				ls.add(val);
+			}
+		}
+		return ls;
+	}
+	
 	private List<List> validateEbay(List<List> lists) {
 		List<List> ls = new LinkedList<List>();
 		for (int i = 0; i < lists.size(); i++) {

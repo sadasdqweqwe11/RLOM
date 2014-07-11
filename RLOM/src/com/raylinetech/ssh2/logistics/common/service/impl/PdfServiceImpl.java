@@ -47,27 +47,23 @@ public class PdfServiceImpl implements PdfService {
 //	@Override
 //	public boolean rlOrdersToPdf(List<RLOrder> rlOrders, int logistics,
 //			OutputStream out) {
-//		
-//		
-//		
-//		
-//		if (logistics == PdfService.LOGISTIC_BJXB||logistics == PdfService.LOGISTIC_SZBJXB) {
+//		if (logistics == PdfService.LOGISTICS_BJXB||logistics == PdfService.LOGISTICS_SZBJXB) {
 //			this.rlOrdersToGHZGYZXB(rlOrders, out);
-//		} else if (logistics == PdfService.LOGISTIC_BJXBBGH||logistics == PdfService.LOGISTIC_SZBJXBBGH) {
+//		} else if (logistics == PdfService.LOGISTICS_BJXBBGH||logistics == PdfService.LOGISTICS_SZBJXBBGH) {
 //			this.rlOrdersToBGHZGYZXB(rlOrders, out);
-//		} else if (logistics == PdfService.LOGISTIC_SHEUB) {
+//		} else if (logistics == PdfService.LOGISTICS_SHEUB) {
 //			this.rlOrdersToEUB(rlOrders, out);
-//		} else if (logistics == PdfService.LOGISTIC_BJEUB) {
+//		} else if (logistics == PdfService.LOGISTICS_BJEUB) {
 //			this.rlOrdersToEUB(rlOrders, out);
-//		} else if (logistics == PdfService.LOGISTIC_SZSBT||logistics == PdfService.LOGISTIC_SHXB||logistics == PdfService.LOGISTIC_YWSHXB) {
+//		} else if (logistics == PdfService.LOGISTICS_SZSBT||logistics == PdfService.LOGISTICS_SHXB||logistics == PdfService.LOGISTICS_YWSHXB) {
 //			this.rlOrdersToGHZGYZXBOLD(rlOrders, out);
-//		}else if (logistics == PdfService.LOGISTIC_SHXBBGH||logistics == PdfService.LOGISTIC_YWSHXBBGH) {
+//		}else if (logistics == PdfService.LOGISTICS_SHXBBGH||logistics == PdfService.LOGISTICS_YWSHXBBGH) {
 //			this.rlOrdersToGHZGYZXBOLD(rlOrders, out);
-//		}else if (logistics == PdfService.LOGISTIC_SHEQUICK||logistics == PdfService.LOGISTIC_BJEQUICK) {
+//		}else if (logistics == PdfService.LOGISTICS_SHEQUICK||logistics == PdfService.LOGISTICS_BJEQUICK) {
 //			this.rlOrdersToEQUICK(rlOrders, out);
-//		}else if (logistics == PdfService.LOGISTIC_SZYYB||logistics == PdfService.LOGISTIC_BJYYB||logistics == PdfService.LOGISTIC_YWYYB||logistics == PdfService.LOGISTIC_SHYYB) {
+//		}else if (logistics == PdfService.LOGISTICS_SZYYB||logistics == PdfService.LOGISTICS_BJYYB||logistics == PdfService.LOGISTICS_YWYYB||logistics == PdfService.LOGISTICS_SHYYB) {
 //			this.rlOrdersToYYB(rlOrders, out);
-//		}else if (logistics == PdfService.LOGISTIC_SZHLXB||logistics == PdfService.LOGISTIC_BJHLXB||logistics == PdfService.LOGISTIC_SHHLXB||logistics == PdfService.LOGISTIC_YWHLXB) {
+//		}else if (logistics == PdfService.LOGISTICS_SZHLXB||logistics == PdfService.LOGISTICS_BJHLXB||logistics == PdfService.LOGISTICS_SHHLXB||logistics == PdfService.LOGISTICS_YWHLXB) {
 //			this.rlOrdersToHLXB(rlOrders, out);
 //		}
 //		return true;
@@ -106,21 +102,21 @@ public class PdfServiceImpl implements PdfService {
 //				writer.setViewerPreferences(PdfWriter.PageLayoutTwoColumnLeft);
 				// Step 3—Open the Document.
 				document.open();
-				if (logisticsid == PdfService.LOGISTIC_BJXB||logisticsid == PdfService.LOGISTIC_SZBJXB) {
+				if (logisticsid == PdfService.LOGISTICS_BJXB||logisticsid == PdfService.LOGISTICS_SZBJXB) {
 					this.rlOrdersToGHZGYZXB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_BJXBBGH||logisticsid == PdfService.LOGISTIC_SZBJXBBGH) {
+				} else if (logisticsid == PdfService.LOGISTICS_BJXBBGH||logisticsid == PdfService.LOGISTICS_SZBJXBBGH) {
 					this.rlOrdersToBGHZGYZXB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_SHEUB||logisticsid == PdfService.LOGISTIC_BJEUB) {
+				} else if (logisticsid == PdfService.LOGISTICS_SHEUB||logisticsid == PdfService.LOGISTICS_BJEUB) {
 					this.rlOrdersToEUB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_SZSBT||logisticsid == PdfService.LOGISTIC_SHXB||logisticsid == PdfService.LOGISTIC_YWSHXB||logisticsid == PdfService.LOGISTIC_SHXBBGH||logisticsid == PdfService.LOGISTIC_YWSHXBBGH) {
+				} else if (logisticsid == PdfService.LOGISTICS_SZSBT||logisticsid == PdfService.LOGISTICS_SHXB||logisticsid == PdfService.LOGISTICS_YWSHXB||logisticsid == PdfService.LOGISTICS_SHXBBGH||logisticsid == PdfService.LOGISTICS_YWSHXBBGH) {
 					this.rlOrdersToGHZGYZXBOLD(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SHEQUICK||logisticsid == PdfService.LOGISTIC_BJEQUICK||logisticsid == PdfService.LOGISTIC_SZEQUICK) {
+				}else if (logisticsid == PdfService.LOGISTICS_SHEQUICK||logisticsid == PdfService.LOGISTICS_BJEQUICK||logisticsid == PdfService.LOGISTICS_SZEQUICK) {
 					this.rlOrdersToEQUICK(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SZYYB||logisticsid == PdfService.LOGISTIC_BJYYB||logisticsid == PdfService.LOGISTIC_YWYYB||logisticsid == PdfService.LOGISTIC_SHYYB) {
+				}else if (logisticsid == PdfService.LOGISTICS_SZYYB||logisticsid == PdfService.LOGISTICS_BJYYB||logisticsid == PdfService.LOGISTICS_YWYYB||logisticsid == PdfService.LOGISTICS_SHYYB||logisticsid == PdfService.LOGISTICS_SZYYBBGH||logisticsid == PdfService.LOGISTICS_BJYYBBGH||logisticsid == PdfService.LOGISTICS_YWYYBBGH||logisticsid == PdfService.LOGISTICS_SHYYBBGH) {
 					this.rlOrdersToYYB(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SZHLXB||logisticsid == PdfService.LOGISTIC_BJHLXB||logisticsid == PdfService.LOGISTIC_SHHLXB||logisticsid == PdfService.LOGISTIC_YWHLXB) {
+				}else if (logisticsid == PdfService.LOGISTICS_SZHLXB||logisticsid == PdfService.LOGISTICS_BJHLXB||logisticsid == PdfService.LOGISTICS_SHHLXB||logisticsid == PdfService.LOGISTICS_YWHLXB) {
 					this.rlOrdersToHLXB(orders, out,document,writer);
-				}else if(logisticsid >=PdfService.LOGISTIC_SZYODEL_SMALL&&logisticsid <=LOGISTIC_YWYODEL){
+				}else if(logisticsid >=PdfService.LOGISTICS_SZYODEL_SMALL&&logisticsid <=LOGISTICS_YWYODEL){
 					this.rlOrdersToYODEL(rlOrders, out, document, writer);
 				}
 				document.close();
@@ -172,21 +168,21 @@ public class PdfServiceImpl implements PdfService {
 			for (Entry<Integer, List<RLOrder>> entry: orderMap.entrySet()) {
 			    int logisticsid = entry.getKey();
 			    List<RLOrder> orders = entry.getValue();
-				if (logisticsid == PdfService.LOGISTIC_BJXB||logisticsid == PdfService.LOGISTIC_SZBJXB||logisticsid == PdfService.LOGISTIC_SHXB||logisticsid == PdfService.LOGISTIC_YWSHXB) {
+				if (logisticsid == PdfService.LOGISTICS_BJXB||logisticsid == PdfService.LOGISTICS_SZBJXB||logisticsid == PdfService.LOGISTICS_SHXB||logisticsid == PdfService.LOGISTICS_YWSHXB) {
 					this.rlOrdersToGHZGYZXB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_BJXBBGH||logisticsid == PdfService.LOGISTIC_SZBJXBBGH||logisticsid == PdfService.LOGISTIC_SHXBBGH||logisticsid == PdfService.LOGISTIC_YWSHXBBGH) {
+				} else if (logisticsid == PdfService.LOGISTICS_BJXBBGH||logisticsid == PdfService.LOGISTICS_SZBJXBBGH||logisticsid == PdfService.LOGISTICS_SHXBBGH||logisticsid == PdfService.LOGISTICS_YWSHXBBGH) {
 					this.rlOrdersToBGHZGYZXB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_SHEUB||logisticsid == PdfService.LOGISTIC_BJEUB) {
+				} else if (logisticsid == PdfService.LOGISTICS_SHEUB||logisticsid == PdfService.LOGISTICS_BJEUB) {
 					this.rlOrdersToEUB(orders, out,document,writer);
-				} else if (logisticsid == PdfService.LOGISTIC_SZSBT) {
+				} else if (logisticsid == PdfService.LOGISTICS_SZSBT) {
 					this.rlOrdersToGHZGYZXBOLD(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SHEQUICK||logisticsid == PdfService.LOGISTIC_BJEQUICK||logisticsid == PdfService.LOGISTIC_SZEQUICK) {
+				}else if (logisticsid == PdfService.LOGISTICS_SHEQUICK||logisticsid == PdfService.LOGISTICS_BJEQUICK||logisticsid == PdfService.LOGISTICS_SZEQUICK) {
 					this.rlOrdersToEQUICK(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SZYYB||logisticsid == PdfService.LOGISTIC_BJYYB||logisticsid == PdfService.LOGISTIC_YWYYB||logisticsid == PdfService.LOGISTIC_SHYYB) {
+				}else if (logisticsid == PdfService.LOGISTICS_SZYYB||logisticsid == PdfService.LOGISTICS_BJYYB||logisticsid == PdfService.LOGISTICS_YWYYB||logisticsid == PdfService.LOGISTICS_SHYYB||logisticsid == PdfService.LOGISTICS_SZYYBBGH||logisticsid == PdfService.LOGISTICS_BJYYBBGH||logisticsid == PdfService.LOGISTICS_YWYYBBGH||logisticsid == PdfService.LOGISTICS_SHYYBBGH) {
 					this.rlOrdersToYYB(orders, out,document,writer);
-				}else if (logisticsid == PdfService.LOGISTIC_SZHLXB||logisticsid == PdfService.LOGISTIC_BJHLXB||logisticsid == PdfService.LOGISTIC_SHHLXB||logisticsid == PdfService.LOGISTIC_YWHLXB) {
+				}else if (logisticsid == PdfService.LOGISTICS_SZHLXB||logisticsid == PdfService.LOGISTICS_BJHLXB||logisticsid == PdfService.LOGISTICS_SHHLXB||logisticsid == PdfService.LOGISTICS_YWHLXB) {
 					this.rlOrdersToHLXB(orders, out,document,writer);
-				}else if(logisticsid >=PdfService.LOGISTIC_SZYODEL_SMALL&&logisticsid <=LOGISTIC_YWYODEL){
+				}else if(logisticsid >=PdfService.LOGISTICS_SZYODEL_SMALL&&logisticsid <=LOGISTICS_YWYODEL){
 					this.rlOrdersToYODEL(rlOrders, out, document, writer);
 				}
 			}
@@ -293,7 +289,7 @@ public class PdfServiceImpl implements PdfService {
 		table.addCell(cell);
 
 		String comp = "协议客户：北京燕文物流有限公司(11010502740000)";
-		if(ll.getLogistics().getId()==PdfService.LOGISTIC_SHXB||ll.getLogistics().getId()==PdfService.LOGISTIC_YWSHXB){
+		if(ll.getLogistics().getId()==PdfService.LOGISTICS_SHXB||ll.getLogistics().getId()==PdfService.LOGISTICS_YWSHXB){
 			comp = "协议客户：北京燕文物流有限公司上海分公司(31000041066000)";
 		}
 		cell = new PdfPCell(new Phrase(comp,
@@ -306,7 +302,7 @@ public class PdfServiceImpl implements PdfService {
 		table.addCell(cell);
 
 		String from = "FROM    北京市朝阳区万红路5号兰涛中A101";
-		if(ll.getLogistics().getId()==PdfService.LOGISTIC_SHXB||ll.getLogistics().getId()==PdfService.LOGISTIC_YWSHXB){
+		if(ll.getLogistics().getId()==PdfService.LOGISTICS_SHXB||ll.getLogistics().getId()==PdfService.LOGISTICS_YWSHXB){
 			from = "FROM    上海市闸北区灵石路697-3号五号楼1楼";
 		}
 		
@@ -335,12 +331,12 @@ public class PdfServiceImpl implements PdfService {
 		cell.setRowspan(2);
 		cell.setColspan(3);
 		cell.setBorder(Rectangle.NO_BORDER);
-		if(logistics == PdfService.LOGISTIC_BJXB||logistics == PdfService.LOGISTIC_SZBJXB){
+		if(logistics == PdfService.LOGISTICS_BJXB||logistics == PdfService.LOGISTICS_SZBJXB){
 			float[] widths2 = { 0.33f, 0.34f, 0.33f };
 			PdfPTable gxp = new PdfPTable(widths2);
 			PdfPCell gua = null; 
 			PdfPCell code = null;
-//		(logistics == PdfService.LOGISTIC_BJXBBGH||logistics == PdfService.LOGISTIC_SZBJXBBGH){
+//		(logistics == PdfService.LOGISTICS_BJXBBGH||logistics == PdfService.LOGISTICS_SZBJXBBGH){
 //			String guaa = ExpressPrint.GetYPOSTP(ll.getGuojia());
 //			gua = new PdfPCell(new Phrase(guaa, FontUtil.getChi10BOLD()));
 //			gua.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -417,7 +413,7 @@ public class PdfServiceImpl implements PdfService {
 		table.addCell(cell);
 		
 		String ret = "退件单位： 北京国际邮电局集中收寄网点";
-		if(ll.getLogistics().getId()==PdfService.LOGISTIC_SHXB||ll.getLogistics().getId()==PdfService.LOGISTIC_YWSHXB){
+		if(ll.getLogistics().getId()==PdfService.LOGISTICS_SHXB||ll.getLogistics().getId()==PdfService.LOGISTICS_YWSHXB){
 			ret = "退件单位： 上海广告商函局";
 		}
 		cell = new PdfPCell(new Phrase(ret, FontUtil.getChi8()));
@@ -428,7 +424,7 @@ public class PdfServiceImpl implements PdfService {
 		
 		
 		// sev 3*1
-		if(logistics == PdfService.LOGISTIC_BJXBBGH||logistics == PdfService.LOGISTIC_SZBJXBBGH){
+		if(logistics == PdfService.LOGISTICS_BJXBBGH||logistics == PdfService.LOGISTICS_SZBJXBBGH){
 			cell = new PdfPCell(new Phrase("",FontUtil.getEng30()));
 			cell.setFixedHeight(40f);
 			cell.setUseAscender(true);
@@ -444,7 +440,7 @@ public class PdfServiceImpl implements PdfService {
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBorder(Rectangle.TOP);
 			table.addCell(cell);
-		}else if(logistics == PdfService.LOGISTIC_YWSHXB||logistics == PdfService.LOGISTIC_SHXB){
+		}else if(logistics == PdfService.LOGISTICS_YWSHXB||logistics == PdfService.LOGISTICS_SHXB){
 			cell = new PdfPCell(tradingImage);
 			cell.setColspan(5);
 			cell.setFixedHeight(40f);
@@ -506,7 +502,7 @@ public class PdfServiceImpl implements PdfService {
 		PdfPTable table = new PdfPTable(widths);
 		PdfPCell cell;
 		int logistics = ll.getLogistics().getId();
-		if(logistics == PdfService.LOGISTIC_SHXBBGH||logistics == PdfService.LOGISTIC_YWSHXBBGH){
+		if(logistics == PdfService.LOGISTICS_SHXBBGH||logistics == PdfService.LOGISTICS_YWSHXBBGH){
 		cell = new PdfPCell();
 			cell.setFixedHeight(40f);
 			cell.setUseAscender(true);
@@ -2084,9 +2080,9 @@ public class PdfServiceImpl implements PdfService {
 				
 				String freightType = "YODEL英国标准";
 				int logid = order.getLogistics().getId();
-				if(logid==PdfService.LOGISTIC_BJYODEL_SMALL||logid==PdfService.LOGISTIC_YWYODEL_SMALL||logid==PdfService.LOGISTIC_SHYODEL_SMALL||logid==PdfService.LOGISTIC_SZYODEL_SMALL){
+				if(logid==PdfService.LOGISTICS_BJYODEL_SMALL||logid==PdfService.LOGISTICS_YWYODEL_SMALL||logid==PdfService.LOGISTICS_SHYODEL_SMALL||logid==PdfService.LOGISTICS_SZYODEL_SMALL){
 					freightType = "YODEL英国小包";
-				}else if(logid==PdfService.LOGISTIC_BJYODEL_ELE||logid==PdfService.LOGISTIC_YWYODEL_ELE||logid==PdfService.LOGISTIC_SHYODEL_ELE||logid==PdfService.LOGISTIC_SZYODEL_ELE){
+				}else if(logid==PdfService.LOGISTICS_BJYODEL_ELE||logid==PdfService.LOGISTICS_YWYODEL_ELE||logid==PdfService.LOGISTICS_SHYODEL_ELE||logid==PdfService.LOGISTICS_SZYODEL_ELE){
 					freightType = "YODEL英国小包（含电）";
 				}
 				cell = new PdfPCell(new Phrase(freightType,FontUtil.getChi12BOLD()));
@@ -3094,7 +3090,12 @@ public class PdfServiceImpl implements PdfService {
 		cell.setColspan(2);
 		table.addCell(cell);
 		
-		cell = new PdfPCell(new Phrase("1",
+		String code = "1";
+		int logisticsid = order.getLogistics().getId();
+		if(logisticsid == PdfService.LOGISTICS_SZYYBBGH||logisticsid == PdfService.LOGISTICS_BJYYBBGH||logisticsid == PdfService.LOGISTICS_YWYYBBGH||logisticsid == PdfService.LOGISTICS_SHYYBBGH ){
+			code = "2";
+		}
+		cell = new PdfPCell(new Phrase(code,
 				FontUtil.getEng30()));
 		cell.setBorder(Rectangle.NO_BORDER);
 		cell.setRowspan(2);

@@ -25,6 +25,35 @@ public class DateUtil {
         return yyyyMMdd + "210000";
     }
     
+    public static String getTomorrow(String date,String currentFormat, String targetFormat){
+    	SimpleDateFormat format = new SimpleDateFormat(currentFormat);
+		Date d=null;
+		String sdate= "";
+		try {
+			d = format.parse(date);
+			long mills = d.getTime();
+			mills = mills+(24*60*60*1000);
+			sdate = new SimpleDateFormat(targetFormat).format(new Date(mills));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return sdate;
+    }
+    
+    public static String getYesterday(String date,String currentFormat, String targetFormat){
+    	SimpleDateFormat format = new SimpleDateFormat(currentFormat);
+		Date d=null;
+		String sdate= "";
+		try {
+			d = format.parse(date);
+			long mills = d.getTime();
+			mills = mills-(24*60*60*1000);
+			sdate = new SimpleDateFormat(targetFormat).format(new Date(mills));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return sdate;
+    }
     public static String getCurrentFormatTime(String format) {
         return getCurrentTimeString(format, System.currentTimeMillis());
     }
@@ -89,5 +118,9 @@ public class DateUtil {
 //		System.out.println(d);
     	System.out.println(yyMMdd());
     	System.out.println(reFormatDate("20020124", "yyyyMMdd", "yy-MM-dd"));
+    	System.out.println(getTomorrow("20020124", "yyyyMMdd", "yyyy-MM-dd"));
+    	
 	}
+
+
 }

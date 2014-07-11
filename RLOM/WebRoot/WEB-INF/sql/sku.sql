@@ -3459,3 +3459,14 @@ insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,p
 insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-QT4","CTJZ21",1,0.2,1,"GIFT","礼物",0,0,0,0);
 insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-QT26","CTJZ21",1,0.2,1,"GIFT","礼物",0,0,0,0);
 insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-QT19","CTJZ21",1,0.2,1,"GIFT","礼物",0,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("1702c","CTJZ21",3,0.3,50,"PART","配件",1,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("RANDOM","CTJZ21",1,0.015,0.6,"NAIL STICKER","指甲贴",0,0,0,0);
+
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("PW930","CTJZ21",3,0.4,  49,"  ELECTRIC SHAVER","电动剃须刀",1,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("PW818GREEN","CTJZ21",3,0.24,45,"  ELECTRIC SHAVER","电动剃须刀",1,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("1433D","CTJZ21",3,0.25,35,"ELECTRIC SHAVER","电动剃须刀",1,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-WS02B","CTJZ21",1,0.045,8," WALL STICKER","墙贴",0,1,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-WS02W","CTJZ21",1,0.045,8," WALL STICKER","墙贴",0,1,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-WS02R","CTJZ21",1,0.045,8," WALL STICKER","墙贴",0,1,0,0);
+
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("PQ7200-1","CTJZ21",3,0.37,44,"ELECTRIC SHAVER","电动剃须刀",1,0,0,0);

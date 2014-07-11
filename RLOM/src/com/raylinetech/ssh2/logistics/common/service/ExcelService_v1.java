@@ -15,16 +15,16 @@ public interface ExcelService_v1 {
 	public static final String DEFAULT_EMAIL = "";
 	public static final String DEFAULT_SHIPPINGMETHORD = "小包";
 	
-	public static int LOGISTIC_GHZGYZXB = 1;
-	public static int LOGISTIC_EQUICKYGKSXB = 2;
-	public static int LOGISTIC_BJEUB = 3;
-	public static int LOGISTIC_SHEUB = 4;
-	public static int LOGISTIC_BGHZGYZXB =5;
-	public static int LOGISTIC_RSXB =6;
-	public static int LOGISTIC_YWROYALMAIL =7;
-	public static int LOGISTIC_YYBELS =8;
-	public static int LOGISTIC_GHSZXB = 9;
-	public static int LOGISTIC_BGHSZXB = 10;
+	public static int LOGISTICS_GHZGYZXB = 1;
+	public static int LOGISTICS_EQUICKYGKSXB = 2;
+	public static int LOGISTICS_BJEUB = 3;
+	public static int LOGISTICS_SHEUB = 4;
+	public static int LOGISTICS_BGHZGYZXB =5;
+	public static int LOGISTICS_RSXB =6;
+	public static int LOGISTICS_YWROYALMAIL =7;
+	public static int LOGISTICS_YYBELS =8;
+	public static int LOGISTICS_GHSZXB = 9;
+	public static int LOGISTICS_BGHSZXB = 10;
 	/**
 	 * 将表格转化为实体
 	 * @param path

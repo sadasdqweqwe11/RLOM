@@ -57,4 +57,9 @@ public interface RLOrderDao {
 
 	public List<Object[]> findLogisticsAndCountByDate(String yyyyMMdd,
 			String yyyyMMdd2);
+
+	public List<RLOrder> findByDateAccount(String beginDate, String endDate,
+			String code);
+
+	public List getAccountsByDate(String beginDate, String endDate);
 }

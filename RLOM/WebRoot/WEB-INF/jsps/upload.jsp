@@ -161,8 +161,9 @@ chart.write('chartdiv12');
             	$(".vendor").click(function(){
             		var ven = $(this).text();
             		$("#vendor").val(ven);
-            		$(".download").text("下载" +ven +"总分拣单")
-					reloadData("<%=path%>/ajax/getChartsAjax.action?vendor=" + ven);
+            		$(".download").text("下载" +ven +"总分拣单");
+            		var date = $("#date").val();
+					reloadData("<%=path%>/ajax/getChartsAjax.action?vendor=" + ven+"&date="+date);
                 });
                 
                 
@@ -184,26 +185,35 @@ chart.write('chartdiv12');
 				});
 				
 				$(".yanwen").click(function(){
-/*
-					$.get("http://online.yw56.com.cn/service_sandbox/Common/LoginUser/100000/100001",function(data){
- 					var xmlObject = new ActiveXObject("Msxml.DOMDocument");
-					xmlObject.async = false;  
-					xmlObject.loadXML(message);
-					alert(data);
-					
-  					}); 
-					 */
-        $.ajax
-        ({
-            type: "GET",
-            //url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'http%3A%2F%2Fonline.yw56.com.cn%2Fservice_sandbox%2FCommon%2FLoginUser%2F100000%2F100001",  //这里是网址
-            url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fonline.yw56.com.cn%2Fservice_sandbox%2FCommon%2FLoginUser%2F100000%2F100001'&diagnostics=true",
-            success:function(data){alert("123");},
-            //timeout:30000, 
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(errorThrown);
-            }
-        });
+					 $.ajax({  
+            url:"<%=path%>/xml/yanwenLogin.action?name=100000&password=100001",  
+            type:"GET",  
+            dataType:"xml",  
+            timeout: 1000,  
+            error: function(xml){  
+                alert('Error loading XML document'+xml);  
+            },  
+            success: function(xml){  
+               // $(xml).find("User").each(function(i){  
+               //     var id=$(this).children("id");   //取对象  
+               //     var id_value=$(this).children("id").text();  //取文本 或者 $("id" , xml).text();   
+               //     var name_value=$(this).children("name").text();  
+                    //alert(id_value);//这里就是ID的值了。  
+                    //alert($(this).attr("email")); //这里能显示student下的email属性。  
+                //    $('<li></li>').html(id_value+"&nbsp;&nbsp;&nbsp;"+name_value+"&nbsp;&nbsp;&nbsp;"+$(this).attr("email")).appendTo('ol');  
+                //});
+                var apiToken =   $(xml).find("User").children("ApiToken").text();
+                alert(apiToken);
+            }  
+        });  
+				
+				
+				
+					<%-- $.get("<%=path%>/xml/yanwenLogin.action?name=100000&password=100001",function(data){
+						var uid = $(data).find(User).text();
+						alert(uid);
+  					});  --%>
+					 
 /* 
 	    $.ajax({
             url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'http%3A%2F%2Fwww.webservicex.net%2FCurrencyConvertor.asmx%2FConversionRate%3FFromCurrency%3DNOK%26ToCurrency%3DEUR'&format=json&callback=cbfunc",
@@ -273,6 +283,19 @@ chart.write('chartdiv12');
 		</table>
 	</form>
 	
+	<form id="form4" name="form4" method="post"
+		enctype="multipart/form-data" action="<%=path%>/uploadAmazonAmount.action">
+		<table>
+			<tr>
+				<td><span class="reply-tr">上传Amazon amount。</span><br />
+					<br /> 
+					<input type="file" name="uploadAmount">
+  					<input type="submit"  value="预览" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	
 <%-- 	<form id="form3" name="form3" method="post"
 		enctype="multipart/form-data" action="<%=path%>/uploadSkuinfo.action">
 		<table>
@@ -289,13 +312,13 @@ chart.write('chartdiv12');
 	<div id="chartdiv12" style="width: 640px; height: 400px;"></div>
 <form id="form3" name="form3" method="post"
 		enctype="multipart/form-data" action="<%=path%>/.action">
-<!-- 				请选择日期: <input type="text" value="" id="date">
+ 				请选择日期: <input type="text" value="" id="date">
 		<script type="text/javascript" charset="utf-8">
 			new Kalendae.Input('date', {
 				months : 2,
 				mode : 'range',
 			});
-		</script> -->
+		</script> 
 					<input id="vendor" name="vendor" type="text" style="visibility: hidden;" value="ALL">
 									<a href="javascript:void(0)" class="download">下载总分拣单</a>
 									<a href="javascript:void(0)" class="downloadVendor">下载供应商标签</a>
@@ -305,7 +328,7 @@ chart.write('chartdiv12');
 			<c:forEach items="${vendors}" var="vendor"  varStatus="sum">
 				<a href="javascript:void(0)" class="c${(sum.index+2)%8+1} vendor">${vendor}</a>
 			</c:forEach>
-			<a href="javascript:void(0)" class="yanwen">燕文对接</a>
+			<!-- <a href="javascript:void(0)" class="yanwen">燕文对接</a> -->
 				</p>
 				
 				

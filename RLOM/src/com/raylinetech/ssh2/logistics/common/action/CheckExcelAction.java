@@ -258,6 +258,40 @@ public class CheckExcelAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String checkAmountExcel() throws Exception {
+		//judge if user exists in session
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session  = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user == null){
+			return "login";
+		}
+		ActionContext ac = ActionContext.getContext();   
+		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);   
+		String path = sc.getRealPath("/");
+		String classPath = sc.getContextPath();
+		System.out.println(path);
+		System.out.println(classPath);
+		OrderFile orderFile = (OrderFile)request.getAttribute("orderFile");
+		//test
+		List<List> stringList= this.excelService.excelToList(path+PageConfig.AMOUNTFILE_PATH, orderFile);
+		List<List> checkList = this.excelService.validateAmountExcel(stringList);
+		boolean flag = true;
+		for (List list : checkList) {
+			for (Object object : list) {
+				if(object.equals(false)){
+					flag = false;
+					break;
+				}
+			}
+		}
+		request.setAttribute("stringList",stringList);
+		request.setAttribute("checkList",checkList);
+		request.setAttribute("orderFile",orderFile);
+		request.setAttribute("flag",flag);
+		return SUCCESS;
+	}
+	
 	
 	public String deleteExcel() throws Exception {
 		//judge if user exists in session
@@ -378,6 +412,45 @@ public class CheckExcelAction extends ActionSupport {
 	}
 }
 	
+	public String storeAmountExcel() throws Exception {
+	HttpServletRequest request = ServletActionContext.getRequest();
+	HttpSession session  = request.getSession();
+	User user = (User) session.getAttribute("user");
+	if(user == null){
+		return "login";
+	}
+	ActionContext ac = ActionContext.getContext();   
+	ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);   
+	String path = sc.getRealPath("/");
+	try {
+		String classPath = sc.getContextPath();
+		System.out.println(path);
+		System.out.println(classPath);
+		OrderFile orderFile = this.orderFileService.find(Long.parseLong(this.fid));
+		List<List> lists = this.excelService.excelToList(path+PageConfig.AMOUNTFILE_PATH, orderFile);
+		List first = new ArrayList();
+		Map orderMap = new HashMap();
+		for (List list : lists) {
+			orderMap.put(list.get(1), list.get(0));
+			first.add(list.get(1));
+		}
+		List<RLOrder> orders = this.rlOrderService.getRLOrderListFromRLOrdernumbers(first);
+		for (RLOrder rlOrder : orders) {
+			rlOrder.setAmount((String)orderMap.get(rlOrder.getRlordernumber()));
+		}
+		this.rlOrderService.saveOrUpdateRLOrderList(orders);
+		this.urlPath = "orderFile/"+orderFile.getId();
+		return SUCCESS;
+	} catch (ExcelException e) {
+ 		StringWriter errors = new StringWriter();
+ 		e.printStackTrace(new PrintWriter(errors));
+ 		logger.error(errors.toString());
+ 		request.setAttribute("error", e.getMessage());
+		return "fail";
+	}
+	}
+	
+	
 	public String generateExcel() throws Exception {
 		//judge if user exists in session
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -445,8 +518,8 @@ public class CheckExcelAction extends ActionSupport {
 			ExcelOperator operator = ExcelOperatorFactory.getExcelOperatorInstance();
 			operator.WriteExcel(model, out);
 			PdfService pdf = new PdfServiceImpl();
-//			pdf.rlOrdersToPdf(orders, PdfService.LOGISTIC_BJEUB, out);
-//			pdf.rlOrdersToPdf(orders, PdfService.LOGISTIC_ZGYZPY, out);
+//			pdf.rlOrdersToPdf(orders, PdfService.LOGISTICS_BJEUB, out);
+//			pdf.rlOrdersToPdf(orders, PdfService.LOGISTICS_ZGYZPY, out);
 			out.close();  
 	        response.flushBuffer();//强行将响应缓存中的内容发送到目的
 	        return null;

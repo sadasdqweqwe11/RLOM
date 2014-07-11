@@ -76,6 +76,22 @@
 			<interceptor-ref name="defaultStack" />
 		</action>
 		
+		<action name="uploadAmazonAmount" class="upLoadAction" method="uploadAmount">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="chain">
+				checkAmountExcel
+			</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+			<result name="input">/WEB-INF/jsps/uploadMistaketip.jsp</result>
+			<interceptor-ref name="defaultStack" /> 
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">20048576</param>
+				<param name="allowedExtensions">
+					xls
+				</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
 		
 		
 		
@@ -91,6 +107,12 @@
 			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
 		</action>
 		
+		<action name="checkAmountExcel" class="checkExcelAction" method="checkAmountExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success">/WEB-INF/jsps/CheckAmountExcel.jsp</result>
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		
 		<action name="storeExcel" class="checkExcelAction" method="storeExcel">
 			<result name="login">/WEB-INF/jsps/login.jsp</result>
 			<result name="success" type="redirect">${urlPath}</result> 
@@ -98,6 +120,11 @@
 		</action>
 		
 		<action name="storeTrackingnoExcel" class="checkExcelAction" method="storeTrackingnoExcel">
+			<result name="login">/WEB-INF/jsps/login.jsp</result>
+			<result name="success" type="redirect">main.action</result> 
+			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+		</action>
+		<action name="storeAmountExcel" class="checkExcelAction" method="storeAmountExcel">
 			<result name="login">/WEB-INF/jsps/login.jsp</result>
 			<result name="success" type="redirect">main.action</result> 
 			<result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
@@ -144,6 +171,9 @@
          <action name="downloadAmazon"  class="downloadAction" method="downloadAmazon">  
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>   
+        <action name="downloadTongji"  class="downloadAction" method="downloadTongji">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>  
         <action name="deleteRLOrders"  class="downloadAction" method="deleteRLOrders">  
 			<result name="success" type="redirect">${path}</result>
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
@@ -202,4 +232,13 @@
 		</action>
 		
        </package>  
+       
+       
+       
+   <package name="xml" namespace="/xml" extends="struts-default">  
+		    <action name="yanwenLogin" class="yanwenXML" method="login" >  
+    		<!-- 下面的name和type不能改动 -->  
+            <result name="xmlMessage" type="plainText"></result>    
+   		</action>   
+   </package>  
 </struts>

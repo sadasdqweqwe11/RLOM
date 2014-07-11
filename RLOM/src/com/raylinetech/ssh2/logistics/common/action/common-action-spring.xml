@@ -69,6 +69,7 @@
 		<property name="searchService" ref="searchService"></property>
 	</bean>
 	
-	
+	<bean id="yanwenXML" class="com.raylinetech.ssh2.logistics.common.xml.YanwenXML" scope="prototype">
+	</bean>
 	
 </beans>

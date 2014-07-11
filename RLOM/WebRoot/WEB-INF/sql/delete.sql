@@ -8,3 +8,4 @@ DROP table IF EXISTS logistics_logistics;
 DROP table IF EXISTS logistics_sku;
 #delete from logistics_rlorder where id >= 11427;
 #delete from logistics_sku;
+#delete from logistics_logistics;

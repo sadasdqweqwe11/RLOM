@@ -8,6 +8,7 @@ import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
 import com.raylinetech.ssh2.logistics.common.entity.RLOrderItem;
 import com.raylinetech.ssh2.logistics.common.service.PdfService;
 import com.raylinetech.ssh2.logistics.common.service.impl.PdfServiceImpl;
+import com.raylinetech.ssh2.logistics.common.util.DateUtil;
 import com.raylinetech.ssh2.logistics.common.util.StringUtil;
 
 public class AmazonExcel extends ExcelModel{
@@ -49,15 +50,15 @@ public class AmazonExcel extends ExcelModel{
 				String carriername = "china post";
 				String shipmethod = "挂号";
 				int logid = o.getLogistics().getId();
-				if(logid==PdfService.LOGISTIC_BJEQUICK ||logid==PdfService.LOGISTIC_SHEQUICK ||logid==PdfService.LOGISTIC_SZEQUICK){
+				if(logid==PdfService.LOGISTICS_BJEQUICK ||logid==PdfService.LOGISTICS_SHEQUICK ||logid==PdfService.LOGISTICS_SZEQUICK){
 					carriercode = "Equick";
 					carriername = "Equick";
 				}
-				if(logid==PdfService.LOGISTIC_BJHLXB ||logid==PdfService.LOGISTIC_YWHLXB ||logid==PdfService.LOGISTIC_SZHLXB ||logid==PdfService.LOGISTIC_SHHLXB ){
+				if(logid==PdfService.LOGISTICS_BJHLXB ||logid==PdfService.LOGISTICS_YWHLXB ||logid==PdfService.LOGISTICS_SZHLXB ||logid==PdfService.LOGISTICS_SHHLXB ){
 					carriercode = "NLPG";
 					carriername = "NLPG";
 				}
-				if(logid==PdfService.LOGISTIC_BJXBBGH||logid==PdfService.LOGISTIC_YWSHXBBGH||logid==PdfService.LOGISTIC_SHXBBGH||logid==PdfService.LOGISTIC_SZBJXBBGH){
+				if(logid==PdfService.LOGISTICS_BJXBBGH||logid==PdfService.LOGISTICS_YWSHXBBGH||logid==PdfService.LOGISTICS_SHXBBGH||logid==PdfService.LOGISTICS_SZBJXBBGH){
 					shipmethod = "不挂号";
 				}
 				for (RLOrderItem item : o.getRlorderitems()) {
@@ -65,10 +66,11 @@ public class AmazonExcel extends ExcelModel{
 				this.data[0][rowNumber] = item.getOrderno();
 				this.data[1][rowNumber] = item.getItemno();
 				this.data[2][rowNumber] = item.getQuantity();
-				this.data[3][rowNumber] = o.getDate();
-				
-				
-				
+				//设定日期格式为yyyy-MM-dd
+				this.data[3][rowNumber] = DateUtil.reFormatDate(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+				if(o.getGuojia().equals("美国")){
+					this.data[3][rowNumber] = DateUtil.getYesterday(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+				}
 				this.data[4][rowNumber] = carriercode;
 				this.data[5][rowNumber] = carriername;
 				this.data[6][rowNumber] = o.getTrackingno();

@@ -66,7 +66,26 @@ public class GetChartsAjax extends ActionSupport {
 			return "login";
 		}
 		String vendor = request.getParameter("vendor");
-		List<Object[]> logis = this.rlOrderService.getLogisticsAndCountFromDateVendor(DateUtil.yyyyMMdd(), DateUtil.yyyyMMdd(), vendor);
+		String date = request.getParameter("date");
+		String beginDate = "";
+		String endDate = "";
+		if(null == date|| "".equals(date.trim())){
+			beginDate = DateUtil.yyyyMMdd();
+			endDate = DateUtil.yyyyMMdd();
+		}else{
+			String[] dates = date.split("-");
+		if(dates.length==1){
+			beginDate = DateUtil.reFormatDate(dates[0], "MM/dd/yyyy", "yyyyMMdd");
+			endDate = beginDate;
+		}
+		if(dates.length==2){
+			beginDate = DateUtil.reFormatDate(dates[0], "MM/dd/yyyy", "yyyyMMdd");			
+			endDate = DateUtil.reFormatDate(dates[1], "MM/dd/yyyy", "yyyyMMdd");
+		}
+		}
+		System.out.println(beginDate + "is beginend");
+		System.out.println(endDate + "is beginend");
+		List<Object[]> logis = this.rlOrderService.getLogisticsAndCountFromDateVendor(beginDate, endDate, vendor);
 		response.setContentType("application/json;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		response.setHeader("Charset", "utf-8");
@@ -91,5 +110,4 @@ public class GetChartsAjax extends ActionSupport {
 		response.flushBuffer();
 		return null;
 	}
-
 }

@@ -19,8 +19,8 @@
 <!-- saved from url=(0014)about:internet -->
 <title>锐蓝标签生成确认录入</title>
 	<script type="text/javascript" src="<%=path %>/js/jquery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/jquery/dataTables/js/jquery.dataTables.js"></script>
-	<link rel="stylesheet" href="<%=path %>/js/jquery/dataTables/css/jquery.dataTables.css" type="text/css" />
+	<script type="text/javascript" src="<%=path %>/js/jquery/dataTables/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="<%=path %>/js/jquery/dataTables/css/jquery.dataTables.min.css" type="text/css" />
 <script type="text/javascript"> 
         $(function (){  
     		$.fn.squareSelection=function(){  
@@ -294,6 +294,13 @@
 .split5 {
 	font-family: "楷体";
 	background-color: #f29c9c;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
+.split6 {
+	font-family: "楷体";
+	background-color: #ef5b9c;
 	font-size: 12px;
 	padding:2px 2px 2px 2px;
 	text-align:center;

@@ -219,21 +219,25 @@ public class TxtServiceImpl implements TxtService{
 		
 		
 		Map<String, List<List<String>>> orderMap = new LinkedHashMap<String, List<List<String>>>();
+		
 		for (List<String> oneList : lists) {
-			String orderNo = oneList.get(0);
-			List<List<String>> orders = orderMap.get(orderNo);
+			String buyerfullname = oneList.get(16).trim().toUpperCase();
+			String buyeraddress1 = oneList.get(17).trim().toUpperCase();
+			String postalcode = oneList.get(22).trim().toUpperCase();
+			String nameAddressPostKey = buyerfullname+buyeraddress1+postalcode;
+			List<List<String>> orders = orderMap.get(nameAddressPostKey);
 			if(orders == null){
 				orders = new ArrayList<List<String>>();
 				orders.add(oneList);
-				orderMap.put(orderNo, orders);
+				orderMap.put(nameAddressPostKey, orders);
 			}else{
-				orderMap.get(orderNo).add(oneList);
+				orderMap.get(nameAddressPostKey).add(oneList);
 			}
 		}
 		List<RLOrder> orders = new ArrayList<RLOrder>();
 		for (Entry<String, List<List<String>>>  oneOrder: orderMap.entrySet()) {
-			String ordernumber = oneOrder.getKey();
 			List<List<String>>  value = oneOrder.getValue();
+			String ordernumber = value.get(0).get(0).trim();
 			RLOrder order = new RLOrder();
 			order.setOrdernumber(ordernumber);
 			order.setBuyerphonenumber(value.get(0).get(9).trim());

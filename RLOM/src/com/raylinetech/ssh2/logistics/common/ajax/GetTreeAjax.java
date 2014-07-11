@@ -62,6 +62,7 @@ public class GetTreeAjax extends ActionSupport {
 			return "login";
 		}
 		String func = request.getParameter("func");
+		String date = request.getParameter("date");
 		response.setContentType("application/json;charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
 		response.setHeader("Charset", "utf-8");
@@ -71,7 +72,25 @@ public class GetTreeAjax extends ActionSupport {
 			System.out.println("没有传入func");
 			return null;
 		}
-		List<Object[]> keyValues  = this.searchService.getSearchFunc(func);
+		String beginDate = "";
+		String endDate = "";
+		if(null == date|| "".equals(date.trim())){
+			beginDate = DateUtil.yyyyMMdd();
+			endDate = DateUtil.yyyyMMdd();
+		}else{
+			String[] dates = date.split("-");
+		if(dates.length==1){
+			beginDate = DateUtil.reFormatDate(dates[0], "MM/dd/yyyy", "yyyyMMdd");
+			endDate = beginDate;
+		}
+		if(dates.length==2){
+			beginDate = DateUtil.reFormatDate(dates[0], "MM/dd/yyyy", "yyyyMMdd");			
+			endDate = DateUtil.reFormatDate(dates[1], "MM/dd/yyyy", "yyyyMMdd");
+		}
+		}
+		
+		
+		List<Object[]> keyValues  = this.searchService.getSearchFunc(func,beginDate,endDate);
 		JSONObject[] jsObjs = null;
 		if(null == keyValues|| keyValues.size() == 0 ){
 			System.out.println("没有取到任何数据");

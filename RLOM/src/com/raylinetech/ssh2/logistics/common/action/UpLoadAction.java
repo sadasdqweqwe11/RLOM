@@ -42,6 +42,12 @@ public class UpLoadAction extends ActionSupport{
 	
 	private String uploadTrackingnoContenType;
 	
+	private File uploadAmount;
+	
+	private String uploadAmountFileName;
+	
+	private String uploadAmountContenType;
+	
 	private UserService userService;
 	
 	private OrderFileService orderFileService;
@@ -115,6 +121,30 @@ public class UpLoadAction extends ActionSupport{
 		this.userService = userService;
 	}
 
+	public File getUploadAmount() {
+		return uploadAmount;
+	}
+
+	public void setUploadAmount(File uploadAmount) {
+		this.uploadAmount = uploadAmount;
+	}
+
+	public String getUploadAmountFileName() {
+		return uploadAmountFileName;
+	}
+
+	public void setUploadAmountFileName(String uploadAmountFileName) {
+		this.uploadAmountFileName = uploadAmountFileName;
+	}
+
+	public String getUploadAmountContenType() {
+		return uploadAmountContenType;
+	}
+
+	public void setUploadAmountContenType(String uploadAmountContenType) {
+		this.uploadAmountContenType = uploadAmountContenType;
+	}
+
 	public String uploadOrder() throws Exception{
 		PrintWriter out = null;
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -185,29 +215,72 @@ public class UpLoadAction extends ActionSupport{
 				saveName = user.getUid()+""+DateUtil.yyyyMMddHHmmss()+extName;
 				//save upload file
 
-				System.out.println("gos here1 ");
 				File destfile = new File(savePath,saveName);
-				System.out.println("gos here1 ");
 				OutputStream os = new FileOutputStream(destfile);
-				System.out.println("gos here1 ");
 				byte[] buffer = new byte[400];
 				int length = 0 ;
 				while((length = is.read(buffer)) > 0){
 				     os.write(buffer, 0, length);
 				}		 
-				System.out.println("gos here2 ");
 				is.close();
 				os.close();
 				OrderFile orderFile = new OrderFile();
 
-				System.out.println("gos here3 ");
 				orderFile.setUid(user.getUid());
 				orderFile.setOriginalfilename(this.uploadTrackingnoFileName);
 				orderFile.setFilesize(size);
 				orderFile.setFiletype(extName);
 				orderFile.setPostdatetime(new Date());
 				orderFile.setFilename(saveName);
-				System.out.println("gos here4 ");
+				this.orderFileService.save(orderFile);
+				request.setAttribute("orderFile", orderFile);
+			return SUCCESS;
+			} catch (FileNotFoundException e) {
+		 		StringWriter errors = new StringWriter();
+		 		e.printStackTrace(new PrintWriter(errors));
+		 		logger.error(errors.toString());
+				request.setAttribute("error", PageConfig.NAME_UPLOAD_ERROR);
+				return "fail";
+			}
+	}
+	
+	public String uploadAmount() throws Exception{
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user == null){
+			return "login";
+		}
+		File f = this.getUploadAmount();
+		long size = 0;
+			String saveName;
+			try {
+				InputStream is = new FileInputStream(f);
+				String savePath = ServletActionContext.getServletContext().getRealPath("");
+				size = is.available();
+				savePath = savePath + PageConfig.AMOUNTFILE_PATH;
+				//set saveName
+				String extName = this.uploadAmountFileName.substring(this.uploadAmountFileName.lastIndexOf("."));
+				saveName = user.getUid()+""+DateUtil.yyyyMMddHHmmss()+extName;
+				//save upload file
+
+				File destfile = new File(savePath,saveName);
+				OutputStream os = new FileOutputStream(destfile);
+				byte[] buffer = new byte[400];
+				int length = 0 ;
+				while((length = is.read(buffer)) > 0){
+				     os.write(buffer, 0, length);
+				}		 
+				is.close();
+				os.close();
+				OrderFile orderFile = new OrderFile();
+
+				orderFile.setUid(user.getUid());
+				orderFile.setOriginalfilename(this.uploadAmountFileName);
+				orderFile.setFilesize(size);
+				orderFile.setFiletype(extName);
+				orderFile.setPostdatetime(new Date());
+				orderFile.setFilename(saveName);
 				this.orderFileService.save(orderFile);
 				request.setAttribute("orderFile", orderFile);
 			return SUCCESS;

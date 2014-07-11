@@ -186,4 +186,34 @@ public class RLOrderDaoImpl implements RLOrderDao{
 			return list;
 		}	
 	}
+	@Override
+	public List<RLOrder> findByDateAccount(String beginDate, String endDate,
+			String code) {
+		String hql = "from RLOrder order where order.date>=:beginDate and order.date<=:endDate and order.account=:account order by order.logistics.id";
+		String[] params = {"beginDate","endDate","account"};
+		Object[] values = {beginDate, endDate, code};
+		List list =  this.hibernateTemplate.findByNamedParam(hql, params, values);
+		if(list.size()== 0 ){
+			return null;
+		}else{
+			return list;
+		}		
+	}
+	@Override
+	public List getAccountsByDate(String beginDate, String endDate) {
+		System.out.println("abc");
+		System.out.println(beginDate);
+		System.out.println(endDate);
+		
+		String hql = "select order.account,order.account from RLOrder order where order.date>=:beginDate and order.date<=:endDate  group by order.account";
+		String[] param = {"beginDate","endDate"};
+		Object[] value = {beginDate, endDate};
+		List list =  this.hibernateTemplate.findByNamedParam(hql, param, value);
+		System.out.println(list.size());
+		if(list.size()== 0 ){
+			return null;
+		}else{
+			return list;
+		}	
+	}
 }

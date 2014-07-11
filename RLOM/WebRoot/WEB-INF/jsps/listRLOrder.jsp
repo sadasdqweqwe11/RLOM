@@ -27,14 +27,6 @@
 }
 </style>
 
-<style type="text/css">
-.selVendor{
-color: #FF9933;
-}
-.kalendae span.closed {
-	background: red;
-}
-</style>
 <!-- saved from url=(0014)about:internet -->
 <title>锐蓝标签查询</title>
 <script type="text/javascript" charset="utf-8">
@@ -54,8 +46,9 @@ color: #FF9933;
 		$("#second").hide(); //初始化的时候第二个下拉列表隐藏
 		$("#first").change(function(){ //当第一个下拉列表变动内容时第二个下拉列表将会显示
 		var parentId=$("#first").val();
+		var dateValue = $("#date").val();
 		if(null!= parentId && ""!=parentId){
-		$.getJSON("<%=path%>/ajax/getSearchMap.action",{func:parentId},function(myJSON){
+		$.getJSON("<%=path%>/ajax/getSearchMap.action",{func:parentId,date:dateValue},function(myJSON){
 		var options="";
 		if(myJSON.length>0){
 		//options+="<option value=''>==请选择类型==</option>";
@@ -117,6 +110,7 @@ color: #FF9933;
 				<option value="1">按物流方式查询</option>
 				<option value="2">按物流帐号查询</option>
 				<option value="3">按集货中心查询</option>
+				<option value="5">按帐号查询查询</option>
 		</select> 
 		
 		<span id="second">

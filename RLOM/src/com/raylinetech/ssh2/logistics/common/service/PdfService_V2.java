@@ -8,13 +8,13 @@ import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
 
 public interface PdfService_V2 {
 
-	public static int LOGISTIC_GHZGYZXB = 1;
-	public static int LOGISTIC_EQUICKYGKSXB = 2;
-	public static int LOGISTIC_BJEUB = 3;
-	public static int LOGISTIC_SHEUB = 4;
-	public static int LOGISTIC_BGHZGYZXB =5;
-	public static int LOGISTIC_GHSZXB = 6;
-	public static int LOGISTIC_BGHSZXB = 6;
+	public static int LOGISTICS_GHZGYZXB = 1;
+	public static int LOGISTICS_EQUICKYGKSXB = 2;
+	public static int LOGISTICS_BJEUB = 3;
+	public static int LOGISTICS_SHEUB = 4;
+	public static int LOGISTICS_BGHZGYZXB =5;
+	public static int LOGISTICS_GHSZXB = 6;
+	public static int LOGISTICS_BGHSZXB = 6;
 	
 	
 	public boolean printLablesToPdf(List<PrintLable> printLables,String path,String fileName);

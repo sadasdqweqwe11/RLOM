@@ -34,16 +34,30 @@ public class GHZGYZXBExcel extends ExcelModel {
 			for (RLOrder p : rlOrders) {
 				this.data[0][rowNumber] = p.getTrackingno();
 				int logid = p.getLogistics().getId();
-				if(logid==ExcelService.LOGISTIC_SHXB || logid==ExcelService.LOGISTIC_YWSHXB){
+				String bizhong = "1";
+				if(logid==ExcelService.LOGISTICS_SHXB || logid==ExcelService.LOGISTICS_YWSHXB){
 					this.data[1][rowNumber] = "中邮上海挂号小包";		
-				}else if(logid==ExcelService.LOGISTIC_BJXB || logid==ExcelService.LOGISTIC_SZBJXB){
+				}else if(logid==ExcelService.LOGISTICS_BJXB || logid==ExcelService.LOGISTICS_SZBJXB){
 					this.data[1][rowNumber] = "中邮北京挂号小包";			
-				}else if(logid==ExcelService.LOGISTIC_BJXBBGH || logid==ExcelService.LOGISTIC_SZBJXBBGH||logid==ExcelService.LOGISTIC_SHXBBGH || logid==ExcelService.LOGISTIC_YWSHXBBGH){
+				}else if(logid==ExcelService.LOGISTICS_BJXBBGH || logid==ExcelService.LOGISTICS_SZBJXBBGH||logid==ExcelService.LOGISTICS_SHXBBGH || logid==ExcelService.LOGISTICS_YWSHXBBGH){
 					this.data[1][rowNumber] = "不挂号中国邮政小包（通用）";			
-				}else if(logid==ExcelService.LOGISTIC_SZHLXB || logid==ExcelService.LOGISTIC_BJHLXB||logid==ExcelService.LOGISTIC_SHHLXB || logid==ExcelService.LOGISTIC_YWHLXB){
+				}else if(logid==ExcelService.LOGISTICS_SZHLXB || logid==ExcelService.LOGISTICS_BJHLXB||logid==ExcelService.LOGISTICS_SHHLXB || logid==ExcelService.LOGISTICS_YWHLXB){
 					this.data[1][rowNumber] = "挂号荷兰邮政小包";			
-				}else if(logid==ExcelService.LOGISTIC_BJYYB || logid==ExcelService.LOGISTIC_SZYYB||logid==ExcelService.LOGISTIC_SHYYB || logid==ExcelService.LOGISTIC_YWYYB){
+				}else if(logid==ExcelService.LOGISTICS_BJYYB || logid==ExcelService.LOGISTICS_SZYYB||logid==ExcelService.LOGISTICS_SHYYB || logid==ExcelService.LOGISTICS_YWYYB){
 					this.data[1][rowNumber] = "挂号燕邮宝";			
+				}else if(logid==ExcelService.LOGISTICS_BJYYBBGH || logid==ExcelService.LOGISTICS_SZYYBBGH||logid==ExcelService.LOGISTICS_SHYYBBGH || logid==ExcelService.LOGISTICS_YWYYBBGH){
+					this.data[1][rowNumber] = "不挂号燕邮宝";			
+				}else if(logid==ExcelService.LOGISTICS_BJYODEL || logid==ExcelService.LOGISTICS_SZYODEL||logid==ExcelService.LOGISTICS_SHYODEL || logid==ExcelService.LOGISTICS_YWYODEL){
+					this.data[1][rowNumber] = "YODEL英国标准";	
+					bizhong="3";
+				}else if(logid==ExcelService.LOGISTICS_BJYODEL_SMALL || logid==ExcelService.LOGISTICS_SZYODEL_SMALL||logid==ExcelService.LOGISTICS_SHYODEL_SMALL || logid==ExcelService.LOGISTICS_YWYODEL_SMALL){
+					this.data[1][rowNumber] = "YODEL英国小包";			
+					bizhong="3";
+				}else if(logid==ExcelService.LOGISTICS_BJYODEL_ELE || logid==ExcelService.LOGISTICS_SZYODEL_ELE||logid==ExcelService.LOGISTICS_SHYODEL_ELE || logid==ExcelService.LOGISTICS_YWYODEL_ELE){
+					this.data[1][rowNumber] = "YODEL英国小包（含电）";			
+					bizhong="3";
+				}else if(logid==ExcelService.LOGISTICS_YWSHEUB){
+						this.data[1][rowNumber] = "线下E邮宝（上海）";			
 				}
 				this.data[2][rowNumber] = p.getRlordernumber();
 				this.data[3][rowNumber] = p.getBuyername();
@@ -84,7 +98,7 @@ public class GHZGYZXBExcel extends ExcelModel {
 				
 				this.data[15][rowNumber] = quantity;
 				this.data[16][rowNumber] = totalWeight;
-				this.data[17][rowNumber] = "1";
+				this.data[17][rowNumber] = bizhong;
 				this.data[18][rowNumber] = df.format(price);
 				this.data[19][rowNumber] = "";
 				this.data[20][rowNumber] = "";

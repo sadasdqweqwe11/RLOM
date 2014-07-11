@@ -125,28 +125,28 @@ public class LogisticsAction extends ActionSupport{
 		for (RLOrder rlOrder : rlOrders) {
 			RLOrder order = rlOrder.clone();
 			order.setId(0);
-			order.setRlordernumber("");
+			order.setRlordernumber("20"+rlOrder.getRlordernumber());
 			order.setSplitstatus(PageConfig.SPLIT_COPY);
 			order.setTrackingno("");
 			copyOrders.add(order);
 		}
 		this.rlOrderService.saveOrUpdateRLOrderList(copyOrders);
-		String STR_FORMAT = "0000"; 
-		DecimalFormat df = new DecimalFormat(STR_FORMAT);
-		for (RLOrder rlOrder : copyOrders) {
-			 int id = (int)rlOrder.getId()%10000;
-			 String date = rlOrder.getDate();
-			 String rlOrdernumber = "";
-			 if(date.length()>2){
-				 rlOrdernumber = date+df.format(id);
-			 }else{
-				 date = DateUtil.yyMMdd();
-				 rlOrdernumber = date+df.format(id);
-			 }
-			 //TOBE UPDATE copy出来的即是促销帐号，在这里为了区分将DATE少写两位，可能会造成打印标签的时候出现故障，测试一下。
-			 rlOrder.setRlordernumber(rlOrdernumber);
-		}
-		this.rlOrderService.saveOrUpdateRLOrderList(copyOrders);
+//		String STR_FORMAT = "0000"; 
+//		DecimalFormat df = new DecimalFormat(STR_FORMAT);
+//		for (RLOrder rlOrder : copyOrders) {
+//			 int id = (int)rlOrder.getId()%10000;
+//			 String date = rlOrder.getDate();
+//			 String rlOrdernumber = "";
+//			 if(date.length()>2){
+//				 rlOrdernumber = date+df.format(id);
+//			 }else{
+//				 date = DateUtil.yyMMdd();
+//				 rlOrdernumber = date+df.format(id);
+//			 }
+//			 //TOBE UPDATE copy出来的即是促销帐号，在这里为了区分将DATE少写两位，可能会造成打印标签的时候出现故障，测试一下。
+//			 rlOrder.setRlordernumber(rlOrdernumber);
+//		}
+//		this.rlOrderService.saveOrUpdateRLOrderList(copyOrders);
 		this.path = request.getHeader("referer");
 		return SUCCESS;
 	}

@@ -7,8 +7,8 @@
 			+ path + "/";
 %>
 
-	<script type="text/javascript" src="<%=path %>/js/jquery/dataTables/js/jquery.dataTables.js"></script>
-	<link rel="stylesheet" href="<%=path %>/js/jquery/dataTables/css/jquery.dataTables.css" type="text/css" />
+	<script type="text/javascript" src="<%=path %>/js/jquery/dataTables/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="<%=path %>/js/jquery/dataTables/css/jquery.dataTables.min.css" type="text/css" />
 <script type="text/javascript" charset="utf-8">
 	$(function(){
 		$.fn.squareSelection=function(){  
@@ -103,7 +103,11 @@
 	    $('#prTable').squareSelection();
 		
 		$('#prTable').dataTable( {
-	        "paging":   false
+			"scrollY":        "450px",
+			"scrollX":        "true",
+	        "scrollCollapse": true,
+	        "paging":         false,
+	        "info":     false	        
 	    } );
 		$("#all").click(function(){
 		if($("#all").attr("checked")){
@@ -125,6 +129,13 @@
 			$("input[name='orders']").attr("checked",false);		
 			$("."+account).attr("checked",true);		
 		});
+		$(".selMarket").click(function(){
+			var market = $(this).text();
+			market=account.replace(/[ ]/g,"");
+			$("input[name='orders']").attr("checked",false);		
+			$("."+market).attr("checked",true);		
+		});
+		
 		$(".scbd").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");
@@ -189,7 +200,7 @@
 				$("#form").attr("action", "<%=path%>/downloadTable.action?"+new Date()).submit();
 			}
 		});
-		$(".amazon").click(function(){
+		$(".amazonDownload").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");
 			return false;
@@ -197,6 +208,16 @@
 				$("#form").attr("action", "<%=path%>/downloadAmazon.action?"+new Date()).submit();
 			}
 		});
+		
+		$(".tongji").click(function(){
+			if($('input[name="orders"]:checked').length==0){
+			alert("请选择至少一项");
+			return false;
+			}else{
+				$("#form").attr("action", "<%=path%>/downloadTongji.action?"+new Date()).submit();
+			}
+		});
+		
 		$(".generate").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");
@@ -357,6 +378,13 @@
 	padding:2px 2px 2px 2px;
 	text-align:center;
 }
+.split6 {
+	font-family: "楷体";
+	background-color: #ef5b9c;
+	font-size: 12px;
+	padding:2px 2px 2px 2px;
+	text-align:center;
+}
 -->
 </style>
 		<form id="form" method="post">
@@ -431,7 +459,7 @@
 			</thead>
 				<c:forEach items="${rlOrders}" var="order" varStatus="sum">
 				<tr>
-					<td   class="split${order.splitstatus}"><input type="checkbox" name="orders" class="${fn:replace(order.account," ","")} ${order.vendor}" value="${order.id}"></td>
+					<td   class="split${order.splitstatus}"><input type="checkbox" name="orders" class="${fn:replace(order.account," ","")} ${fn:replace(order.marketplace," ","")} ${fn:replace(order.vendor," ","")}" value="${order.id}"></td>
 					<td   class="split${order.splitstatus}">${sum.index+1}</td>
 					<td   class="split${order.splitstatus}">${order.rlordernumber}</td>
 					<td   class="split${order.splitstatus}">${order.trackingno}</td>
@@ -448,11 +476,11 @@
 					</c:forEach>
 					</td>
 					<td  class="split${order.splitstatus}">${order.guojia}</td>
-					<td  class="split${order.splitstatus}">${order.marketplace}</td>
+					<td  class="split${order.splitstatus}"><span class="selAccount">${order.marketplace}</span></td>
 					<td  class="split${order.splitstatus}"><span class="selAccount">${order.account}</span></td>
 					<td  class="split${order.splitstatus}">${order.currency}</td>
 					<td  class="split${order.splitstatus}" id="logi${order.id}">${order.logistics.name}</td>
-										<td  class="split${order.splitstatus}">${order.date}</td>
+					<td  class="split${order.splitstatus}">${order.date}</td>
 					<td  class="split${order.splitstatus}" id="name${order.id}">${order.buyername}</td>
 					<td  class="split${order.splitstatus}">${order.shipaddress1}</td>
 					<td  class="split${order.splitstatus}">${order.shipcity}</td>
@@ -482,11 +510,12 @@
 				<span class="bq">下载标签   </span>
  				<span class="tracking">下载运单号   </span></th>
 
-				<th colspan="3"><span class="amazon">下载Amazon表单</span></th>
+				<th colspan="3"><span class="amazonDownload">下载Amazon表单</span></th>
+				<th colspan="2"><span class="tongji">下载统计表单</span></th>
 				<th colspan="3"><span class="splitOrder">拆单&nbsp;&nbsp;</span>
 				<span class="mergeOrder">合单&nbsp;&nbsp;</span>
 				<span class="copyOrder" >复制&nbsp;&nbsp;</span></th>	<th><span class="del">删除</span></th>
-				<th colspan="6">&nbsp;</th>
+				<th colspan="4">&nbsp;</th>
 					</tr>
 					</tfoot>
 				</table>
