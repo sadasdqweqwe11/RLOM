@@ -2872,11 +2872,11 @@ public class PdfServiceImpl implements PdfService {
 		if(null != order.getGuojia()){
 			if(order.getGuojia().equals("英国")){
 				country = "UNITED KINGDOM (GB)";
-			}
-			if(order.getGuojia().equals("美国")){
+			}else if(order.getGuojia().equals("美国")){
 				country = "UNITED STATE (US)";
+			}else if(order.getGuojia().equals("澳大利亚")){
+				country = "Australia (AU)";
 			}
-			
 		}
 		cell = new PdfPCell(new Phrase("Country  " + country, FontUtil.getChi8()));
 		cell.setBorder(Rectangle.NO_BORDER);

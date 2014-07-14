@@ -240,5 +240,9 @@
     		<!-- 下面的name和type不能改动 -->  
             <result name="xmlMessage" type="plainText"></result>    
    		</action>   
+		    <action name="getTrackingno" class="yanwenXML" method="getTrackingno" >  
+            <result name="xmlMessage" type="plainText"></result>    
+   		</action>   
    </package>  
+   
 </struts>

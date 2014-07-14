@@ -3470,3 +3470,6 @@ insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,p
 insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CTJZ21-WS02R","CTJZ21",1,0.045,8," WALL STICKER","墙贴",0,1,0,0);
 
 insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("PQ7200-1","CTJZ21",3,0.37,44,"ELECTRIC SHAVER","电动剃须刀",1,0,0,0);
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("PH7186","CTJZ21",3,0.35,24," ELECTRIC SHAVER","电动剃须刀",1,0,0,0);
+
+insert into logistics_sku(skuno, vendor,area,weight,price,name,pinming,battery,promotion,liquid,other) values("CBJZ11-AY893","CBJZ11",1,0.23,10,"WALL STICKER","墙贴",0,0,0,0);

@@ -53,7 +53,7 @@
 		if(myJSON.length>0){
 		//options+="<option value=''>==请选择类型==</option>";
 		for(var i=0;i<myJSON.length;i++){
-		options+="<option value="+myJSON[i].id+">"+myJSON[i].name+"</option>";
+		options+="<option value=\""+myJSON[i].id+"\">"+myJSON[i].name+"</option>";
 		}
 		$("#area").html(options);
 		$("#second").show();
@@ -110,7 +110,8 @@
 				<option value="1">按物流方式查询</option>
 				<option value="2">按物流帐号查询</option>
 				<option value="3">按集货中心查询</option>
-				<option value="5">按帐号查询查询</option>
+				<option value="4">按供货商查询</option>
+				<option value="5">按帐号查询</option>
 		</select> 
 		
 		<span id="second">

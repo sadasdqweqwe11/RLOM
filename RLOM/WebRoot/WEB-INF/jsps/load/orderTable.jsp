@@ -106,9 +106,8 @@
 			"scrollY":        "450px",
 			"scrollX":        "true",
 	        "scrollCollapse": true,
-	        "paging":         false,
-	        "info":     false	        
-	    } );
+	        "paging":         false
+		} );
 		$("#all").click(function(){
 		if($("#all").attr("checked")){
 			$("input[name='orders']").attr("checked",true);			
@@ -120,20 +119,20 @@
 		$(".selVendor").click(function(){
 			var vendor = $(this).text();
 			$("input[name='orders']").attr("checked",false);		
-			$("."+vendor).attr("checked",true);		
+			$("."+vendor.toUpperCase()).attr("checked",true);		
 		});
 		
 		$(".selAccount").click(function(){
 			var account = $(this).text();
 			account=account.replace(/[ ]/g,"");
 			$("input[name='orders']").attr("checked",false);		
-			$("."+account).attr("checked",true);		
+			$("."+account.toUpperCase()).attr("checked",true);		
 		});
 		$(".selMarket").click(function(){
 			var market = $(this).text();
 			market=account.replace(/[ ]/g,"");
 			$("input[name='orders']").attr("checked",false);		
-			$("."+market).attr("checked",true);		
+			$("."+market.toUpperCase()).attr("checked",true);		
 		});
 		
 		$(".scbd").click(function(){
@@ -458,8 +457,8 @@
 			</tr>
 			</thead>
 				<c:forEach items="${rlOrders}" var="order" varStatus="sum">
-				<tr>
-					<td   class="split${order.splitstatus}"><input type="checkbox" name="orders" class="${fn:replace(order.account," ","")} ${fn:replace(order.marketplace," ","")} ${fn:replace(order.vendor," ","")}" value="${order.id}"></td>
+				<tr> 
+					<td   class="split${order.splitstatus}"><input type="checkbox" name="orders" class="${fn:replace(order.account.toUpperCase()," ","")} ${fn:replace(order.marketplace.toUpperCase()," ","")} ${fn:replace(order.vendor," ","")}" value="${order.id}"></td>
 					<td   class="split${order.splitstatus}">${sum.index+1}</td>
 					<td   class="split${order.splitstatus}">${order.rlordernumber}</td>
 					<td   class="split${order.splitstatus}">${order.trackingno}</td>

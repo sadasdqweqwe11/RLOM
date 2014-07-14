@@ -67,10 +67,11 @@ public class AmazonExcel extends ExcelModel{
 				this.data[1][rowNumber] = item.getItemno();
 				this.data[2][rowNumber] = item.getQuantity();
 				//设定日期格式为yyyy-MM-dd
-				this.data[3][rowNumber] = DateUtil.reFormatDate(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
-				if(o.getGuojia().equals("美国")){
-					this.data[3][rowNumber] = DateUtil.getYesterday(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+				String date = DateUtil.reFormatDate(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+				if(("美国").equals(o.getGuojia())){
+					date = DateUtil.getYesterday(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
 				}
+				this.data[3][rowNumber] = date;
 				this.data[4][rowNumber] = carriercode;
 				this.data[5][rowNumber] = carriername;
 				this.data[6][rowNumber] = o.getTrackingno();

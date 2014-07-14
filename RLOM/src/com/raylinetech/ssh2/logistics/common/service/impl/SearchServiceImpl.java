@@ -57,6 +57,8 @@ public class SearchServiceImpl implements SearchService{
 			return this.rlOrderDao.findByDateLogisticsAddress(beginDate, endDate, code);
 		}else if(func.equals(SEARCH_ACCOUNT)){
 			return this.rlOrderDao.findByDateAccount(beginDate, endDate, code);
+		}else if(func.equals(SEARCH_VENDOR)){
+			return this.rlOrderDao.findByDateVendor(beginDate, endDate, code);
 		}
 		return null;
 	}
@@ -76,6 +78,8 @@ public class SearchServiceImpl implements SearchService{
 			return this.logisticsDao.getIdAddress();
 		}else if(func.equals(SEARCH_ACCOUNT)){
 			return this.rlOrderDao.getAccountsByDate(beginDate, endDate);
+		}else if(func.equals(SEARCH_VENDOR)){
+			return this.rlOrderDao.getVendorVendorByDate(beginDate, endDate);
 		}
 		return null;
 	}

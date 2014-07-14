@@ -31,23 +31,13 @@ public interface RLOrderDao {
 	public List<RLOrder> findByDateVendor(String beginDate, String endDate,
 			String vendor);
 
-
-//	public List<RLOrder> findByDateLogisticsAddress(String beginDate, String endDate,
-//			String vendor);
-//	
-//	public List<RLOrder> findByDateLogisticsAccount(String beginDate, String endDate,
-//			String vendor);
-//	
-//	public List<RLOrder> findByDateLogisticsAddress(String beginDate, String endDate,
-//			String vendor);
-	
-	
 	public List<RLOrder> findByRLOrdernumbers(List rlOrdernumbers);
 
 	public List<Object[]> getLogisticsAndCountFromDateVendor(String yyyyMMdd,
 			String yyyyMMdd2, String vendor);
 
 	public List<String> findVendorFromDate(String startDate, String endDate);
+	
 
 	public List<RLOrder> findByDateLogisticsAccount(String beginDate,
 			String endDate, String code);
@@ -62,4 +52,5 @@ public interface RLOrderDao {
 			String code);
 
 	public List getAccountsByDate(String beginDate, String endDate);
+	public List getVendorVendorByDate(String startDate, String endDate);
 }

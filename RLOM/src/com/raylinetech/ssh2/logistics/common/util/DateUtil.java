@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
+
 /**
  * @author malei
  * 
@@ -116,9 +118,20 @@ public class DateUtil {
 //		String d = ab.substring(ab.indexOf("/")+1,ab.length());
 //		System.out.println(c);
 //		System.out.println(d);
-    	System.out.println(yyMMdd());
-    	System.out.println(reFormatDate("20020124", "yyyyMMdd", "yy-MM-dd"));
-    	System.out.println(getTomorrow("20020124", "yyyyMMdd", "yyyy-MM-dd"));
+//    	System.out.println(yyMMdd());
+    	RLOrder o = new RLOrder();
+    	o.setDate(DateUtil.yyyyMMdd());
+    	o.setGuojia("美国");
+//    	o.setGuojia("yingguo");
+		//设定日期格式为yyyy-MM-dd
+		String date = DateUtil.reFormatDate(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+		if(("美国").equals(o.getGuojia())){
+			date = DateUtil.getYesterday(o.getDate(), "yyyyMMdd", "yyyy-MM-dd");
+		}
+		System.out.println(date);
+//    	System.out.println(reFormatDate("20020124", "yyyyMMdd", "yy-MM-dd"));
+//    	System.out.println(getTomorrow("20020124", "yyyyMMdd", "yyyy-MM-dd"));
+//    	System.out.println(getYesterday("20020124", "yyyyMMdd", "yyyy-MM-dd"));
     	
 	}
 

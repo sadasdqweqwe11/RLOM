@@ -70,7 +70,6 @@ public class LogisticsServiceImpl implements LogisticsService {
 						.getSkuno();
 				String account = rlOrder.getAccount();
 				String market = rlOrder.getMarketplace();
-				// 如果是指甲帖，高亮显示
 				if (null != skuno
 						&& PageConfig.isInZhijiaList(skuno.toUpperCase())) {
 					System.out.println("zhijia");
@@ -78,11 +77,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 					//TOBEUPDATE 添加ALI
 					if (!rlOrder.getMarketplace().equalsIgnoreCase(
 							"aliexpress")) {
+						// 如果是指甲帖，高亮显示
+						rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
 						if (!rlOrder.getRlorderitems().get(0).getQuantity().trim().equals("1")) {
 							RLOrderItem item = new RLOrderItem(0,
 									new Sku("RANDOM"), rlOrder.getRlorderitems().get(0).getQuantity().trim() + "", "");
 							rlOrder.getRlorderitems().add(item);
-							rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
 						}
 					}
 					result.add(rlOrder);
@@ -144,6 +144,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 		}
 
 		rlOrder.setLogistics(new Logistics(PdfService.LOGISTICS_BJXBBGH));
+		if(rlOrder.getGuojia().equals("巴西")||rlOrder.getGuojia().equals("俄罗斯")){
+			rlOrder.setLogistics(new Logistics(PdfService.LOGISTICS_BJYYBBGH));
+		}
 	}
 
 	/**

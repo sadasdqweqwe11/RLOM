@@ -65,21 +65,22 @@ public class PageConfig {
 		amazonList.add("CBJZ11-AM001LV");
 		amazonList.add("CBJZ11-AM001ZI");
 
+		amazonList.add("CBJX11201-Y");
+		amazonList.add("CBJZ11-AM003");
+		amazonList.add("CBJX11211-B");
+		amazonList.add("CSZW11-1208101063");
+		amazonList.add("CBJZ11-AM824");
+		amazonList.add("CBJX11197-G");
+		amazonList.add("CBJX11197-B");
+		amazonList.add("CSZW11-1208100801");
+		amazonList.add("CSZW11-1208101027");
+		amazonList.add("CBJX11204-G");
+		amazonList.add("CBJX11207-P");
+		amazonList.add("CBJX11202-P");
+		amazonList.add("CBJX11211-D");
+
 		
 		povosList = new ArrayList<String>();
-		povosList.add("CBJX11201-Y");
-		povosList.add("CBJZ11-AM003");
-		povosList.add("CBJX11211-B");
-		povosList.add("CSZW11-1208101063");
-		povosList.add("CBJZ11-AM824");
-		povosList.add("CBJX11197-G");
-		povosList.add("CBJX11197-B");
-		povosList.add("CSZW11-1208100801");
-		povosList.add("CSZW11-1208101027");
-		povosList.add("CBJX11204-G");
-		povosList.add("CBJX11207-P");
-		povosList.add("CBJX11202-P");
-		povosList.add("CBJX11211-D");
 
 		benList = new ArrayList<String>();
 		benList.add("CBJZ11-AM999T");

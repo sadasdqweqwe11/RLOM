@@ -186,10 +186,32 @@ chart.write('chartdiv12');
 				
 				$(".yanwen").click(function(){
 					 $.ajax({  
-            url:"<%=path%>/xml/yanwenLogin.action?name=100000&password=100001",  
+            url:"<%=path%>/xml/yanwenLogin.action?name=303616&password=RL303616",  
             type:"GET",  
             dataType:"xml",  
-            timeout: 1000,  
+            error: function(xml){  
+                alert('Error loading XML document'+xml);  
+            },  
+            success: function(xml){  
+               // $(xml).find("User").each(function(i){  
+               //     var id=$(this).children("id");   //取对象  
+               //     var id_value=$(this).children("id").text();  //取文本 或者 $("id" , xml).text();   
+               //     var name_value=$(this).children("name").text();  
+                    //alert(id_value);//这里就是ID的值了。  
+                    //alert($(this).attr("email")); //这里能显示student下的email属性。  
+                //    $('<li></li>').html(id_value+"&nbsp;&nbsp;&nbsp;"+name_value+"&nbsp;&nbsp;&nbsp;"+$(this).attr("email")).appendTo('ol');  
+                //});
+                var apiToken =   $(xml).find("User").children("ApiToken").text();
+                alert(apiToken);
+            }  
+        }); 
+        				}); 
+				$(".getTrackingno").click(function(){
+					 $.ajax({  
+            url:"<%=path%>/xml/getTrackingno.action",  
+            type:"GET",  
+            dataType:"xml",  
+            timeout: 5000,  
             error: function(xml){  
                 alert('Error loading XML document'+xml);  
             },  
@@ -206,7 +228,6 @@ chart.write('chartdiv12');
                 alert(apiToken);
             }  
         });  
-				
 				
 				
 					<%-- $.get("<%=path%>/xml/yanwenLogin.action?name=100000&password=100001",function(data){
@@ -328,7 +349,8 @@ chart.write('chartdiv12');
 			<c:forEach items="${vendors}" var="vendor"  varStatus="sum">
 				<a href="javascript:void(0)" class="c${(sum.index+2)%8+1} vendor">${vendor}</a>
 			</c:forEach>
-			<!-- <a href="javascript:void(0)" class="yanwen">燕文对接</a> -->
+			<a href="javascript:void(0)" class="yanwen">燕文对接</a>
+			<a href="javascript:void(0)" class="getTrackingno">trac</a>
 				</p>
 				
 				

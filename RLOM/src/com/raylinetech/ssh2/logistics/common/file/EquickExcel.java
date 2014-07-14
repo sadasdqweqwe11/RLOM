@@ -35,7 +35,10 @@ public class EquickExcel extends ExcelModel {
 					this.data[0][rowNumber] = "US";
 					String st = this.getShortState(p.getShipstate());
 					this.data[1][rowNumber] = st;
-					System.out.println("meiguomeiguomeiguo   "+st);
+				}else if(p.getGuojia().equals("澳大利亚")){
+					this.data[0][rowNumber] = "AU";
+//					String st = this.getShortState(p.getShipstate());
+//					this.data[1][rowNumber] = st;
 				}
 				//如果shipstate为空，则将shipcity写入city栏里
 				if(null==p.getShipstate()||"".equals(p.getShipstate().trim())){
