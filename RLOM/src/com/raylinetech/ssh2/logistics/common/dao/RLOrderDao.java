@@ -53,4 +53,7 @@ public interface RLOrderDao {
 
 	public List getAccountsByDate(String beginDate, String endDate);
 	public List getVendorVendorByDate(String startDate, String endDate);
+
+
+	public List<RLOrder> findByIdsOrderByLidSkunameQuaRLOid(List ids);
 }

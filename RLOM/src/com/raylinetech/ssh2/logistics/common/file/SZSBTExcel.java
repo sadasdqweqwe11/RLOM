@@ -65,15 +65,14 @@ public class SZSBTExcel extends ExcelModel {
 					this.data[8][rowNumber] = o.getRlorderitems().get(0).getSku().getName();
 					int quantity=0;
 					for (RLOrderItem item : o.getRlorderitems()) {
-						quantity = quantity + Integer.parseInt(item.getQuantity());
+						quantity = quantity + item.getQuantity();
 					}
 					this.data[9][rowNumber] = quantity;
 				}
 				this.data[10][rowNumber] = "";
 				this.data[11][rowNumber] = o.getCurrency();
 				DecimalFormat df = new DecimalFormat("#.##");
-				String price = df.format(Double.parseDouble(StringUtil
-						.getDoubleFromAmount(o.getAmount())) * 0.3);
+				String price = df.format(o.getAmount() * 0.3);
 				this.data[12][rowNumber] = Double.parseDouble(price);
 				this.data[13][rowNumber] = "0.1";
 				this.data[14][rowNumber] = Double.parseDouble(price);

@@ -122,6 +122,16 @@ public class RLOrderServiceImpl implements RLOrderService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<RLOrder> getRLOrdersZFJDFromRLOrderIds(List ids) {
+		return this.rlOrderDao.findByIdsOrderByLidSkunameQuaRLOid(ids);
+	}
+
+	@Override
+	public List<RLOrder> getRLOrdersBQFromIds(List ids) {
+		return this.rlOrderDao.findByIdsOrderByLidSkunameQuaRLOid(ids);
+	}
 	
 	
 

@@ -64,7 +64,7 @@ Create Table If Not Exists logistics.logistics_rlorder(
 	skuno varchar(30),
 	itemname varchar(50),
 	pinming varchar(50),
-	quantity varchar(10),
+	quantity int(10),
 	description varchar(255),
 	buyername varchar(30),
 	shipaddress1 varchar(100),
@@ -74,8 +74,9 @@ Create Table If Not Exists logistics.logistics_rlorder(
 	postalcode varchar(20),
 	shipcountry varchar(30),
 	buyerphonenumber varchar(20),
-	date varchar(8),
-	amount varchar(20),
+	date varchar(14),
+	amount double,
+	weight double,
 	trackingno varchar(30),
 	guojia varchar(30),
 	marketplace varchar(20),
@@ -91,7 +92,26 @@ Create Table If Not Exists logistics.logistics_rlorder(
 #alter table logistics_rlorder change ordernumber ordernumber varchar(50);
 #alter table logistics_rlorder Add column splitstatus int(4) default 0 AFTER logisticsid;
 #alter table logistics_rlorder Add column uid int(10) default 0 AFTER splitstatus;
- 
+
+
+alter table logistics_rlorder change date date varchar(14);
+alter table logistics_rlorder Add column qua int(10) default 0 AFTER quantity;
+alter table logistics_rlorder Add column weight double default 0 AFTER amount;
+alter table logistics_rlorder Add column amou double default 0 AFTER amount;
+
+update logistics_rlorder  set qua=quantity;
+update logistics_rlorder  set amou=amount;
+
+select * from logistics_rlorder where amou=0;
+
+alter table logistics_rlorder drop column amount;
+alter table logistics_rlorder drop column quantity;
+
+alter table logistics_rlorder change amou amount double;
+alter table logistics_rlorder change qua quantity int(10);
+
+select * from logistics_rlorder ;
+
 
 
 #order_item
@@ -101,9 +121,19 @@ Create Table If Not Exists logistics.logistics_rlorder_item(
 	orderno varchar(50),
 	itemno varchar(50),
 	skuid varchar(40),
-	quantity varchar(3),
+	quantity int(10),
 	description varchar(255)
 );
+
+alter table logistics_rlorder_item Add column qua int(10) default 0 AFTER skuid;
+update logistics_rlorder_item  set qua=quantity;
+select * from logistics_rlorder_item;
+alter table logistics_rlorder_item drop column quantity;
+alter table logistics_rlorder_item change qua quantity int(10);
+
+
+
+
 
 #order file 上传excel文件表
 Create Table If Not Exists logistics.logistics_orderFile(
@@ -201,6 +231,8 @@ insert into logistics_logistics(id,name,engname,logifunc,address,account,mailto,
 #drop table logistics.logistics_sku;
 Create Table If Not Exists logistics.logistics_sku(
 	skuno varchar(40) PRIMARY KEY,
+	skucode varchar(40),
+	des varchar(200),
 	vendor varchar(20),
 	area int(3) DEFAULT 0,
 	weight double,
@@ -216,4 +248,7 @@ Create Table If Not Exists logistics.logistics_sku(
 #alter table logistics_sku drop column id;
 #alter table logistics_sku change skuno skuno varchar(40) primary key;
 #alter table logistics_sku Add column name varchar(50) default "" AFTER price; 
-#alter table logistics_sku Add column pinming varchar(50) default "" AFTER name; 
+#alter table logistics_sku Add column pinming varchar(50) default "" AFTER name;
+
+#alter table logistics_sku Add column des varchar(200) default "" AFTER skuno;
+#alter table logistics_sku Add column skucode varchar(40) default "" AFTER skuno;  

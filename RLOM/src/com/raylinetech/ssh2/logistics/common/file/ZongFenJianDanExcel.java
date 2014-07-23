@@ -51,7 +51,7 @@ public class ZongFenJianDanExcel extends ExcelModel {
 					this.data[1][rowNumber] = o.getRlordernumber();
 					this.data[2][rowNumber] = o.getVendor();
 					if (null != o.getLogistics()) {
-						this.data[3][rowNumber] = item.getSku().getSkuno();
+						this.data[3][rowNumber] = item.getSku().getSkucode();
 						this.data[4][rowNumber] = item.getQuantity();
 						this.data[5][rowNumber] = o.getLogistics().getName();
 						this.data[6][rowNumber] = o.getLogistics().getAddress();

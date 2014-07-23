@@ -156,6 +156,9 @@
         <action name="downloadFJD"  class="downloadAction" method="downloadFJD">  
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>   
+        <action name="downloadRLFJD"  class="downloadAction" method="downloadRLFJD">  
+        <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
+        </action>   
         <action name="downloadZFJD"  class="downloadAction" method="downloadZFJD">  
         <result name="fail">/WEB-INF/jsps/mistaketip.jsp</result>
         </action>        

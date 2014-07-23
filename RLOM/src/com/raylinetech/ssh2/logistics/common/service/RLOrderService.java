@@ -39,6 +39,11 @@ public interface RLOrderService {
 	public List<RLOrder> mergeOrders(List<String> rlOrderIds);
 	
 	public List<RLOrder> copyOrders(List<String> rlOrderIds);
+
+	public List<RLOrder> getRLOrdersZFJDFromRLOrderIds(
+			List ids);
+
+	public List<RLOrder> getRLOrdersBQFromIds(List ids);
 	
 	
 }

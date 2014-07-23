@@ -647,7 +647,7 @@ public class PdfServiceImpl implements PdfService {
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					table.addCell(cell);
-					String sku = productDetail.getSku().getSkuno();
+					String sku = productDetail.getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}
@@ -656,7 +656,7 @@ public class PdfServiceImpl implements PdfService {
 					cell.setFixedHeight(20f);
 					cell.setColspan(2);
 					table.addCell(cell);
-					cell = new PdfPCell(new Phrase(productDetail.getQuantity(),
+					cell = new PdfPCell(new Phrase(productDetail.getQuantity()+"",
 							FontUtil.getEng8()));
 					cell.setUseAscender(true);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -706,7 +706,7 @@ public class PdfServiceImpl implements PdfService {
 	 */
 	private PdfPTable formZGYZPY(PdfWriter writer, RLOrder rlOrder) {
 		
-		float[] widths2 = { 0.49f, 0.02f, 0.49f };
+		float[] widths2 = { 0.48f, 0.04f, 0.48f };
 		PdfPTable table = new PdfPTable(widths2);
 		table.setWidthPercentage(100);
 		PdfPCell cellOuter21 = null;
@@ -778,7 +778,7 @@ public class PdfServiceImpl implements PdfService {
 			// trd 3*1
 			cell = new PdfPCell(new Phrase("可径行开拆\nMay be opened officially", chi8));
 			cell.setBorder(Rectangle.BOTTOM);
-			cell.setColspan(4);
+			cell.setColspan(2);
 			table.addCell(cell);
 			// for 3*1
 			cell = new PdfPCell(new Phrase("中国邮政\nCHINA POST", chi8));
@@ -841,7 +841,7 @@ public class PdfServiceImpl implements PdfService {
 
 			cell = new PdfPCell(new Phrase(
 					"​内件详细名称和数量\n Quantity and detailed description of contents",
-					chi8));
+					chi5));
 			cell.setColspan(3);
 			table.addCell(cell);
 
@@ -856,29 +856,29 @@ public class PdfServiceImpl implements PdfService {
 			 * 这里是内件详细名称和价值，预留4个书写位置
 			 */
 			int quantity = 0;
-			double totalPrice = 0.0;
+			double totalPrice = StringUtil.random(3.99, 14.99);
 			double totalWeight = 0.0;
 			for (RLOrderItem l : rlOrder.getRlorderitems()) {
 				// 申报价值
-				quantity = quantity+Integer.parseInt(l.getQuantity());
-				if(null != rlOrder.getAmount() &&!"".equals(rlOrder.getAmount().trim())){
-					totalPrice= Double.parseDouble(StringUtil
-							.getDoubleFromAmount(rlOrder.getAmount())) * 0.3 + totalPrice;
-				}
+				quantity = quantity+l.getQuantity();
+//				if(null != rlOrder.getAmount() &&!"".equals(rlOrder.getAmount().trim())){
+//					totalPrice= 
+//							.getDoubleFromAmount(rlOrder.getAmount())) * 0.3 + totalPrice;
+//				}
 				// 实际重量
-				totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+				totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 			}
 			DecimalFormat df = new DecimalFormat("#.##");
 			for (int i = 0; i < 4; i++) {
 				RLOrderItem productDetail = null;
 				if (i < products.size()) {
 					productDetail = products.get(i);
-					String sku = productDetail.getSku().getSkuno();
+					String sku = productDetail.getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}
 					String pinming = sku.trim() + " " + productDetail.getSku().getPinming()+"/"+
-							productDetail.getSku().getName() + " * " + productDetail.getQuantity();
+							productDetail.getQuantity() + " * " + productDetail.getSku().getName();
 //						if (pinming.length() > 36) {
 //							pinming = pinming.substring(0, 36) + " ...";
 //						}
@@ -891,9 +891,9 @@ public class PdfServiceImpl implements PdfService {
 						cell.setBorder(Rectangle.RIGHT);
 						cell.setColspan(2);
 						table.addCell(cell);
-						String price = df
-								.format(Double.parseDouble(StringUtil
-										.getDoubleFromAmount(rlOrder.getAmount())) * 0.3);
+						String price = df.format(StringUtil.random(3.99, 14.99));
+//								.format(Double.parseDouble(StringUtil
+//										.getDoubleFromAmount(rlOrder.getAmount())) * 0.3);
 						cell = new PdfPCell(new Phrase(price, chi8));
 						cell.setBorder(Rectangle.NO_BORDER);
 						cell.setColspan(1);
@@ -1259,7 +1259,7 @@ public class PdfServiceImpl implements PdfService {
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					table.addCell(cell);
-					String sku = productDetail.getSku().getSkuno();
+					String sku = productDetail.getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}
@@ -1268,7 +1268,7 @@ public class PdfServiceImpl implements PdfService {
 					cell.setFixedHeight(20f);
 					cell.setColspan(2);
 					table.addCell(cell);
-					cell = new PdfPCell(new Phrase(productDetail.getQuantity(),
+					cell = new PdfPCell(new Phrase(productDetail.getQuantity()+"",
 							FontUtil.getEng8()));
 					cell.setUseAscender(true);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1499,9 +1499,9 @@ public class PdfServiceImpl implements PdfService {
 					cell.setColspan(2);
 					table.addCell(cell);
 					DecimalFormat df = new DecimalFormat("#.##");
-					String price = df
-							.format(Double.parseDouble(StringUtil
-									.getDoubleFromAmount(printLable.getAmount())) * 0.3);
+					String price = df.format(StringUtil.random(3.99, 14.99));
+//							.format(Double.parseDouble(StringUtil
+//									.getDoubleFromAmount(printLable.getAmount())) * 0.3);
 					cell = new PdfPCell(new Phrase("$" + price, chi8));
 					cell.setBorder(Rectangle.NO_BORDER);
 					cell.setColspan(1);
@@ -1750,22 +1750,22 @@ public class PdfServiceImpl implements PdfService {
 		 * 这里是内件详细名称和价值，预留4个书写位置
 		 */
 		int quantity = 0;
-		double totalPrice = 0.0;
+		double totalPrice = StringUtil.random(3.99, 14.99);
 		double totalWeight = 0.0;
 		StringBuilder sb = new StringBuilder();
 		for (RLOrderItem l : printLable.getRlorderitems()) {
 			Sku sku = l.getSku();
-			String skuno = sku.getSkuno();
+			String skuno = sku.getSkucode();
 			if('C'==skuno.charAt(0)||'c'==skuno.charAt(0)){
 				skuno = skuno.substring(6);
 			}
-			sb.append(skuno.trim() + " * " + l.getQuantity()+"\n");
+			sb.append(l.getQuantity() + " * " + skuno.trim() +"\n");
 			// 申报价值
-			quantity = quantity+Integer.parseInt(l.getQuantity());
-			totalPrice= Double.parseDouble(StringUtil
-					.getDoubleFromAmount(printLable.getAmount())) * 0.3 + totalPrice;
+			quantity = quantity+l.getQuantity();
+//			totalPrice= Double.parseDouble(StringUtil
+//					.getDoubleFromAmount(printLable.getAmount())) * 0.3 + totalPrice;
 			// 实际重量
-			totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+			totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 		}
 		DecimalFormat df = new DecimalFormat("#.##");
 		
@@ -1773,7 +1773,7 @@ public class PdfServiceImpl implements PdfService {
 			RLOrderItem productDetail = null;
 			if (i < products.size()) {
 					productDetail = products.get(i);
-					String sku = productDetail.getSku().getSkuno();
+					String sku = productDetail.getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}
@@ -2000,18 +2000,18 @@ public class PdfServiceImpl implements PdfService {
 				left.addCell(cell);
 				int quantity = 1;
 				double weight=100.00;
-				double value = 0.5 * Double.parseDouble(order.getAmount());
+				double value = StringUtil.random(3.99, 14.99);
 				String mutilItemnames = "";
 				StringBuilder sb = new StringBuilder();
 				for (RLOrderItem item : order.getRlorderitems()) {
-					quantity = quantity + Integer.parseInt(item.getQuantity());
+					quantity = quantity + item.getQuantity();
 					weight = weight + item.getSku().getWeight();
 					mutilItemnames  = mutilItemnames + ",  " +item.getSku().getName();
-					String sku = item.getSku().getSkuno();
+					String sku = item.getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}
-					sb.append("  " + sku.trim() + " * " + item.getQuantity()+"\n");
+					sb.append("  " + item.getQuantity() + " * " + sku.trim()+"\n");
 				}
 				mutilItemnames = mutilItemnames.substring(1);
 
@@ -2299,10 +2299,14 @@ public class PdfServiceImpl implements PdfService {
 				document.add(table1);
 				document.add(new Paragraph("\n"));  
 				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
 				PdfPTable table2 = this.formGHZGYZXB(writer,
 						orders.get(1));
 				// 第一个模块
 				document.add(table2);
+				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
 				document.add(new Paragraph("\n"));  
 				document.add(new Paragraph("\n"));  
 				PdfPTable table3 = this.formGHZGYZXB(writer,
@@ -2387,7 +2391,7 @@ public class PdfServiceImpl implements PdfService {
 				cell1.setVerticalAlignment(Element.ALIGN_BOTTOM);
 				cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tableDown.addCell(cell1);
-				String sku = items.get(i).getSku().getSkuno();
+				String sku = items.get(i).getSku().getSkucode();
 				if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 					sku = sku.substring(6);
 				}
@@ -2396,7 +2400,7 @@ public class PdfServiceImpl implements PdfService {
 				cell1.setVerticalAlignment(Element.ALIGN_BOTTOM);
 				tableDown.addCell(cell1);
 				
-				cell1 = new PdfPCell(new Phrase(items.get(i).getQuantity(), FontUtil.getEng8()));
+				cell1 = new PdfPCell(new Phrase(items.get(i).getQuantity()+"", FontUtil.getEng8()));
 				cell1.setUseAscender(true);
 				cell1.setVerticalAlignment(Element.ALIGN_BOTTOM);
 				cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -2579,12 +2583,15 @@ public class PdfServiceImpl implements PdfService {
 						orders.add(null);
 					}
 				}
-				System.out.println("size ====" + orders.size());
 				PdfPTable table = this.formZGYZPY(writer,orders.get(0));
 				document.add(table);
+				document.add(new Paragraph("\n")); 
+				document.add(new Paragraph("\n")); 
 				document.add(new Paragraph("\n"));  
 				PdfPTable table2 = this.formZGYZPY(writer,orders.get(1));
 				document.add(table2);
+				document.add(new Paragraph("\n")); 
+				document.add(new Paragraph("\n")); 
 				document.add(new Paragraph("\n"));  
 				PdfPTable table3 = this.formZGYZPY(writer,orders.get(2));
 				document.add(table3);
@@ -2724,15 +2731,18 @@ public class PdfServiceImpl implements PdfService {
 				document.add(table);
 				document.add(new Paragraph("\n"));  
 				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
 				RLOrder[] rls2 = {orders.get(2),orders.get(3)};
 				PdfPTable table2 = this.formYYB(writer,rls2);
 				document.add(table2);
 				document.add(new Paragraph("\n"));  
 				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
+				document.add(new Paragraph("\n"));  
 				RLOrder[] rls3 = {orders.get(4),orders.get(5)};
 				PdfPTable table3 = this.formYYB(writer,rls3);
 				document.add(table3);
-				document.add(new Paragraph("\n"));  
 			}
 		} catch (DocumentException e) {
 			e.printStackTrace();
@@ -2916,21 +2926,21 @@ public class PdfServiceImpl implements PdfService {
 		table.addCell(cell);
 		
 		int quantity = 0;
-		double totalPrice = 0.0;
+		double totalPrice = StringUtil.random(3.99, 14.99);
 		double totalWeight = 0.0;
 		for (RLOrderItem l : order.getRlorderitems()) {
 			// 申报价值
-			quantity = quantity+Integer.parseInt(l.getQuantity());
-			totalPrice= Double.parseDouble(StringUtil
-					.getDoubleFromAmount(order.getAmount())) * 0.3 + totalPrice;
+			quantity = quantity+l.getQuantity();
+//			totalPrice= Double.parseDouble(StringUtil
+//					.getDoubleFromAmount(order.getAmount())) * 0.3 + totalPrice;
 			// 实际重量
-			totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+			totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 		}
 		
 		DecimalFormat df = new DecimalFormat("#.##");
-		String price = df
-				.format(Double.parseDouble(StringUtil
-						.getDoubleFromAmount(order.getAmount())) * 0.3);
+		String price = df.format(StringUtil.random(3.99, 14.99));
+//				.format(Double.parseDouble(StringUtil
+//						.getDoubleFromAmount(order.getAmount())) * 0.3);
 		//weight
 		cell = new PdfPCell(new Phrase("Weight  "+ df.format(totalWeight)+"      Declare Value  " +  (int)totalPrice+" USD", FontUtil.getEng8()));
 		cell.setBorder(Rectangle.NO_BORDER);
@@ -3176,11 +3186,11 @@ public class PdfServiceImpl implements PdfService {
 		
 		StringBuilder sb = new StringBuilder();
 		for (RLOrderItem l : order.getRlorderitems()) {
-			String sku = l.getSku().getSkuno();
+			String sku = l.getSku().getSkucode();
 			if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 				sku = sku.substring(6);
 			}
-			sb.append("  " + sku.trim() + " * " + l.getQuantity()+"\n");
+			sb.append("  " + l.getQuantity() + " * " + sku.trim()+"\n");
 		}
 		cell = new PdfPCell(new Phrase(sb.toString(),FontUtil.getChi8()));
 		cell.setColspan(2);
@@ -3331,11 +3341,11 @@ public class PdfServiceImpl implements PdfService {
 		StringBuilder sb = new StringBuilder();
 		sb.append(order.getRlordernumber()+"\n");
 		for (RLOrderItem l : order.getRlorderitems()) {
-			String sku = l.getSku().getSkuno();
+			String sku = l.getSku().getSkucode();
 			if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 				sku = sku.substring(6);
 			}
-			sb.append(sku.trim() + " * " + l.getQuantity()+"\n");
+			sb.append(l.getQuantity() + " * " + sku.trim() +"\n");
 			
 		}
 		cell = new PdfPCell(new Phrase(sb.toString() ,FontUtil.getEng8()));
@@ -3414,17 +3424,17 @@ public class PdfServiceImpl implements PdfService {
 		
 		
 		int quantity = 0;
-		double totalPrice = 0.0;
+		double totalPrice = StringUtil.random(3.99, 14.99);
 		double totalWeight = 0.0;
 		StringBuilder sb = new StringBuilder();
 		for (RLOrderItem l : order.getRlorderitems()) {
-			sb.append(l.getSku().getName() + " * " + l.getQuantity()+"\n");
+			sb.append(l.getQuantity() + " * " + l.getSku().getName() +"\n");
 			// 申报价值
-			quantity = quantity+Integer.parseInt(l.getQuantity());
-			totalPrice= Double.parseDouble(StringUtil
-					.getDoubleFromAmount(order.getAmount())) * 0.3 + totalPrice;
+			quantity = quantity+l.getQuantity();
+//			totalPrice= Double.parseDouble(StringUtil
+//					.getDoubleFromAmount(order.getAmount())) * 0.3 + totalPrice;
 			// 实际重量
-			totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+			totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 		}
 		DecimalFormat df = new DecimalFormat("#.##");
 		cell = new PdfPCell(new Phrase(df.format(totalWeight),FontUtil.getEng6()));
@@ -3490,7 +3500,7 @@ public class PdfServiceImpl implements PdfService {
 			for (int i = 0; i < 4; i++) {
 				if(i<items.size()){
 					sb.append("    ");
-					String sku = items.get(i).getSku().getSkuno();
+					String sku = items.get(i).getSku().getSkucode();
 					if('C'==sku.charAt(0)||'c'==sku.charAt(0)){
 						sku = sku.substring(6);
 					}

@@ -224,4 +224,14 @@ public class RLOrderDaoImpl implements RLOrderDao{
 				return list;
 			}	
 	}
+	@Override
+	public List<RLOrder> findByIdsOrderByLidSkunameQuaRLOid(List ids) {
+		String hql = "from RLOrder order where order.id in (:ids) order by order.logistics.id,order.sku.name,order.quantity,order.id";
+		List list =  this.hibernateTemplate.findByNamedParam(hql, "ids", ids);
+		if(list.size()== 0 ){
+			return null;
+		}else{
+			return list;
+		}
+	}
 }

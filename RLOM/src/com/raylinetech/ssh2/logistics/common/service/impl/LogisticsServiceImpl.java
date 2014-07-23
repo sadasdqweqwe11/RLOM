@@ -18,6 +18,7 @@ import com.raylinetech.ssh2.logistics.common.entity.Sku;
 import com.raylinetech.ssh2.logistics.common.service.LogisticsService;
 import com.raylinetech.ssh2.logistics.common.service.PdfService;
 import com.raylinetech.ssh2.logistics.common.util.SortUtil;
+import com.raylinetech.ssh2.logistics.common.util.StringUtil;
 
 public class LogisticsServiceImpl implements LogisticsService {
 
@@ -73,18 +74,18 @@ public class LogisticsServiceImpl implements LogisticsService {
 				if (null != skuno
 						&& PageConfig.isInZhijiaList(skuno.toUpperCase())) {
 					System.out.println("zhijia");
-					this.completRLOrder(rlOrder, skuno);
 					//TOBEUPDATE 添加ALI
 					if (!rlOrder.getMarketplace().equalsIgnoreCase(
 							"aliexpress")) {
 						// 如果是指甲帖，高亮显示
 						rlOrder.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
-						if (!rlOrder.getRlorderitems().get(0).getQuantity().trim().equals("1")) {
+						if (rlOrder.getRlorderitems().get(0).getQuantity()!=1) {
 							RLOrderItem item = new RLOrderItem(0,
-									new Sku("RANDOM"), rlOrder.getRlorderitems().get(0).getQuantity().trim() + "", "");
+									new Sku("RANDOM"), rlOrder.getRlorderitems().get(0).getQuantity(), "");
 							rlOrder.getRlorderitems().add(item);
 						}
 					}
+					this.completRLOrder(rlOrder, skuno);
 					result.add(rlOrder);
 				} else if (null != skuno
 						&& PageConfig.isInpijingList(skuno.toUpperCase())) {
@@ -132,17 +133,18 @@ public class LogisticsServiceImpl implements LogisticsService {
 		rlOrder.setVendor(sku.getVendor());
 		rlOrder.setItemname(sku.getName());
 		rlOrder.setPinming(sku.getPinming());
-		rlOrder.setSkuno(sku.getSkuno());
+		rlOrder.setSku(sku);
 		rlOrder.setDescription(rlOrder.getRlorderitems().get(0)
 				.getDescription());
 		rlOrder.getRlorderitems().get(0).setSku(sku);
-		if (null == rlOrder.getAmount()
-				|| rlOrder.getAmount().trim().equals("")) {
-			DecimalFormat df = new DecimalFormat("#.##");
-			String amount = df.format(3.0 + Math.random() * 11);
-			rlOrder.setAmount(amount);
+		if (rlOrder.getAmount()==0) {
+			rlOrder.setAmount(3.0 + Math.random() * 11);
 		}
-
+		int quantity = 0;
+		for (RLOrderItem item : rlOrder.getRlorderitems()) {
+			quantity+=item.getQuantity();
+		}
+		rlOrder.setQuantity(quantity);
 		rlOrder.setLogistics(new Logistics(PdfService.LOGISTICS_BJXBBGH));
 		if(rlOrder.getGuojia().equals("巴西")||rlOrder.getGuojia().equals("俄罗斯")){
 			rlOrder.setLogistics(new Logistics(PdfService.LOGISTICS_BJYYBBGH));
@@ -163,20 +165,17 @@ public class LogisticsServiceImpl implements LogisticsService {
 		for (RLOrder rlOrder : rlOrders) {
 			// 将只有一件的直接返回,进入下一次循环
 			if (rlOrder.getRlorderitems().size() == 1
-					&& rlOrder.getRlorderitems().get(0).getQuantity().trim()
-							.equals("1")) {
-				if (null == rlOrder.getAmount()
-						|| rlOrder.getAmount().equals("")) {
-					DecimalFormat df = new DecimalFormat("#.##");
-					String amount = df.format(3.0 + Math.random() * 11);
-					rlOrder.setAmount(amount);
+					&& rlOrder.getRlorderitems().get(0).getQuantity()==1) {
+				if ( rlOrder.getAmount()==0) {
+					rlOrder.setAmount(3.0 + Math.random() * 11);
 				}
 				String skuno = rlOrder.getRlorderitems().get(0).getSku()
 						.getSkuno();
 				Sku sku = this.skuDao.find(skuno);
 				rlOrder.getRlorderitems().get(0).setSku(sku);
+				rlOrder.setQuantity(rlOrder.getRlorderitems().get(0).getQuantity());
 				rlOrder.setVendor(sku.getVendor());
-				rlOrder.setSkuno(sku.getSkuno());
+				rlOrder.setSku(sku);
 				rlOrder.setItemname(sku.getName());
 				rlOrder.setPinming(sku.getPinming());
 				rlOrder.setDescription(rlOrder.getRlorderitems().get(0)
@@ -230,8 +229,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 					// 如果只有一个sku这个sku的quantity为1，则直接返回，否则
 					// 临时逻辑，如果size==1，先判断是否是目标格式，如果是设置
 					if (areaItems.size() == 1
-							&& areaItems.get(0).getQuantity().trim()
-									.equals("1")) {
+							&& areaItems.get(0).getQuantity()==1) {
 						RLOrder order = null;
 						try {
 							order = (RLOrder) rlOrder.clone();
@@ -239,17 +237,14 @@ public class LogisticsServiceImpl implements LogisticsService {
 							e.printStackTrace();
 						}
 						order.setRlorderitems(areaItems);
-						if (null == rlOrder.getAmount()
-								|| rlOrder.getAmount().equals("")) {
-							DecimalFormat df = new DecimalFormat("#.##");
-							String amount = df.format(3.0 + Math.random() * 11);
-							rlOrder.setAmount(amount);
+						if (rlOrder.getAmount()==0) {
+							rlOrder.setAmount(3.0 + Math.random() * 11);
 						}
 						String skuno = rlOrder.getRlorderitems().get(0)
 								.getSku().getSkuno();
 						Sku sku = this.skuDao.find(skuno);
 						rlOrder.getRlorderitems().get(0).setSku(sku);
-						rlOrder.setSkuno(sku.getSkuno());
+						rlOrder.setSku(sku);
 						rlOrder.setVendor(sku.getVendor());
 						rlOrder.setItemname(sku.getName());
 						rlOrder.setPinming(sku.getPinming());
@@ -309,19 +304,21 @@ public class LogisticsServiceImpl implements LogisticsService {
 									if (PageConfig.isInZhijiaList(item.getSku()
 											.getSkuno().toUpperCase())) {
 										order.setSplitstatus(PageConfig.SPLIT_SYS_FIRST);
-										zhijiaCount += Integer.parseInt(item
-												.getQuantity());
+										zhijiaCount += item.getQuantity();
 									}
 								}
 								if (zhijiaCount > 1) {
-									RLOrderItem item = new RLOrderItem(0,
-											new Sku("RANDOM"),
-											zhijiaCount + "", "");
+									RLOrderItem item = new RLOrderItem(0,new Sku("RANDOM"),
+											zhijiaCount, "");
 									oneOrder.add(item);
 								}
 							}
 							// TOBEUPDATE
-
+							int quantity = 0;
+							for (RLOrderItem item : oneOrder) {
+									quantity += item.getQuantity();
+							}
+							order.setQuantity(quantity);
 							order.setRlorderitems(oneOrder);
 							order.setVendor(oneOrder.get(0).getSku()
 									.getVendor());
@@ -329,15 +326,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 									.getName());
 							order.setPinming(oneOrder.get(0).getSku()
 									.getPinming());
-							order.setSkuno(oneOrder.get(0).getSku().getSkuno());
+							order.setSku(oneOrder.get(0).getSku());
 							order.setDescription(oneOrder.get(0)
 									.getDescription());
-							if (null == rlOrder.getAmount()
-									|| rlOrder.getAmount().trim().equals("")) {
-								DecimalFormat df = new DecimalFormat("#.##");
-								String amount = df
-										.format(3.0 + Math.random() * 11);
-								order.setAmount(amount);
+							if (rlOrder.getAmount()==0) {
+								order.setAmount(3.0 + Math.random() * 11);
 							}
 							resultList.add(order);
 						}
@@ -365,7 +358,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 					+ allLists.get(i).getSku().getBattery());
 		}
 		for (int i = 0; i < allLists.size(); i++) {
-			int quantity = Integer.parseInt(allLists.get(i).getQuantity());
+			int quantity = allLists.get(i).getQuantity();
 			while (quantity > 0) {
 				double totalweight = weight
 						+ allLists.get(i).getSku().getWeight();
@@ -385,9 +378,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 							} catch (CloneNotSupportedException e) {
 								e.printStackTrace();
 							}
-							item.setQuantity("1");
+							item.setQuantity(1);
 							quantity = quantity - 1;
-							allLists.get(i).setQuantity(quantity + "");
+							allLists.get(i).setQuantity(quantity);
 							// oneOrder.put(item.getSku().getVendor(), item);
 							oneOrder.put(item.getSku().getSkuno(), item);
 							if (quantity == 0) {
@@ -398,14 +391,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 							break;
 						}
 					} else {
-						int qua = Integer.parseInt(oneOrder.get(skuno)
-								.getQuantity());
+						int qua = oneOrder.get(skuno).getQuantity();
 						qua = qua + 1;
-						oneOrder.get(skuno).setQuantity(qua + "");
+						oneOrder.get(skuno).setQuantity(qua);
 						quantity = quantity - 1;
-						allLists.get(i).setQuantity(quantity + "");
-						// oneOrder.put(item.getSku().getVendor(), item);
-						// oneOrder.put(item.getSku().getVendor(), item);
+						allLists.get(i).setQuantity(quantity);
 						if (quantity == 0) {
 							toDel.add(allLists.get(i));
 						}
@@ -443,6 +433,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 		if (skuno.indexOf("--") > 0) {
 			skuno = skuno.substring(0, skuno.indexOf(LogisticsService.BZ));
 		}
+		skuno = StringUtil.getNumberAndletterFromString(skuno);
 		Sku sku = this.skuDao.find(skuno);
 		if (null == sku) {
 			List no = orderMap.get(0);
@@ -460,7 +451,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 			int area = sku.getArea();
 			int battery = sku.getBattery();
 			int promotion = sku.getPromotion();
-			String quantity = items.get(0).getQuantity();
+			int quantity = items.get(0).getQuantity();
 			String account = rlOrder.getAccount();
 			double weight = 0.0;
 			for (RLOrderItem item : items) {
@@ -469,8 +460,9 @@ public class LogisticsServiceImpl implements LogisticsService {
 					skuno1 = skuno1.substring(0,
 							skuno1.indexOf(LogisticsService.BZ));
 				}
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				Sku sku1 = this.skuDao.find(skuno);
-				weight = weight + Double.parseDouble(item.getQuantity())
+				weight = weight + (double)item.getQuantity()
 						* sku1.getWeight();
 
 			}
@@ -534,7 +526,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 
 	private int getlogisticsId(String vendor, String postalCode, String guojia,
 			int area, int battery, double weight, int promotion,
-			String quantity, String account) {
+			int quantity, String account) {
 		int[] datas = { 0, 0, 0, 0, 0, 0, 0, 0 };
 		if ("CDGV11".equalsIgnoreCase(vendor)) {
 			datas[0] = 1;
@@ -569,8 +561,8 @@ public class LogisticsServiceImpl implements LogisticsService {
 		if (flag) {
 			datas[4] = 1;
 		}
-
-		if (weight >= 0.3) {
+		//原来是0.3 2014年7月17日
+		if (weight >= 0.42) {
 			datas[5] = 1;
 		}
 

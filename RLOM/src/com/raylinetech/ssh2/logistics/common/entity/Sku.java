@@ -14,6 +14,10 @@ public class Sku {
 	@Id
 	private String skuno;
 	@Column
+	private String skucode;
+	@Column
+	private String des;
+	@Column
 	private String vendor;
 	@Column
 	private int area;
@@ -94,18 +98,19 @@ public class Sku {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPinming() {
-		return pinming;
+	public String getSkucode() {
+		return skucode;
 	}
-	public void setPinming(String pinming) {
-		this.pinming = pinming;
+	public void setSkucode(String skucode) {
+		this.skucode = skucode;
 	}
-	
-	public Sku(String skuno, String vendor, int area, double weight,
-			double price, String name, String pinming, int battery,
-			int promotion, int liquid, int other) {
+	public Sku(String skuno, String skucode, String des, String vendor,
+			int area, double weight, double price, String name, String pinming,
+			int battery, int promotion, int liquid, int other) {
 		super();
 		this.skuno = skuno;
+		this.skucode = skucode;
+		this.des = des;
 		this.vendor = vendor;
 		this.area = area;
 		this.weight = weight;
@@ -116,6 +121,19 @@ public class Sku {
 		this.promotion = promotion;
 		this.liquid = liquid;
 		this.other = other;
+	}
+	public String getPinming() {
+		return pinming;
+	}
+	public void setPinming(String pinming) {
+		this.pinming = pinming;
+	}
+	
+	public String getDes() {
+		return des;
+	}
+	public void setDes(String des) {
+		this.des = des;
 	}
 	public Sku() {
 		super();

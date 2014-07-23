@@ -348,9 +348,9 @@ public class CheckExcelAction extends ActionSupport {
 			 int quantity = 0;
 			 List<RLOrderItem> oneOrder = rlOrder.getRlorderitems();
 			 for (RLOrderItem rlOrderItem : oneOrder) {
-				quantity = Integer.parseInt(rlOrderItem.getQuantity()) + quantity;
+				quantity = rlOrderItem.getQuantity() + quantity;
 			}
-			 rlOrder.setQuantity(quantity+"");
+			 rlOrder.setQuantity(quantity);
 			 rlOrder.setVendor(oneOrder.get(0).getSku().getVendor());
 			 rlOrder.setItemname(oneOrder.get(0).getSku().getName());
 			 rlOrder.setPinming(oneOrder.get(0).getSku().getPinming());
@@ -429,14 +429,14 @@ public class CheckExcelAction extends ActionSupport {
 		OrderFile orderFile = this.orderFileService.find(Long.parseLong(this.fid));
 		List<List> lists = this.excelService.excelToList(path+PageConfig.AMOUNTFILE_PATH, orderFile);
 		List first = new ArrayList();
-		Map orderMap = new HashMap();
+		Map<String,String> orderMap = new HashMap();
 		for (List list : lists) {
-			orderMap.put(list.get(1), list.get(0));
+			orderMap.put(list.get(1).toString().trim(), list.get(0).toString().trim());
 			first.add(list.get(1));
 		}
 		List<RLOrder> orders = this.rlOrderService.getRLOrderListFromRLOrdernumbers(first);
 		for (RLOrder rlOrder : orders) {
-			rlOrder.setAmount((String)orderMap.get(rlOrder.getRlordernumber()));
+			rlOrder.setAmount(Double.parseDouble(orderMap.get(rlOrder.getRlordernumber())));
 		}
 		this.rlOrderService.saveOrUpdateRLOrderList(orders);
 		this.urlPath = "orderFile/"+orderFile.getId();

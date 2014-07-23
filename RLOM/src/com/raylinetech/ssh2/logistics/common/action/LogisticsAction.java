@@ -128,6 +128,7 @@ public class LogisticsAction extends ActionSupport{
 			order.setRlordernumber("20"+rlOrder.getRlordernumber());
 			order.setSplitstatus(PageConfig.SPLIT_COPY);
 			order.setTrackingno("");
+			order.setAmount(0);
 			copyOrders.add(order);
 		}
 		this.rlOrderService.saveOrUpdateRLOrderList(copyOrders);
@@ -165,21 +166,22 @@ public class LogisticsAction extends ActionSupport{
 		List<RLOrder> rlOrders = this.rlOrderService.getRLOrderListFromRLOrderIds(ids);
 		List<RLOrder> splitOrders = new ArrayList<RLOrder>();
 		for (RLOrder rlOrder : rlOrders) {
-			if(rlOrder.getRlorderitems().size()<=1 && rlOrder.getRlorderitems().get(0).getQuantity().equals("1")){
+			if(rlOrder.getRlorderitems().size()<=1 && rlOrder.getRlorderitems().get(0).getQuantity()==1){
 				continue;
 			}else{
 				for (RLOrderItem item : rlOrder.getRlorderitems()) {
-					int qua = Integer.parseInt(item.getQuantity());
+					int qua = item.getQuantity();
 					for (int i = 0; i < qua; i++) {
 						RLOrder order = rlOrder.clone();
 						RLOrderItem it = (RLOrderItem)item.clone();
-						it.setQuantity("1");
+						it.setQuantity(1);
 						List<RLOrderItem> items = new ArrayList<RLOrderItem>();
 						items.add(it);
 						order.setRlorderitems(items);
 						order.setId(0);
 						order.setRlordernumber("");
 						order.setSplitstatus(PageConfig.SPLIT_MT_SPLIT);
+						order.setQuantity(1);
 						splitOrders.add(order);
 					}
 				}
@@ -229,28 +231,36 @@ public class LogisticsAction extends ActionSupport{
 		mergeOrder.setId(0);
 		mergeOrder.getRlorderitems().clear();
 		mergeOrder.setSplitstatus(PageConfig.SPLIT_MT_MERGE);
-
+		mergeOrder.setAmount(0);
 		//将rlrders写入map中，合并sku相同的项
-		Map<String,RLOrderItem> oneOrder = new LinkedHashMap<String, RLOrderItem>();
+//		Map<String,RLOrderItem> oneOrder = new LinkedHashMap<String, RLOrderItem>();
+//		for (RLOrder rlOrder : rlOrders) {
+//			for (RLOrderItem item : rlOrder.getRlorderitems()) {
+//				RLOrderItem it = oneOrder.get(item.getSku().getSkuno());
+//				if(it== null){
+//					//在这里将这个skuno以及对应的itemput进去
+//					oneOrder.put(item.getSku().getSkuno(), item);
+//				}else{
+//					//在这里得到这个it并且将item里的quantity加进来
+//					int quantity = oneOrder.get(item.getSku().getSkuno()).getQuantity();
+//					quantity = quantity + item.getQuantity();
+//					oneOrder.get(item.getSku().getSkuno()).setQuantity(quantity);
+//				}
+//			}
+//		}
+		
+		double amount= 0;
 		for (RLOrder rlOrder : rlOrders) {
-			for (RLOrderItem item : rlOrder.getRlorderitems()) {
-				RLOrderItem it = oneOrder.get(item.getSku().getSkuno());
-				if(it== null){
-					//在这里将这个skuno以及对应的itemput进去
-					oneOrder.put(item.getSku().getSkuno(), item);
-				}else{
-					//在这里得到这个it并且将item里的quantity加进来
-					int quantity = Integer.parseInt(oneOrder.get(item.getSku().getSkuno()).getQuantity());
-					quantity = quantity + Integer.parseInt(item.getQuantity());
-					oneOrder.get(item.getSku().getSkuno()).setQuantity(quantity+"");
-				}
-			}
+			mergeOrder.getRlorderitems().addAll(rlOrder.getRlorderitems());
+			amount+=rlOrder.getAmount();
 		}
-
-		for (RLOrderItem rlOrderItem : oneOrder.values()) {
+		mergeOrder.setAmount(amount);
+		int quantity = 0;
+		for (RLOrderItem rlOrderItem : mergeOrder.getRlorderitems()) {
+			quantity+=rlOrderItem.getQuantity();
 			mergeOrder.getRlorderitems().add(rlOrderItem);
 		}
-		
+		mergeOrder.setQuantity(quantity);
 		List<RLOrder> mergeOrders = new ArrayList<RLOrder>();
 		mergeOrders.add(mergeOrder);
 		this.rlOrderService.saveOrUpdateRLOrderList(mergeOrders);

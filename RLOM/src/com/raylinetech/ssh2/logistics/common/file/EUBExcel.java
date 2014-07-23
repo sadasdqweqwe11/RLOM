@@ -49,14 +49,13 @@ public class EUBExcel extends ExcelModel{
 				this.data[5][rowNumber] = o.getBuyerphonenumber();
 				this.data[6][rowNumber] = o.getPostalcode();
 				DecimalFormat df = new DecimalFormat("#.##");
-				String price = df.format(Double.parseDouble(StringUtil
-						.getDoubleFromAmount(o.getAmount())) * 0.3);
+				String price = df.format(o.getAmount() * 0.3);
 				this.data[7][rowNumber] = (int)Double.parseDouble(price);
 				if(o.getRlorderitems().get(0)!= null){
 					this.data[8][rowNumber] = o.getRlorderitems().get(0).getSku().getName();
 					int totalQuantity = 0;
 					for (int i = 0; i < o.getRlorderitems().size(); i++) {
-						totalQuantity = totalQuantity + Integer.parseInt(o.getRlorderitems().get(i).getQuantity());
+						totalQuantity = totalQuantity + o.getRlorderitems().get(i).getQuantity();
 					}
 					this.data[9][rowNumber] = totalQuantity+"";
 				}else{

@@ -241,8 +241,10 @@ public class ExcelServiceImpl implements ExcelService {
 						skuno = skuno.substring(0,
 								skuno.indexOf(ExcelService.BZ));
 					}
+
+					skuno = StringUtil.getNumberAndletterFromString(skuno);
 					item.setSku(new Sku(skuno));
-					item.setQuantity(list.get(6).trim());
+					item.setQuantity(Integer.parseInt(list.get(6).trim()));
 					item.setDescription(list.get(7).trim());
 					order.getRlorderitems().add(item);
 				}
@@ -251,10 +253,14 @@ public class ExcelServiceImpl implements ExcelService {
 				order.setRlordernumber(list.get(0).trim());
 				order.setOrdernumber(list.get(1).trim());
 				order.setVendor(list.get(2).trim());
-				order.setSkuno(list.get(3).trim());
+				order.setSku(new Sku(list.get(3).trim()));
 				order.setItemname(list.get(4).trim());
 				order.setPinming(list.get(5).trim());
-				order.setQuantity(list.get(6).trim());
+				if(null!=list.get(6)&& !"".equals(list.get(6).trim())){
+					order.setQuantity(Integer.parseInt(list.get(6).trim()));
+				}else{
+					order.setQuantity(0);
+				}
 				order.setDescription(list.get(7).trim());
 				order.setBuyername(list.get(8).trim());
 				order.setShipaddress1(list.get(9).trim());
@@ -265,7 +271,7 @@ public class ExcelServiceImpl implements ExcelService {
 				order.setShipcountry(list.get(14).trim());
 				order.setBuyerphonenumber(list.get(15).trim());
 				order.setDate(list.get(16).trim());
-				order.setAmount(list.get(17).trim());
+				order.setAmount(Double.parseDouble(list.get(17).trim()));
 				order.setTrackingno(list.get(18).trim());
 				order.setGuojia(list.get(19).trim());
 				order.setMarketplace(list.get(20).trim());
@@ -280,8 +286,9 @@ public class ExcelServiceImpl implements ExcelService {
 					// item.setSkuno(list.get(3).trim());
 					// item.setItemname(list.get(4).trim());
 					// item.setPinming(list.get(5).trim());
-					item.setSku(new Sku(list.get(3).trim()));
-					item.setQuantity(list.get(6).trim());
+					String skuno = StringUtil.getNumberAndletterFromString(list.get(3).trim());
+					item.setSku(new Sku(skuno));
+					item.setQuantity(Integer.parseInt(list.get(6).trim()));
 					item.setDescription(list.get(7).trim());
 					// item.setOrdernumber(order.getOrdernumber());
 					items.add(item);
@@ -340,7 +347,7 @@ public class ExcelServiceImpl implements ExcelService {
 			String ordernumber = StringUtil.linkString("-", ordernumbers);
 			order.setOrdernumber(ordernumber);
 			order.setBuyerphonenumber(value.get(0).get(3).trim());
-			order.setSkuno(value.get(0).get(31).trim());
+			order.setSku(new Sku(value.get(0).get(31).trim()));
 			List<RLOrderItem> items = new ArrayList<RLOrderItem>();
 			for (List<String> list : value) {
 				RLOrderItem item = new RLOrderItem();
@@ -355,9 +362,10 @@ public class ExcelServiceImpl implements ExcelService {
 				}
 				item.setItemno(list.get(12).trim());
 				item.setOrderno(list.get(0).trim());
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				item.setSku(new Sku(skuno));
 				item.setDescription(list.get(14).trim());
-				item.setQuantity(list.get(15).trim());
+				item.setQuantity(Integer.parseInt(list.get(15).trim()));
 				items.add(item);
 			}
 			order.setRlorderitems(items);
@@ -369,7 +377,7 @@ public class ExcelServiceImpl implements ExcelService {
 			order.setShipcountry(value.get(0).get(10).toUpperCase().trim());
 			order.setBuyername(value.get(0).get(2).trim());
 			String amount = value.get(0).get(16).trim();
-			order.setAmount(StringUtil.getDoubleFromAmount(amount));
+			order.setAmount(Double.parseDouble(amount));
 			String country = order.getShipcountry();
 			String guojia = PageConfig.getGuojia(country);
 			if (guojia == null || guojia.equals("")) {
@@ -392,7 +400,7 @@ public class ExcelServiceImpl implements ExcelService {
 			order.setItemname("");
 			order.setPinming("");
 			order.setDescription("");
-			order.setQuantity("");
+			order.setQuantity(order.getRlorderitems().get(0).getQuantity());
 			order.setUid(orderFile.getUid());
 			orders.add(order);
 
@@ -460,6 +468,7 @@ public class ExcelServiceImpl implements ExcelService {
 				if (skuno.indexOf(ExcelService.BZ) > 0) {
 					skuno = skuno.substring(0, skuno.indexOf(ExcelService.BZ));
 				}
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				Sku sku = this.skuDao.find(skuno);
 				if (null == sku) {
 					mark3 = false;
@@ -771,6 +780,7 @@ public class ExcelServiceImpl implements ExcelService {
 				if(temSkuno!=null){
 					skuno = temSkuno;
 				}
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				Sku sku = this.skuDao.find(skuno);
 				if(null==sku){
 					mark31 = false;

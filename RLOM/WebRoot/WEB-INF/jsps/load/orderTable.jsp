@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="<%=path %>/js/jquery/dataTables/css/jquery.dataTables.min.css" type="text/css" />
 <script type="text/javascript" charset="utf-8">
 	$(function(){
+<%--
 		$.fn.squareSelection=function(){  
 	        var container = $(this);  
 	        var stop_pop = function(e) {  
@@ -101,7 +102,9 @@
 	        return $(this);    
 	    };  
 	    $('#prTable').squareSelection();
-		
+		 --%>
+		 
+		 
 		$('#prTable').dataTable( {
 			"scrollY":        "450px",
 			"scrollX":        "true",
@@ -151,6 +154,14 @@
 				$("#form").attr("action", "<%=path%>/downloadFJD?"+new Date()).submit();
 			}
 		});
+		$(".rlfjd").click(function(){
+			if($('input[name="orders"]:checked').length==0){
+			alert("请选择至少一项");
+			return false;
+			}else{
+				$("#form").attr("action", "<%=path%>/downloadRLFJD?"+new Date()).submit();
+			}
+		});
 		$(".bq").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 				alert("请选择至少一项");
@@ -172,14 +183,14 @@
 				}
 			}
 		});
-<%-- 		$(".generate").click(function(){
+ 		$(".generate").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");
 			return false;
 			}else{
 				$("#form").attr("action", "<%=path%>/ajax/generateTrackingnoAjax.action?"+new Date()).submit();
 			}
-		}); --%>
+		});
 		$(".del").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");
@@ -494,7 +505,7 @@
 					<th width="20px" align="left" valign="middle"><input
 						type="checkbox" id="all"/></th>
 				<th><span>全选   </span> </th>
-				<th colspan="5">
+				<th colspan="4">
 				<c:if test="${logisticsid== 10||logisticsid== 11||logisticsid== 12||logisticsid== 13||logisticsid== 14}">
 				<span class="generate">生成运单号   </span>
 				</c:if>
@@ -502,16 +513,16 @@
 				<span class="scbd">下载上传表单   </span>
 				</c:if>
 				<span class="fjd">下载分拣单   </span>
-				
  				<%--<c:if test="${logisticsid== 1||logisticsid== 3||logisticsid== 4||logisticsid== 5||logisticsid== 9||logisticsid== 10}">
 				<c:if test="${func== 1}">
 				</c:if>--%>
 				<span class="bq">下载标签   </span>
  				<span class="tracking">下载运单号   </span></th>
 
+				<th colspan="2"><span class="rlfjd">锐蓝专用分拣单</span></th>
 				<th colspan="3"><span class="amazonDownload">下载Amazon表单</span></th>
 				<th colspan="2"><span class="tongji">下载统计表单</span></th>
-				<th colspan="3"><span class="splitOrder">拆单&nbsp;&nbsp;</span>
+				<th colspan="2"><span class="splitOrder">拆单&nbsp;&nbsp;</span>
 				<span class="mergeOrder">合单&nbsp;&nbsp;</span>
 				<span class="copyOrder" >复制&nbsp;&nbsp;</span></th>	<th><span class="del">删除</span></th>
 				<th colspan="4">&nbsp;</th>

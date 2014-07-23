@@ -40,24 +40,24 @@ public class GHZGYZXBExcel extends ExcelModel {
 				}else if(logid==ExcelService.LOGISTICS_BJXB || logid==ExcelService.LOGISTICS_SZBJXB){
 					this.data[1][rowNumber] = "中邮北京挂号小包";			
 				}else if(logid==ExcelService.LOGISTICS_BJXBBGH || logid==ExcelService.LOGISTICS_SZBJXBBGH||logid==ExcelService.LOGISTICS_SHXBBGH || logid==ExcelService.LOGISTICS_YWSHXBBGH){
-					this.data[1][rowNumber] = "不挂号中国邮政小包（通用）";			
+					this.data[1][rowNumber] = "中邮平邮小包(通用)";			
 				}else if(logid==ExcelService.LOGISTICS_SZHLXB || logid==ExcelService.LOGISTICS_BJHLXB||logid==ExcelService.LOGISTICS_SHHLXB || logid==ExcelService.LOGISTICS_YWHLXB){
-					this.data[1][rowNumber] = "挂号荷兰邮政小包";			
+					this.data[1][rowNumber] = "荷兰邮政挂号小包";			
 				}else if(logid==ExcelService.LOGISTICS_BJYYB || logid==ExcelService.LOGISTICS_SZYYB||logid==ExcelService.LOGISTICS_SHYYB || logid==ExcelService.LOGISTICS_YWYYB){
-					this.data[1][rowNumber] = "挂号燕邮宝";			
+					this.data[1][rowNumber] = "燕邮宝挂号";			
 				}else if(logid==ExcelService.LOGISTICS_BJYYBBGH || logid==ExcelService.LOGISTICS_SZYYBBGH||logid==ExcelService.LOGISTICS_SHYYBBGH || logid==ExcelService.LOGISTICS_YWYYBBGH){
-					this.data[1][rowNumber] = "不挂号燕邮宝";			
+					this.data[1][rowNumber] = "燕邮宝平邮";			
 				}else if(logid==ExcelService.LOGISTICS_BJYODEL || logid==ExcelService.LOGISTICS_SZYODEL||logid==ExcelService.LOGISTICS_SHYODEL || logid==ExcelService.LOGISTICS_YWYODEL){
-					this.data[1][rowNumber] = "YODEL英国标准";	
+					this.data[1][rowNumber] = "英国YODEL专线(标准)";	
 					bizhong="3";
 				}else if(logid==ExcelService.LOGISTICS_BJYODEL_SMALL || logid==ExcelService.LOGISTICS_SZYODEL_SMALL||logid==ExcelService.LOGISTICS_SHYODEL_SMALL || logid==ExcelService.LOGISTICS_YWYODEL_SMALL){
-					this.data[1][rowNumber] = "YODEL英国小包";			
+					this.data[1][rowNumber] = "英国YODEL专线(不含电小包)";			
 					bizhong="3";
 				}else if(logid==ExcelService.LOGISTICS_BJYODEL_ELE || logid==ExcelService.LOGISTICS_SZYODEL_ELE||logid==ExcelService.LOGISTICS_SHYODEL_ELE || logid==ExcelService.LOGISTICS_YWYODEL_ELE){
-					this.data[1][rowNumber] = "YODEL英国小包（含电）";			
+					this.data[1][rowNumber] = "英国YODEL专线(含电小包)";			
 					bizhong="3";
 				}else if(logid==ExcelService.LOGISTICS_YWSHEUB){
-						this.data[1][rowNumber] = "线下E邮宝（上海）";			
+						this.data[1][rowNumber] = "中邮上海E邮宝(线下)";			
 				}
 				this.data[2][rowNumber] = p.getRlordernumber();
 				this.data[3][rowNumber] = p.getBuyername();
@@ -84,14 +84,13 @@ public class GHZGYZXBExcel extends ExcelModel {
 				int quantity = 0;
 				double price = 0.0;
 				int totalWeight = 0;
-				price= Double.parseDouble(StringUtil
-						.getDoubleFromAmount(p.getAmount())) * 0.3;
+				price= StringUtil.random(3.99, 14.99);
 				List<RLOrderItem> products = p.getRlorderitems();
 				for (RLOrderItem l : products) {
 					// 申报价值
-					quantity = quantity+Integer.parseInt(l.getQuantity());
+					quantity = quantity+l.getQuantity();
 					// 实际重量
-					totalWeight = Integer.parseInt(l.getQuantity()) * 100 + totalWeight;
+					totalWeight = l.getQuantity() * 100 + totalWeight;
 				}
 				DecimalFormat df = new DecimalFormat("#.##");
 				

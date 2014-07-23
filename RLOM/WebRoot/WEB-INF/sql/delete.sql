@@ -9,3 +9,10 @@ DROP table IF EXISTS logistics_sku;
 #delete from logistics_rlorder where id >= 11427;
 #delete from logistics_sku;
 #delete from logistics_logistics;
+
+
+UPDATE logistics_rlorder_item SET skuid=REPLACE(skuid,'-','');
+UPDATE logistics_rlorder SET skuno=REPLACE(skuno,'-','');
+UPDATE logistics_sku SET skuno=REPLACE(skuno,' ','');
+
+select * from logistics_rlorder where vendor is  null  group by date;

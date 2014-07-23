@@ -34,6 +34,8 @@ import com.raylinetech.ssh2.logistics.common.file.FJDExcelOperator;
 import com.raylinetech.ssh2.logistics.common.file.FenJianDanExcel;
 import com.raylinetech.ssh2.logistics.common.file.GHZGYZXBExcel;
 import com.raylinetech.ssh2.logistics.common.file.HLXBExcel;
+import com.raylinetech.ssh2.logistics.common.file.RLFJDExcelOperator;
+import com.raylinetech.ssh2.logistics.common.file.RLFenJianDanExcel;
 import com.raylinetech.ssh2.logistics.common.file.SZSBTExcel;
 import com.raylinetech.ssh2.logistics.common.file.TableExcel;
 import com.raylinetech.ssh2.logistics.common.file.TableExcelOperator;
@@ -282,7 +284,7 @@ public class DownloadAction extends ActionSupport {
 			ids.add(Long.parseLong((String) object));
 		}
 		List<RLOrder> orders = this.rlOrderService
-				.getRLOrderListFromRLOrderIds(ids);
+				.getRLOrdersZFJDFromRLOrderIds(ids);
 		int logisticsid = orders.get(0).getLogistics().getId();
 		try {
 			OutputStream out = response.getOutputStream();
@@ -390,6 +392,36 @@ public class DownloadAction extends ActionSupport {
 		}
 		return null;
 	}
+	
+	public String downloadRLFJD() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		if (null == this.orders) {
+			return "fail";
+		}
+		List ids = new ArrayList();
+		for (Object object : this.orders) {
+			ids.add(Long.parseLong((String) object));
+		}
+		List<RLOrder> orders = this.rlOrderService
+				.getRLOrdersZFJDFromRLOrderIds(ids);
+		try {
+			OutputStream out = response.getOutputStream();
+			response.setHeader("content-disposition",
+						"attachment;filename=" + "rlfjd" + DateUtil.yyyyMMdd()
+								+ ".xls");
+			response.setContentType("APPLICATION/msexcel");
+			RLFJDExcelOperator operator = new RLFJDExcelOperator();
+			operator.WriteExcel(orders, out);
+			out.close();
+			response.flushBuffer();// 强行将响应缓存中的内容发送到目的
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public String downloadBQ() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -403,51 +435,11 @@ public class DownloadAction extends ActionSupport {
 			ids.add(Long.parseLong((String) object));
 		}
 		List<RLOrder> orders = this.rlOrderService
-				.getRLOrderListFromRLOrderIds(ids);
+				.getRLOrdersBQFromIds(ids);
 		// int logisticsid = orders.get(0).getLogistics().getId();
 		PdfService pdf = new PdfServiceImpl();
 		try {
 			OutputStream out = response.getOutputStream();
-			// if(logisticsid == PdfService.LOGISTICS_BJEQUICK){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "BJEQUICK.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SHEQUICK){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SHEQUICK.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SZEQUICK){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SZEQUICK.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_BJEUB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "BJEUB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SHEUB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SHEUB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_BJXB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "BJXB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SZBJXB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SZBJXB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SHXB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SHXB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_YWSHXB){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "YWSHXB.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_BJXBBGH){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "BJXBBGH.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SZBJXBBGH){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SZBJXBBGH.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_SHXBBGH){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "SHXBBGH.pdf");
-			// }else if(logisticsid == PdfService.LOGISTICS_YWSHXBBGH){
-			// response.setHeader("content-disposition","attachment;filename="+"bq"+DateUtil.yyyyMMdd()+
-			// "YWSHXBBGH.pdf");
-			// }
 			response.setHeader("content-disposition", "attachment;filename="
 					+ "bq" + DateUtil.yyyyMMdd() + ".pdf");
 			response.setContentType("APPLICATION/pdf");

@@ -69,6 +69,11 @@ public class OrderFileAction extends ActionSupport {
 		OrderFile orderFile = this.orderFileService.find(Long.parseLong(id));
 		System.out.println(orderFile);
 		List<RLOrder> rlOrders = this.rlOrderService.getRLOrderListFromFile(orderFile.getId());
+		//TODO
+		for (RLOrder rlOrder : rlOrders) {
+			System.out.println("vendor is "+ rlOrder.getVendor());
+			
+		}
 		if(null == orderFile.getDescription() || "".equals(orderFile.getDescription())){
 			List<Logistics> logisticss = this.logisticsService.getAllLogistics();
 			request.setAttribute("logisticss", logisticss);

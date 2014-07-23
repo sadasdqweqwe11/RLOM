@@ -28,6 +28,7 @@ import com.raylinetech.ssh2.logistics.common.service.ExcelService;
 import com.raylinetech.ssh2.logistics.common.service.LogisticsService;
 import com.raylinetech.ssh2.logistics.common.service.TxtService;
 import com.raylinetech.ssh2.logistics.common.util.DateUtil;
+import com.raylinetech.ssh2.logistics.common.util.StringUtil;
 
 public class TxtServiceImpl implements TxtService{
 
@@ -86,6 +87,7 @@ public class TxtServiceImpl implements TxtService{
 					System.out.println(temSkuno + "skuskuskuksu ");
 				}
 				System.out.println(skuno);
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				Sku sku = this.skuDao.find(skuno);
 				if(null==sku){
 					mark10 = false;
@@ -216,8 +218,6 @@ public class TxtServiceImpl implements TxtService{
 			zhanghao = datas[1];
 			riqi = datas[2];
 		}
-		
-		
 		Map<String, List<List<String>>> orderMap = new LinkedHashMap<String, List<List<String>>>();
 		
 		for (List<String> oneList : lists) {
@@ -242,7 +242,6 @@ public class TxtServiceImpl implements TxtService{
 			order.setOrdernumber(ordernumber);
 			order.setBuyerphonenumber(value.get(0).get(9).trim());
 
-			order.setSkuno(value.get(0).get(10).trim());
 			List<RLOrderItem> items = new ArrayList<RLOrderItem>();
 			for (List<String> list : value) {
 				RLOrderItem item = new RLOrderItem();
@@ -255,13 +254,15 @@ public class TxtServiceImpl implements TxtService{
 				if(temSkuno!=null){
 					skuno = temSkuno;
 				}
-				item.setOrderno(ordernumber);
+				item.setOrderno(list.get(1).trim());
 				item.setItemno(list.get(1).trim());
+				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				item.setSku(new Sku(skuno));
 				item.setDescription(list.get(11).trim());
-				item.setQuantity(list.get(12).trim());
+				item.setQuantity(Integer.parseInt(list.get(12).trim()));
 				items.add(item);
 			}
+			order.setSku(order.getRlorderitems().get(0).getSku());
 			order.setRlorderitems(items);
 			order.setShipaddress1(value.get(0).get(17));
 			String address2 = "";
@@ -299,7 +300,8 @@ public class TxtServiceImpl implements TxtService{
 			order.setItemname("");
 			order.setPinming("");
 			order.setDescription("");
-			order.setQuantity("");
+			order.setQuantity(1);
+			order.setAmount(0);
 			order.setUid(orderFile.getUid());
 			orders.add(order);
 			

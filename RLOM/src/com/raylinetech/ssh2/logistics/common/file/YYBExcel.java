@@ -48,14 +48,13 @@ public class YYBExcel extends ExcelModel {
 				int quantity = 0;
 				double price = 0.0;
 				double totalWeight = 0.0;
-				price= Double.parseDouble(StringUtil
-						.getDoubleFromAmount(p.getAmount())) * 0.3;
+				price= p.getAmount() * 0.3;
 				List<RLOrderItem> products = p.getRlorderitems();
 				for (RLOrderItem l : products) {
 					// 申报价值
-					quantity = quantity+Integer.parseInt(l.getQuantity());
+					quantity = quantity+l.getQuantity();
 					// 实际重量
-					totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+					totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 				}
 				DecimalFormat df = new DecimalFormat("#.##");
 				

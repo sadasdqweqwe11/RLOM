@@ -16,7 +16,7 @@
 		<meta name="Description" content="" />
 		<link href="<%=path %>/css/meiyoubbs3.css" rel="stylesheet" type="text/css" />
 		<!-- saved from url=(0014)about:internet -->
-		<title>锐蓝标签生成--登录</title>
+		<title>增加SKU</title>
 		<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->

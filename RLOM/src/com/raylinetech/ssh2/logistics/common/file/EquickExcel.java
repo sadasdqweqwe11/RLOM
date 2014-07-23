@@ -80,11 +80,10 @@ public class EquickExcel extends ExcelModel {
 					List<RLOrderItem> products = p.getRlorderitems();
 					for (RLOrderItem l : products) {
 						// 申报价值
-						quantity = quantity+Integer.parseInt(l.getQuantity());
-						totalPrice= Double.parseDouble(StringUtil
-								.getDoubleFromAmount(p.getAmount())) * 0.3 + totalPrice;
+						quantity = quantity+l.getQuantity();
+						totalPrice= p.getAmount() * 0.3 + totalPrice;
 						// 实际重量
-						totalWeight = Double.parseDouble(l.getQuantity()) * 0.25 + totalWeight;
+						totalWeight = (double)l.getQuantity() * 0.25 + totalWeight;
 					}
 				}
 				DecimalFormat df = new DecimalFormat("#.##");

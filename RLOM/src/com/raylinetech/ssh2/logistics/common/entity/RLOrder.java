@@ -29,13 +29,11 @@ public class RLOrder implements Cloneable{
 	@Column
 	private String vendor;
 	@Column
-	private String skuno;
-	@Column
 	private String itemname;
 	@Column
 	private String pinming;
 	@Column
-	private String quantity;
+	private int quantity;
 	@Column
 	private String description;
 	@Column
@@ -57,7 +55,9 @@ public class RLOrder implements Cloneable{
 	@Column
 	private String date;
 	@Column
-	private String amount;
+	private double amount;
+	@Column
+	private double weight;
 	@Column
 	private String trackingno;
 	@Column
@@ -76,6 +76,9 @@ public class RLOrder implements Cloneable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="logisticsid")
 	private Logistics logistics;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="skuno")
+	private Sku sku;
 	/**
      * 记录是否拆单，不需要拆单0，系统拆单拆单1，系统合单2，手动拆单3，手动合单4，copy订单5 default 0	
      */
@@ -114,12 +117,6 @@ public class RLOrder implements Cloneable{
 	public void setVendor(String vendor) {
 		this.vendor = vendor;
 	}
-	public String getSkuno() {
-		return skuno;
-	}
-	public void setSkuno(String skuno) {
-		this.skuno = skuno;
-	}
 	public String getItemname() {
 		return itemname;
 	}
@@ -131,12 +128,6 @@ public class RLOrder implements Cloneable{
 	}
 	public void setPinming(String pinming) {
 		this.pinming = pinming;
-	}
-	public String getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
 	}
 	public String getDescription() {
 		return description;
@@ -198,12 +189,6 @@ public class RLOrder implements Cloneable{
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getAmount() {
-		return amount;
-	}
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
 	public String getTrackingno() {
 		return trackingno;
 	}
@@ -264,22 +249,46 @@ public class RLOrder implements Cloneable{
 		this.uid = uid;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	public double getWeight() {
+		return weight;
+	}
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+	
+	public Sku getSku() {
+		return sku;
+	}
+	public void setSku(Sku sku) {
+		this.sku = sku;
+	}
+	
 	public RLOrder(long id, String rlordernumber, String ordernumber,
-			String vendor, String skuno, String itemname, String pinming,
-			String quantity, String description, String buyername,
-			String shipaddress1, String shipaddress2, String shipcity,
-			String shipstate, String postalcode, String shipcountry,
-			String buyerphonenumber, String date, String amount,
-			String trackingno, String guojia, String marketplace,
-			String account, String currency, long fileid,
-			List<RLOrderItem> rlorderitems, Logistics logistics,
-			int splitstatus, long uid) {
+			String vendor, String itemname, String pinming, int quantity,
+			String description, String buyername, String shipaddress1,
+			String shipaddress2, String shipcity, String shipstate,
+			String postalcode, String shipcountry, String buyerphonenumber,
+			String date, double amount, double weight, String trackingno,
+			String guojia, String marketplace, String account, String currency,
+			long fileid, List<RLOrderItem> rlorderitems, Logistics logistics,
+			Sku sku, int splitstatus, long uid) {
 		super();
 		this.id = id;
 		this.rlordernumber = rlordernumber;
 		this.ordernumber = ordernumber;
 		this.vendor = vendor;
-		this.skuno = skuno;
 		this.itemname = itemname;
 		this.pinming = pinming;
 		this.quantity = quantity;
@@ -294,6 +303,7 @@ public class RLOrder implements Cloneable{
 		this.buyerphonenumber = buyerphonenumber;
 		this.date = date;
 		this.amount = amount;
+		this.weight = weight;
 		this.trackingno = trackingno;
 		this.guojia = guojia;
 		this.marketplace = marketplace;
@@ -302,6 +312,7 @@ public class RLOrder implements Cloneable{
 		this.fileid = fileid;
 		this.rlorderitems = rlorderitems;
 		this.logistics = logistics;
+		this.sku = sku;
 		this.splitstatus = splitstatus;
 		this.uid = uid;
 	}
@@ -336,7 +347,7 @@ public class RLOrder implements Cloneable{
 		order.setShipcity(shipcity);
 		order.setShipcountry(shipcountry);
 		order.setShipstate(shipstate);
-		order.setSkuno(skuno);
+		order.setSku(sku);
 		order.setTrackingno(trackingno);
 		order.setVendor(vendor);
 		order.setUid(uid);

@@ -24,7 +24,7 @@ public class RLOrderItem implements Cloneable{
     @JoinColumn(name="skuid")
 	private Sku sku;
 	@Column
-	private String quantity;
+	private int quantity;
 	@Column
 	private String description;
 	
@@ -37,11 +37,11 @@ public class RLOrderItem implements Cloneable{
 	}
 
 
-	public String getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
@@ -92,7 +92,7 @@ public class RLOrderItem implements Cloneable{
 		return item;
 	}
 	
-	public RLOrderItem(long id, Sku sku, String quantity, String description) {
+	public RLOrderItem(long id, Sku sku, int quantity, String description) {
 		super();
 		this.id = id;
 		this.sku = sku;
@@ -101,7 +101,7 @@ public class RLOrderItem implements Cloneable{
 	}
 
 	public RLOrderItem(long id, String orderno, String itemno, Sku sku,
-			String quantity, String description) {
+			int quantity, String description) {
 		super();
 		this.id = id;
 		this.orderno = orderno;
