@@ -183,14 +183,6 @@
 				}
 			}
 		});
- 		$(".generate").click(function(){
-			if($('input[name="orders"]:checked').length==0){
-			alert("请选择至少一项");
-			return false;
-			}else{
-				$("#form").attr("action", "<%=path%>/ajax/generateTrackingnoAjax.action?"+new Date()).submit();
-			}
-		});
 		$(".del").click(function(){
 			if($('input[name="orders"]:checked').length==0){
 			alert("请选择至少一项");

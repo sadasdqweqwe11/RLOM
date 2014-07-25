@@ -71,7 +71,27 @@ public class LogisticsServiceImpl implements LogisticsService {
 						.getSkuno();
 				String account = rlOrder.getAccount();
 				String market = rlOrder.getMarketplace();
-				if (null != skuno
+				if(null!=skuno && skuno.toUpperCase().contains("CTJZ21PST")){
+					System.out.println("xiguan");
+					this.completRLOrder(rlOrder, skuno);
+					result.add(rlOrder);
+				}else if(null!=skuno && skuno.toUpperCase().contains("CTJZ21LB")){
+					System.out.println("pijing");
+						this.completRLOrder(rlOrder, skuno);
+						result.add(rlOrder);
+				}else if(null!=skuno && PageConfig.isInhudieList(skuno.toUpperCase())){
+					System.out.println("hudie");
+					if(null!=account && PageConfig.isInhudieAccountList(account.toUpperCase())){
+						this.completRLOrder(rlOrder, skuno);
+						result.add(rlOrder);
+					}
+				}else if(null!=skuno && PageConfig.isInkouziList(skuno.toUpperCase())){
+					System.out.println("kouzi");
+					if(null!=account && PageConfig.isInkouziAccountList(account.toUpperCase())){
+						this.completRLOrder(rlOrder, skuno);
+						result.add(rlOrder);
+					}
+				}else if (null != skuno
 						&& PageConfig.isInZhijiaList(skuno.toUpperCase())) {
 					System.out.println("zhijia");
 					//TOBEUPDATE 添加ALI
@@ -82,6 +102,22 @@ public class LogisticsServiceImpl implements LogisticsService {
 						if (rlOrder.getRlorderitems().get(0).getQuantity()!=1) {
 							RLOrderItem item = new RLOrderItem(0,
 									new Sku("RANDOM"), rlOrder.getRlorderitems().get(0).getQuantity(), "");
+							rlOrder.getRlorderitems().add(item);
+						}
+					}
+					this.completRLOrder(rlOrder, skuno);
+					result.add(rlOrder);
+				}else if (null != skuno
+						&& PageConfig.isInzhuziList(skuno.toUpperCase())) {
+					System.out.println("zhuzi");
+					
+					if (!rlOrder.getMarketplace().equalsIgnoreCase(
+							"aliexpress")) {
+						// 如果是指甲帖，高亮显示
+						
+						if (rlOrder.getRlorderitems().get(0).getQuantity()>1) {
+							RLOrderItem item = new RLOrderItem(0,
+									new Sku("CTJT11PJS001"), 1, "");
 							rlOrder.getRlorderitems().add(item);
 						}
 					}
@@ -468,6 +504,20 @@ public class LogisticsServiceImpl implements LogisticsService {
 			}
 			int logisticsId = this.getlogisticsId(vendor, postalCode, guojia,
 					area, battery, weight, promotion, quantity, account);
+			//TOBEUPDATE 
+			if(rlOrder.getGuojia().equals("澳大利亚")){
+				if(items.get(0).getSku().getArea()==4){
+					logisticsId = PdfService.LOGISTICS_SZBJXBBGH;
+				}else if(items.get(0).getSku().getArea()==2){
+					logisticsId = PdfService.LOGISTICS_SHXBBGH;
+				}else if(items.get(0).getSku().getArea()==3){
+					logisticsId = PdfService.LOGISTICS_SHXBBGH;
+				}else{
+					logisticsId = PdfService.LOGISTICS_BJXBBGH;
+				}
+				System.out.println("澳大利亚"+logisticsId);
+			}
+			//TOBEUPDATE END
 			System.out.println("物流选择了第" + logisticsId);
 			List list = orderMap.get(logisticsId);
 			Object[] objs = { items.get(0), sku };

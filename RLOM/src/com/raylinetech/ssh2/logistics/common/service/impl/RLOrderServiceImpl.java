@@ -132,6 +132,11 @@ public class RLOrderServiceImpl implements RLOrderService{
 	public List<RLOrder> getRLOrdersBQFromIds(List ids) {
 		return this.rlOrderDao.findByIdsOrderByLidSkunameQuaRLOid(ids);
 	}
+
+	@Override
+	public RLOrder getRLOrderFromId(String orderid) {
+		return rlOrderDao.find(Integer.parseInt(orderid));
+	}
 	
 	
 

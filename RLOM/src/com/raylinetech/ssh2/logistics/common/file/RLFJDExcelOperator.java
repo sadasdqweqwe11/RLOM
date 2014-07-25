@@ -61,9 +61,30 @@ public class RLFJDExcelOperator {
 			for (Entry<String, List<RLOrder>> entry : logiMap.entrySet()) {
 				String sheetName = entry.getKey();
 				List<RLOrder> orders = entry.getValue();
-				ExcelModel excel= new RLFenJianDanExcel(orders);
-				this.getInitWorkbook(excel,sheetName,wwb,out); 
-//				if(entry.getValue().size()<=120){
+				if(sheetName.equals("北京小包-不挂号")){
+					Map<String,List<RLOrder>> bghmap = new LinkedHashMap<String,List<RLOrder>>();
+					for (RLOrder order : orders) {
+						List<RLOrder> os = bghmap.get(order.getSku().getName().trim());
+						if(os == null){
+							os = new ArrayList<RLOrder>();
+							os.add(order);
+							bghmap.put(order.getSku().getName(), os);
+						}else{
+							bghmap.get(order.getSku().getName()).add(order);
+						}
+					}
+					for (Entry<String, List<RLOrder>> ent : bghmap.entrySet()) {
+						List<RLOrder> skunameOrders = ent.getValue();
+						ExcelModel excel= new RLFenJianDanExcel(skunameOrders);
+						this.getInitWorkbook(excel,skunameOrders.get(0).getSku().getPinming(),wwb,out); 
+					}
+				}else{
+					ExcelModel excel= new RLFenJianDanExcel(orders);
+					this.getInitWorkbook(excel,sheetName,wwb,out); 
+
+				}
+
+				//				if(entry.getValue().size()<=120){
 //				}else{
 //					List<List<RLOrder>> lists = new LinkedList<List<RLOrder>>();
 //					List<RLOrder> result = new LinkedList<RLOrder>();

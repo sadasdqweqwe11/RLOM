@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CreateExpressResponseType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CallSuccess>false</CallSuccess>
+	<Response>
+		<Userid>100000</Userid>
+		<Operation>Create</Operation>
+		<Success>false</Success>
+		<Reason>V101</Reason>
+		<ReasonMessage>渠道不正确</ReasonMessage>
+	</Response>
+</CreateExpressResponseType>

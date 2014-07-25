@@ -234,4 +234,8 @@ public class RLOrderDaoImpl implements RLOrderDao{
 			return list;
 		}
 	}
+	@Override
+	public RLOrder find(long id) {
+		return (RLOrder)this.hibernateTemplate.get(RLOrder.class, id);
+	}
 }

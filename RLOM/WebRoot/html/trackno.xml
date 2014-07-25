@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CreateExpressResponseType xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<CallSuccess>true</CallSuccess>
+	<CreatedExpress>
+		<Epcode>TE190876082ST</Epcode>
+		<Userid>100000</Userid>
+		<ChannelType>
+			<Id>154</Id>
+			<Name>中邮北京挂号小包</Name>
+			<Status>true</Status>
+		</ChannelType>
+		<Channel>中邮北京挂号小包</Channel>
+		<Package>无</Package>
+		<UserOrderNumber />
+		<SendDate>2014-07-12T00:00:00</SendDate>
+		<Receiver>
+			<Userid>100000</Userid>
+			<Name>tang</Name>
+			<Phone>13113131313 13922222222</Phone>
+			<Mobile>13113131313 13922222222</Mobile>
+			<Email>jpcn@mpc.com.br</Email>
+			<Company />
+			<Country>AUSTRALIA</Country>
+			<Postcode>ukh 101</Postcode>
+			<State>tang</State>
+			<City>澳大利亚</City>
+			<Address1>ukh 101</Address1>
+			<Address2>tang</Address2>
+		</Receiver>
+		<Quantity>3</Quantity>
+		<GoodsName>
+			<Id>0</Id>
+			<Userid>100000</Userid>
+			<NameCh>多媒体播放器</NameCh>
+			<NameEn>MP3</NameEn>
+			<Weight>222</Weight>
+			<DeclaredValue>125</DeclaredValue>
+			<DeclaredCurrency>USD</DeclaredCurrency>
+			<MoreGoodsName />
+			<HsCode />
+		</GoodsName>
+		<ReferenceNo />
+		<PackageNo />
+		<Insure>false</Insure>
+		<Memo />
+		<TrackingStatus>暂无信息</TrackingStatus>
+		<IsPrint>false</IsPrint>
+		<CreateDate>2014-07-25T00:00:00+08:00</CreateDate>
+	</CreatedExpress>
+	<Response>
+		<Userid>100000</Userid>
+		<Operation>Create</Operation>
+		<Success>true</Success>
+		<Reason>None</Reason>
+		<ReasonMessage>没有错误</ReasonMessage>
+	</Response>
+</CreateExpressResponseType>

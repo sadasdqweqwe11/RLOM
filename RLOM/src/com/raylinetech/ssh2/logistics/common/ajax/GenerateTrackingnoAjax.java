@@ -55,7 +55,6 @@ public class GenerateTrackingnoAjax extends ActionSupport {
 
 	public String generateTrackingno() throws Exception{
 		HttpServletResponse  response = ServletActionContext.getResponse();
-		System.out.println(orders1);
 		String[] orders = this.orders1.split(",");
 		List ids = new ArrayList();
 		for (Object object : orders) {

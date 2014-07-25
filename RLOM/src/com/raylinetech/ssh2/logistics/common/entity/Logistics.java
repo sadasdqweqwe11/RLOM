@@ -40,7 +40,8 @@ public class Logistics implements Serializable{
 	private String phonenumber2;
 	@Column
 	private String remarks;
-	
+	@Column
+	private String apitoken;
 	public int getId() {
 		return id;
 	}
@@ -59,6 +60,7 @@ public class Logistics implements Serializable{
 	public void setEngname(String engname) {
 		this.engname = engname;
 	}
+	
 	public Logistics(int id, String name, String engname) {
 		super();
 		this.id = id;
@@ -131,6 +133,12 @@ public class Logistics implements Serializable{
 		this.trackingstore = trackingstore;
 	}
 	
+	public String getApitoken() {
+		return apitoken;
+	}
+	public void setApitoken(String apitoken) {
+		this.apitoken = apitoken;
+	}
 	public Logistics(int id) {
 		super();
 		this.id = id;
@@ -138,7 +146,7 @@ public class Logistics implements Serializable{
 	public Logistics(int id, String name, String engname, String logifunc,
 			String account, String password, int trackingstore, String mailto,
 			String address, String postalcode, String phonenumber1,
-			String phonenumber2, String remarks) {
+			String phonenumber2, String remarks, String apitoken) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -153,6 +161,7 @@ public class Logistics implements Serializable{
 		this.phonenumber1 = phonenumber1;
 		this.phonenumber2 = phonenumber2;
 		this.remarks = remarks;
+		this.apitoken = apitoken;
 	}
 	
 }

@@ -56,4 +56,6 @@ public interface RLOrderDao {
 
 
 	public List<RLOrder> findByIdsOrderByLidSkunameQuaRLOid(List ids);
+	
+	public RLOrder find(long id);
 }

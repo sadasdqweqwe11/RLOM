@@ -6,6 +6,8 @@ import com.raylinetech.ssh2.logistics.common.entity.RLOrder;
 
 public interface RLOrderService {
 
+	public RLOrder getRLOrderFromId(String orderid);
+	
 	public void saveOrUpdateRLOrderList(List<RLOrder> rlOrders);
 	
 	public List<RLOrder> getRLOrderListFromDateLogistics(String beginDate,String endDate,int logisticsid);

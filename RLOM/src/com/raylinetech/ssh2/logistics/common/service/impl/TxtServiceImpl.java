@@ -1,9 +1,12 @@
 package com.raylinetech.ssh2.logistics.common.service.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -168,7 +171,10 @@ public class TxtServiceImpl implements TxtService{
 	public List<List> txtToList(String path, OrderFile orderFile)
 			throws ExcelException {
 	    try {
-			BufferedReader br = new BufferedReader(new FileReader(path + orderFile.getFilename()));  
+	    	File f = new File(path + orderFile.getFilename());
+	    	InputStreamReader read = new InputStreamReader (new FileInputStream(f),"ISO-8859-1");
+//	    	BufferedReader br = new BufferedReader(new FileReader(path + orderFile.getFilename()));  
+	    	BufferedReader br = new BufferedReader(read);  
 			StringBuilder sb = new StringBuilder();
 			List<List> lists = new LinkedList<List>();
 			String data = "";//一次读入一行，直到读入null为文件结束  
@@ -254,7 +260,7 @@ public class TxtServiceImpl implements TxtService{
 				if(temSkuno!=null){
 					skuno = temSkuno;
 				}
-				item.setOrderno(list.get(1).trim());
+				item.setOrderno(list.get(0).trim());
 				item.setItemno(list.get(1).trim());
 				skuno = StringUtil.getNumberAndletterFromString(skuno);
 				item.setSku(new Sku(skuno));
@@ -262,7 +268,9 @@ public class TxtServiceImpl implements TxtService{
 				item.setQuantity(Integer.parseInt(list.get(12).trim()));
 				items.add(item);
 			}
-			order.setSku(order.getRlorderitems().get(0).getSku());
+			if(items.size()!=0){
+				order.setSku(items.get(0).getSku());
+			}
 			order.setRlorderitems(items);
 			order.setShipaddress1(value.get(0).get(17));
 			String address2 = "";

@@ -258,7 +258,6 @@ public class LogisticsAction extends ActionSupport{
 		int quantity = 0;
 		for (RLOrderItem rlOrderItem : mergeOrder.getRlorderitems()) {
 			quantity+=rlOrderItem.getQuantity();
-			mergeOrder.getRlorderitems().add(rlOrderItem);
 		}
 		mergeOrder.setQuantity(quantity);
 		List<RLOrder> mergeOrders = new ArrayList<RLOrder>();

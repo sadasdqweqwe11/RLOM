@@ -117,7 +117,7 @@ public class PdfServiceImpl implements PdfService {
 				}else if (logisticsid == PdfService.LOGISTICS_SZHLXB||logisticsid == PdfService.LOGISTICS_BJHLXB||logisticsid == PdfService.LOGISTICS_SHHLXB||logisticsid == PdfService.LOGISTICS_YWHLXB) {
 					this.rlOrdersToHLXB(orders, out,document,writer);
 				}else if(logisticsid >=PdfService.LOGISTICS_SZYODEL_SMALL&&logisticsid <=LOGISTICS_YWYODEL){
-					this.rlOrdersToYODEL(rlOrders, out, document, writer);
+					this.rlOrdersToYODEL(orders, out, document, writer);
 				}
 				document.close();
 				out.close();
@@ -882,7 +882,7 @@ public class PdfServiceImpl implements PdfService {
 //						if (pinming.length() > 36) {
 //							pinming = pinming.substring(0, 36) + " ...";
 //						}
-					cell = new PdfPCell(new Phrase(pinming, chi8));
+					cell = new PdfPCell(new Phrase(pinming, FontUtil.getChi6()));
 					cell.setBorder(Rectangle.RIGHT);
 					cell.setColspan(3);
 					table.addCell(cell);
@@ -3150,7 +3150,7 @@ public class PdfServiceImpl implements PdfService {
 		cell.setColspan(3);
 		table.addCell(cell);
 		
-		cell = new PdfPCell(new Phrase(	this.getShipAdress(order.getShipaddress1(), order.getShipaddress2(), "", ""),FontUtil.getEng8()));
+		cell = new PdfPCell(new Phrase(	this.getShipAdress(order.getShipaddress1(), order.getShipaddress2(), "", ""),FontUtil.getChi8()));
 		cell.setBorder(Rectangle.NO_BORDER);
 		cell.setColspan(3);
 		table.addCell(cell);

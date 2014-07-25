@@ -14,5 +14,5 @@ DROP table IF EXISTS logistics_sku;
 UPDATE logistics_rlorder_item SET skuid=REPLACE(skuid,'-','');
 UPDATE logistics_rlorder SET skuno=REPLACE(skuno,'-','');
 UPDATE logistics_sku SET skuno=REPLACE(skuno,' ','');
-
+UPDATE logistics_sku SET name=LTRIM(name);
 select * from logistics_rlorder where vendor is  null  group by date;

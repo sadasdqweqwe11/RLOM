@@ -30,7 +30,25 @@
 <!-- saved from url=(0014)about:internet -->
 <title>锐蓝标签查询</title>
 <script type="text/javascript" charset="utf-8">
+
+function showDate()
+{
+var today = new Date();
+var day = today.getUTCDate();
+if(day<10){
+	day = "0" + day;
+}
+var month = today.getUTCMonth()+1;
+if(month<10){
+	month = "0" + month;
+}
+var year = today.getUTCFullYear();
+var date = month + "/" + day + "/" + year;
+document.getElementById("date").value = date;
+}
+
 	$(function(){
+		showDate();
 		$("#ajaxButton").click(function(){
 			if($("#date").attr("value")==""){
 				alert("请选择日期");
